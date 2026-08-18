@@ -1,0 +1,21 @@
+import { spawn } from "node:child_process";
+import { writeFileSync } from "node:fs";
+const [url, out, w, h] = process.argv.slice(2);
+const CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
+const chrome = spawn(CHROME, ["--headless","--disable-gpu","--remote-debugging-port=9334","about:blank"], {stdio:"ignore"});
+await new Promise(r => setTimeout(r, 2500));
+const [t] = (await (await fetch("http://127.0.0.1:9334/json/list")).json()).filter(x=>x.type==="page");
+const ws = new WebSocket(t.webSocketDebuggerUrl);
+let id=0; const pending=new Map();
+const send=(m,p)=>new Promise(r=>{const i=++id;pending.set(i,r);ws.send(JSON.stringify({id:i,method:m,params:p}));});
+ws.onmessage=e=>{const m=JSON.parse(e.data); if(m.id&&pending.has(m.id)){pending.get(m.id)(m.result);pending.delete(m.id);}};
+await new Promise(r=>ws.onopen=r);
+await send("Emulation.setDeviceMetricsOverride",{width:+w,height:+h,deviceScaleFactor:2,mobile:+w<700});
+await send("Page.navigate",{url});
+await new Promise(r=>setTimeout(r,6000));
+const probe = await send("Runtime.evaluate",{expression:
+ `JSON.stringify({vw:document.documentElement.clientWidth, scrollW:document.documentElement.scrollWidth})`,returnByValue:true});
+console.log("viewport:", probe.result.value);
+const shot = await send("Page.captureScreenshot",{format:"png"});
+writeFileSync(out, Buffer.from(shot.data,"base64"));
+ws.close(); chrome.kill();

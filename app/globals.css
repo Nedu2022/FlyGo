@@ -2,7 +2,7 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #1a202c;
 }
 
 @theme inline {
@@ -10,17 +10,299 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* FLYGO brand — orange accent */
+  --color-brand: #f58634;
+  --color-brand-hover: #e0752a;
+  --color-brand-soft: #fff3e6;
+
+  /* FLYGO brand — sky blue, the primary action colour of the new flow */
+  --color-sky: #56ace9;
+  --color-sky-hover: #3f9bdd;
+  --color-sky-deep: #00aff0;
+  --color-sky-soft: #eaf5fd;
+  --color-sky-tint: #f0f8fe;
+  --color-blue: #167ee6;
+  --color-blue-soft: #eaf4fe;
+  /* Steel blue behind the About hero and the offers banner. */
+  --color-steel: #09688c;
+
+  /* Neutrals */
+  --color-ink: #1e293b;
+  --color-body: #475569;
+  --color-label: #64748b;
+  --color-muted: #94a3b8;
+  --color-line: #e2e8f0;
+  --color-shell: #f7f8fa;
+  --color-night: #1a1a1a;
+  --color-star: #f5b423;
+
+  /* Dashboard */
+  --color-canvas: #f6f8fb;
+  --color-tile-rose: #fdeaec;
+  --color-tile-amber: #fdf1dd;
+  --color-tile-mint: #e4f8ec;
+  --color-tile-lilac: #f0eafd;
+  --color-series-online: #3b9ae1;
+  --color-series-offline: #5fd39a;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+/* --------------------------------------------------------------------------
+   Animations
+   -------------------------------------------------------------------------- */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  20% {
+    transform: translateX(-6px);
+  }
+  40% {
+    transform: translateX(5px);
+  }
+  60% {
+    transform: translateX(-3px);
+  }
+  80% {
+    transform: translateX(2px);
+  }
+}
+
+@keyframes badge-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  60% {
+    transform: scale(1.06);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  60%,
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(26px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Children of `.stagger` rise in sequence. */
+.stagger > * {
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.stagger > *:nth-child(1) {
+  animation-delay: 0.04s;
+}
+.stagger > *:nth-child(2) {
+  animation-delay: 0.1s;
+}
+.stagger > *:nth-child(3) {
+  animation-delay: 0.16s;
+}
+.stagger > *:nth-child(4) {
+  animation-delay: 0.22s;
+}
+.stagger > *:nth-child(5) {
+  animation-delay: 0.28s;
+}
+.stagger > *:nth-child(6) {
+  animation-delay: 0.34s;
+}
+.stagger > *:nth-child(7) {
+  animation-delay: 0.4s;
+}
+.stagger > *:nth-child(8) {
+  animation-delay: 0.46s;
+}
+
+.animate-rise {
+  animation: rise 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-fade {
+  animation: fade 0.4s ease-out both;
+}
+.animate-pop {
+  animation: pop 0.25s ease-out;
+}
+.animate-shake {
+  animation: shake 0.4s ease-in-out;
+}
+.animate-badge-in {
+  animation: badge-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Success tick draws itself on. */
+.animate-draw {
+  stroke-dasharray: 40;
+  stroke-dashoffset: 40;
+  animation: draw 0.5s 0.35s ease-out forwards;
+}
+
+/* Sections fade up as they scroll into view, where supported. */
+/* No `both` fill: outside the scroll range the section keeps its normal
+   painted state, so content can never be stranded at opacity 0. */
+.reveal {
+  animation: reveal 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  animation-timeline: view();
+  animation-range: entry 4% cover 24%;
+}
+
+@supports not (animation-timeline: view()) {
+  .reveal {
+    animation: none;
+  }
+}
+
+/* Dual-thumb range sliders: two inputs stacked over one painted track, so
+   only the thumbs may receive pointer events. */
+.range-thumb {
+  appearance: none;
+  background: transparent;
+  pointer-events: none;
+  margin: 0;
+}
+.range-thumb::-webkit-slider-thumb {
+  appearance: none;
+  pointer-events: auto;
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--color-brand);
+  cursor: pointer;
+}
+.range-thumb::-moz-range-thumb {
+  pointer-events: auto;
+  height: 16px;
+  width: 16px;
+  border-radius: 9999px;
+  background: var(--color-brand);
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 0 1px var(--color-brand);
+  cursor: pointer;
+}
+
+/* Horizontal card rails hide their scrollbar. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Revenue bars grow up from the axis as the chart paints. */
+@keyframes grow-bar {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.animate-grow-bar {
+  transform-origin: bottom;
+  animation: grow-bar 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* Popularity meters and progress rails fill from the left. */
+@keyframes grow-rail {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.animate-grow-rail {
+  transform-origin: left;
+  animation: grow-rail 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }
