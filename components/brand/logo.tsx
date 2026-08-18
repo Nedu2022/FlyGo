@@ -4,18 +4,19 @@ import Link from "next/link";
 export function Logo({
   className = "",
   href = "/",
-  /** Rendered height in pixels; the lockup keeps its own 126:56 ratio. */
-  height = 56,
+  /** Height utilities for the mark. Responsive by default so it never dominates
+   *  a narrow bar; pass a fixed one (e.g. "h-[50px]") to override. */
+  imgClass = "h-[38px] sm:h-[46px] lg:h-[50px]",
 }: {
   className?: string;
   href?: string;
-  height?: number;
+  imgClass?: string;
 }) {
   return (
     <Link
       href={href}
       aria-label="FLYGO Bookings — home"
-      className={`inline-block transition-transform duration-300 hover:scale-[1.04] ${className}`}
+      className={`inline-block ${className}`}
     >
       <Image
         src="/images/logo.svg"
@@ -23,7 +24,7 @@ export function Logo({
         width={126}
         height={56}
         priority
-        style={{ height, width: "auto" }}
+        className={`w-auto ${imgClass}`}
       />
     </Link>
   );

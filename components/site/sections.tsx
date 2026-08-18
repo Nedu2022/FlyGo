@@ -12,7 +12,7 @@ export function SectionHeading({
   glyph?: "globe-plane" | "globe-planes";
 }) {
   return (
-    <h2 className="flex items-center gap-3 text-[20px] font-semibold text-ink sm:text-[22px]">
+    <h2 className="flex items-center gap-3 text-h4 font-semibold text-ink">
       {children}
       {glyph ? (
         <Image
@@ -42,10 +42,10 @@ export function WhyChooseUs() {
       </div>
 
       <div>
-        <h2 className="text-[32px] font-bold text-ink sm:text-[36px]">Why Choose Us:</h2>
+        <h2 className="text-h1 font-bold text-ink">Why Choose Us:</h2>
         <ul className="mt-6 space-y-4">
           {WHY_CHOOSE_US.map((item) => (
-            <li key={item.title} className="flex gap-3 text-[15px] leading-relaxed text-body">
+            <li key={item.title} className="flex gap-3 text-copy leading-relaxed text-body">
               <span aria-hidden="true" className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ink" />
               <span>
                 <strong className="font-semibold text-ink">{item.title}</strong> {item.body}
@@ -55,7 +55,7 @@ export function WhyChooseUs() {
         </ul>
         <Link
           href="/signup"
-          className="mt-7 inline-flex h-[38px] items-center justify-center rounded-md bg-brand px-6 text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(233,136,58,0.3)] transition-all duration-200 hover:bg-brand-hover hover:shadow-[0_6px_16px_rgba(233,136,58,0.38)] active:translate-y-px"
+          className="mt-7 inline-flex h-[38px] items-center justify-center rounded-md bg-brand px-6 text-small font-semibold text-white shadow-[0_2px_8px_rgba(233,136,58,0.3)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px"
         >
           Sign up
         </Link>
@@ -67,7 +67,7 @@ export function WhyChooseUs() {
 export function Journals() {
   return (
     <section className="reveal mx-auto w-full max-w-[1200px] px-5 py-16 sm:px-8">
-      <h2 className="flex items-center justify-center gap-3 text-center text-[26px] font-bold text-ink sm:text-[30px]">
+      <h2 className="flex items-center justify-center gap-3 text-center text-h2 font-bold text-ink">
         Adventurer&apos;s Chronicles: Our Travelers&apos; Journals
         <Image
           src="/images/deco/globe-planes.svg"
@@ -82,7 +82,7 @@ export function Journals() {
         {JOURNALS.map((post, index) => (
           <article
             key={index}
-            className="group overflow-hidden rounded-xl bg-white p-3 shadow-[0_2px_14px_rgba(16,24,40,0.09)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(16,24,40,0.14)]"
+            className="group overflow-hidden rounded-xl bg-white p-3 shadow-[0_2px_14px_rgba(16,24,40,0.09)]"
           >
             <div className="relative h-[145px] w-full overflow-hidden rounded-lg">
               <Image
@@ -90,16 +90,16 @@ export function Journals() {
                 alt=""
                 fill
                 sizes="(max-width: 768px) 100vw, 380px"
-                className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+                className="object-cover"
               />
             </div>
-            <h3 className="mt-4 text-[15px] font-semibold text-ink">{post.title}</h3>
-            <p className="mt-2 text-[13px] leading-relaxed text-body">{post.excerpt}</p>
+            <h3 className="mt-4 text-copy font-semibold text-ink">{post.title}</h3>
+            <p className="mt-2 text-small leading-relaxed text-body">{post.excerpt}</p>
             <div className="mt-4 flex items-center gap-3">
               <PlaceholderImage label="" className="h-8 w-8 shrink-0 rounded-full" />
               <div>
-                <p className="text-[13px] font-semibold text-ink">{post.author}</p>
-                <p className="text-[12px] text-muted">{post.date}</p>
+                <p className="text-small font-semibold text-ink">{post.author}</p>
+                <p className="text-tiny text-muted">{post.date}</p>
               </div>
             </div>
           </article>
@@ -117,9 +117,7 @@ export function LovedDestinations() {
         {LOVED_DESTINATIONS.map((group, index) => (
           <div key={group.heading}>
             <h3
-              className={`text-[14px] font-semibold ${
-                index === 0 ? "text-brand" : "text-brand/60"
-              }`}
+              className={`text-small font-semibold ${ index === 0 ? "text-brand" : "text-brand/60" }`}
             >
               {group.heading}
             </h3>
@@ -128,7 +126,7 @@ export function LovedDestinations() {
                 <li key={item}>
                   <Link
                     href="/hotels"
-                    className="text-[13px] text-body transition-colors hover:text-brand"
+                    className="text-small text-body transition-colors hover:text-brand"
                   >
                     {item}
                   </Link>
@@ -146,7 +144,7 @@ export function StoreBadge({ store }: { store: "apple" | "google" }) {
   return (
     <a
       href="#"
-      className="flex h-[42px] items-center gap-2 rounded-md bg-night px-3.5 text-white transition-transform duration-200 hover:-translate-y-0.5"
+      className="flex h-[42px] items-center gap-2 rounded-md bg-night px-3.5 text-white"
     >
       {store === "apple" ? (
         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -161,10 +159,10 @@ export function StoreBadge({ store }: { store: "apple" | "google" }) {
         </svg>
       )}
       <span className="leading-none">
-        <span className="block text-[8px] uppercase tracking-wide text-white/75">
+        <span className="block text-micro uppercase tracking-wide text-white/75">
           {store === "apple" ? "Download on the" : "Get it on"}
         </span>
-        <span className="block text-[13px] font-semibold">
+        <span className="block text-small font-semibold">
           {store === "apple" ? "App Store" : "Google Play"}
         </span>
       </span>
@@ -184,13 +182,13 @@ export function StillHaveQuestions() {
           />
         ))}
       </div>
-      <h2 className="mt-5 text-[17px] font-semibold text-ink">Still have questions?</h2>
-      <p className="mt-2 text-[15px] text-body">
+      <h2 className="mt-5 text-lead font-semibold text-ink">Still have questions?</h2>
+      <p className="mt-2 text-copy text-body">
         Can&apos;t find the answer you&apos;re looking for? Please chat to our friendly team.
       </p>
       <Link
         href="/contact"
-        className="mt-6 inline-flex h-[40px] items-center justify-center rounded-md bg-brand px-5 text-[14px] font-semibold text-white shadow-[0_2px_8px_rgba(233,136,58,0.3)] transition-all duration-200 hover:bg-brand-hover hover:shadow-[0_6px_16px_rgba(233,136,58,0.38)] active:translate-y-px"
+        className="mt-6 inline-flex h-[40px] items-center justify-center rounded-md bg-brand px-5 text-small font-semibold text-white shadow-[0_2px_8px_rgba(233,136,58,0.3)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px"
       >
         Get in touch
       </Link>

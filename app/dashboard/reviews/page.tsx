@@ -19,8 +19,8 @@ export default function ReviewsPage() {
         </>
       }
     >
-      <section className="rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] sm:p-6">
-        <h2 className="text-[19px] font-semibold text-ink">Guests Reviews</h2>
+      <section className="min-w-0 rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] sm:p-6">
+        <h2 className="text-lead font-semibold text-ink">Guests Reviews</h2>
 
         <ul className="mt-5 flex max-h-[640px] flex-col gap-4 overflow-y-auto pr-1">
           {GUEST_REVIEWS.map((review) => {
@@ -35,18 +35,18 @@ export default function ReviewsPage() {
                 <div className="flex items-center gap-3">
                   <Avatar name={review.name} size={34} />
                   <div>
-                    <p className="text-[15px] font-semibold text-ink">{review.name}</p>
+                    <p className="text-copy font-semibold text-ink">{review.name}</p>
                     <Stars rating={review.rating} />
                   </div>
                 </div>
 
-                <p className="mt-3 text-[14px] leading-relaxed text-body">{review.body}</p>
-                <p className="mt-1 text-[14px] text-body">Stayed Date: {review.stayed}</p>
+                <p className="mt-3 text-small leading-relaxed text-body">{review.body}</p>
+                <p className="mt-1 text-small text-body">Stayed Date: {review.stayed}</p>
 
                 <div className="mt-4 flex flex-wrap justify-end gap-3">
                   <button
                     type="button"
-                    className="h-[38px] rounded-md border border-line px-5 text-[14px] text-body transition-colors duration-200 hover:border-sky hover:text-sky"
+                    className="h-[38px] rounded-md border border-line px-5 text-small text-body transition-colors duration-200 hover:border-sky hover:text-sky"
                   >
                     Reply
                   </button>
@@ -58,11 +58,7 @@ export default function ReviewsPage() {
                       )
                     }
                     aria-pressed={done}
-                    className={`h-[38px] rounded-md border px-5 text-[14px] transition-colors duration-200 ${
-                      done
-                        ? "border-[#4ade80] bg-[#4ade80] text-white"
-                        : "border-line text-body hover:border-sky hover:text-sky"
-                    }`}
+                    className={`h-[38px] rounded-md border px-5 text-small transition-colors duration-200 ${ done ? "border-[#4ade80] bg-[#4ade80] text-white" : "border-line text-body hover:border-sky hover:text-sky" }`}
                   >
                     {done ? "Resolved" : "Mark as Resolved"}
                   </button>

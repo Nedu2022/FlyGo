@@ -36,7 +36,7 @@ export function AuthShell({
   return (
     <div className="flex min-h-dvh flex-col bg-white">
       <header className="flex shrink-0 items-start justify-between gap-4 px-5 pt-6 sm:px-10 lg:px-14">
-        <Logo height={50} />
+        <Logo imgClass="h-[40px] sm:h-[48px]" />
         {topRight ? <div className="pt-1 text-right">{topRight}</div> : null}
       </header>
 
@@ -44,7 +44,7 @@ export function AuthShell({
         {backHref ? (
           <Link
             href={backHref}
-            className="group absolute left-5 top-0 inline-flex items-center gap-2 text-[16px] text-body transition-colors duration-200 hover:text-sky sm:left-10 lg:left-14"
+            className="group absolute left-5 top-0 inline-flex items-center gap-2 text-copy text-body transition-colors duration-200 hover:text-sky sm:left-10 lg:left-14"
           >
             <svg
               width="20"
@@ -56,7 +56,6 @@ export function AuthShell({
               strokeLinecap="round"
               strokeLinejoin="round"
               aria-hidden="true"
-              className="transition-transform duration-200 group-hover:-translate-x-1"
             >
               <path d="m15 18-6-6 6-6" />
             </svg>
@@ -69,11 +68,11 @@ export function AuthShell({
         >
           <div className="animate-rise flex flex-col items-center text-center">
             {icon ? <div className="animate-badge-in mb-6">{icon}</div> : null}
-            <h1 className="text-[27px] font-bold tracking-tight text-ink sm:text-[33px]">
+            <h1 className="text-h1 font-bold tracking-tight text-ink">
               {title}
             </h1>
             {subtitle ? (
-              <p className="mt-3 max-w-[500px] text-[16px] leading-relaxed text-label sm:text-[18px]">
+              <p className="mt-3 max-w-[500px] text-lead leading-relaxed text-label">
                 {subtitle}
               </p>
             ) : null}
@@ -82,7 +81,7 @@ export function AuthShell({
           <div className="mt-8">{children}</div>
 
           {seal ? (
-            <p className="mt-7 flex items-center justify-center gap-2 text-[14px] text-muted">
+            <p className="mt-7 flex items-center justify-center gap-2 text-small text-muted">
               <Padlock />
               {seal}
             </p>
@@ -110,7 +109,7 @@ export function AuthSplit({
   return (
     <div className="flex min-h-dvh flex-col bg-white">
       <header className="flex shrink-0 items-start justify-between gap-4 px-5 pt-6 sm:px-10 lg:px-14">
-        <Logo height={50} />
+        <Logo imgClass="h-[40px] sm:h-[48px]" />
         {topRight ? <div className="pt-1 text-right">{topRight}</div> : null}
       </header>
 
@@ -118,11 +117,11 @@ export function AuthSplit({
         <div className="hidden flex-1 lg:block">{art}</div>
 
         <div className="mx-auto w-full max-w-[620px] lg:mx-0 lg:flex-1">
-          <h1 className="animate-rise text-[30px] font-bold tracking-tight text-ink sm:text-[36px]">
+          <h1 className="animate-rise text-h1 font-bold tracking-tight text-ink">
             {title}
           </h1>
           {subtitle ? (
-            <p className="animate-rise mt-4 max-w-[520px] text-[17px] leading-relaxed text-label">
+            <p className="animate-rise mt-4 max-w-[520px] text-lead leading-relaxed text-label">
               {subtitle}
             </p>
           ) : null}
@@ -144,7 +143,7 @@ export function AccountPrompt({
   href: string;
 }) {
   return (
-    <p className="text-[16px] leading-tight text-label sm:text-[18px]">
+    <p className="text-lead leading-tight text-label">
       {text}{" "}
       <Link
         href={href}
@@ -169,12 +168,12 @@ export function StepMarker({
   const pad = (n: number) => String(n).padStart(2, "0");
   return (
     <p
-      className="text-[14px] leading-tight text-muted"
+      className="text-small leading-tight text-muted"
       aria-label={`Step ${step} of ${total}: ${label}`}
     >
       STEP {pad(step)}/{pad(total)}
       <br />
-      <span className="text-[16px] text-sky">{label}</span>
+      <span className="text-copy text-sky">{label}</span>
     </p>
   );
 }

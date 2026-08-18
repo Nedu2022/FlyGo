@@ -19,7 +19,7 @@ export function Panel({
 }) {
   return (
     <section
-      className={`rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] sm:p-6 ${className}`}
+      className={`min-w-0 rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] sm:p-6 ${className}`}
     >
       {children}
     </section>
@@ -38,8 +38,8 @@ export function PanelHeading({
   return (
     <div className="mb-5 flex items-start justify-between gap-4">
       <div>
-        <h2 className="text-[18px] font-bold text-ink sm:text-[20px]">{title}</h2>
-        {subtitle ? <p className="mt-1 text-[14px] text-label">{subtitle}</p> : null}
+        <h2 className="text-h4 font-bold text-ink">{title}</h2>
+        {subtitle ? <p className="mt-1 text-small text-label">{subtitle}</p> : null}
       </div>
       {action}
     </div>
@@ -64,7 +64,7 @@ export function MonthSummary() {
         action={
           <button
             type="button"
-            className="flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line px-4 text-[14px] font-medium text-body transition-colors duration-200 hover:border-sky hover:text-sky"
+            className="flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line px-4 text-small font-medium text-body transition-colors duration-200 hover:border-sky hover:text-sky"
           >
             <DashIcon name="export" size={17} />
             Export
@@ -78,18 +78,18 @@ export function MonthSummary() {
           return (
             <div
               key={tile.label}
-              className={`rounded-2xl p-5 transition-transform duration-300 hover:-translate-y-1 ${tone.surface}`}
+              className={`rounded-2xl p-5 transition-colors duration-300 ${tone.surface}`}
             >
               <span
                 className={`mb-6 inline-flex h-11 w-11 items-center justify-center rounded-xl text-white ${tone.chip}`}
               >
                 <DashIcon name={tile.icon} size={21} strokeWidth={1.8} />
               </span>
-              <p className="text-[26px] font-bold leading-none text-ink">{tile.value}</p>
-              <p className="mt-2 text-[14px] text-body">{tile.label}</p>
+              <p className="text-h3 font-bold leading-none text-ink">{tile.value}</p>
+              <p className="mt-2 text-small text-body">{tile.label}</p>
               <Link
                 href={tile.href}
-                className="mt-2 inline-block text-[13px] font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+                className="mt-2 inline-block text-small font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
               >
                 {tile.action}
               </Link>
@@ -106,15 +106,15 @@ export function MonthSummary() {
 export function QuickLinks() {
   return (
     <Panel className="h-full">
-      <h2 className="text-[18px] font-bold text-ink sm:text-[20px]">Quick links</h2>
+      <h2 className="text-h4 font-bold text-ink">Quick links</h2>
       <ul className="mt-5 flex flex-col gap-2">
         {QUICK_LINKS.map((link) => (
           <li key={link.label}>
             <Link
               href={link.href}
-              className="group flex items-center gap-3 rounded-xl px-3 py-3 text-[14px] text-body transition-colors duration-200 hover:bg-sky-tint hover:text-sky"
+              className="group flex items-center gap-3 rounded-xl px-3 py-3 text-small text-body transition-colors duration-200 hover:bg-sky-tint hover:text-sky"
             >
-              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-soft text-sky transition-transform duration-200 group-hover:scale-110">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-soft text-sky">
                 <DashIcon name={link.icon} size={18} />
               </span>
               {link.label}
@@ -145,7 +145,7 @@ export function RevenueChart({
           action ?? (
             <Link
               href="/dashboard/insights"
-              className="shrink-0 text-[14px] font-medium text-sky transition-colors duration-200 hover:text-sky-hover"
+              className="shrink-0 text-small font-medium text-sky transition-colors duration-200 hover:text-sky-hover"
             >
               View Insights
             </Link>
@@ -167,7 +167,7 @@ export function Notifications() {
         action={
           <Link
             href="/dashboard/messages"
-            className="shrink-0 text-[14px] font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="shrink-0 text-small font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
           >
             View
           </Link>
@@ -178,9 +178,9 @@ export function Notifications() {
           <li key={note.name} className="flex gap-3">
             <Avatar name={note.name} size={42} />
             <div className="min-w-0">
-              <p className="text-[14px] font-semibold text-[#5b5bd6]">{note.name}</p>
-              <p className="mt-0.5 text-[13.5px] leading-snug text-body">{note.message}</p>
-              <p className="mt-1 text-[12.5px] text-muted">{note.time}</p>
+              <p className="text-small font-semibold text-[#5b5bd6]">{note.name}</p>
+              <p className="mt-0.5 text-small leading-snug text-body">{note.message}</p>
+              <p className="mt-1 text-tiny text-muted">{note.time}</p>
             </div>
           </li>
         ))}
@@ -206,7 +206,7 @@ export function TopProperties() {
         action={
           <Link
             href="/dashboard/properties"
-            className="shrink-0 text-[14px] font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="shrink-0 text-small font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
           >
             View&nbsp; Summary
           </Link>
@@ -216,7 +216,7 @@ export function TopProperties() {
       <div className="overflow-x-auto">
         <table className="w-full min-w-[440px] border-collapse text-left">
           <thead>
-            <tr className="text-[13px] font-normal text-muted">
+            <tr className="text-small font-normal text-muted">
               <th scope="col" className="pb-3 font-normal">#</th>
               <th scope="col" className="pb-3 font-normal">Name</th>
               <th scope="col" className="pb-3 font-normal">Popularity</th>
@@ -228,8 +228,8 @@ export function TopProperties() {
               const tone = RAIL_TONES[property.tone];
               return (
                 <tr key={property.name} className="border-t border-line">
-                  <td className="py-4 pr-3 text-[14px] text-label">{property.rank}</td>
-                  <td className="py-4 pr-4 text-[14px] font-medium text-ink">{property.name}</td>
+                  <td className="py-4 pr-3 text-small text-label">{property.rank}</td>
+                  <td className="py-4 pr-4 text-small font-medium text-ink">{property.name}</td>
                   <td className="w-[45%] py-4 pr-4">
                     <span className={`block h-1.5 w-full overflow-hidden rounded-full ${tone.track}`}>
                       <span
@@ -243,7 +243,7 @@ export function TopProperties() {
                   </td>
                   <td className="py-4 text-right">
                     <span
-                      className={`inline-block rounded-md border px-2.5 py-1 text-[13px] font-medium ${tone.chip}`}
+                      className={`inline-block rounded-md border px-2.5 py-1 text-small font-medium ${tone.chip}`}
                     >
                       {property.sales}
                     </span>

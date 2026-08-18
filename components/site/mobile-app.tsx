@@ -8,11 +8,11 @@ import { StoreBadge } from "@/components/site/sections";
 export function MobileApp() {
   return (
     <section className="reveal relative mx-auto w-full max-w-[1100px] overflow-hidden px-5 pt-16 text-center sm:px-8">
-      <p className="text-[19px] text-label sm:text-[22px]">Your Travel Companion on the Go</p>
-      <h2 className="mt-1 text-[30px] font-bold tracking-tight text-ink sm:text-[38px]">
+      <p className="text-h4 text-label">Your Travel Companion on the Go</p>
+      <h2 className="mt-1 text-display font-bold tracking-tight text-ink">
         Get Our Mobile App!
       </h2>
-      <p className="mx-auto mt-5 max-w-[700px] text-[15px] leading-relaxed text-body">
+      <p className="mx-auto mt-5 max-w-[700px] text-copy leading-relaxed text-body">
         Get access to exclusive deals, AI-powered travel suggestions, and seamless
         booking—all from the palm of your hand.
       </p>

@@ -13,13 +13,13 @@ export function Testimonials() {
 
   return (
     <section className="reveal mx-auto w-full max-w-[1360px] px-5 py-16 sm:px-8">
-      <p className="text-center text-[13px] font-semibold uppercase tracking-[0.18em] text-brand">
+      <p className="text-center text-small font-semibold uppercase tracking-[0.18em] text-brand">
         Testimonials
       </p>
-      <h2 className="mt-2 text-center text-[28px] font-bold text-ink sm:text-[32px]">
+      <h2 className="mt-2 text-center text-h2 font-bold text-ink">
         What Our Users Say
       </h2>
-      <p className="mx-auto mt-4 max-w-[720px] text-center text-[15px] leading-relaxed text-body">
+      <p className="mx-auto mt-4 max-w-[720px] text-center text-copy leading-relaxed text-body">
         Real experiences from travelers and hosts who trust us to make their journeys
         unforgettable.
       </p>
@@ -28,15 +28,15 @@ export function Testimonials() {
         {shown.map((person) => (
           <article
             key={person.name}
-            className="animate-fade flex flex-col rounded-lg bg-sky-tint px-7 py-9 text-center transition-transform duration-300 hover:-translate-y-1"
+            className="animate-fade flex flex-col rounded-lg bg-sky-tint px-7 py-9 text-center"
           >
-            <p className="flex-1 text-[14px] leading-relaxed text-body">
+            <p className="flex-1 text-small leading-relaxed text-body">
               &ldquo;{person.quote}&rdquo;
             </p>
             <Stars rating={person.rating} className="mt-6 justify-center" />
             <Avatar name={person.name} size={44} className="mx-auto mt-5" />
-            <h3 className="mt-3 text-[15px] font-bold text-ink">{person.name}</h3>
-            <p className="mt-1 text-[13px] text-sky">{person.role}</p>
+            <h3 className="mt-3 text-copy font-bold text-ink">{person.name}</h3>
+            <p className="mt-1 text-small text-sky">{person.role}</p>
           </article>
         ))}
       </div>

@@ -31,7 +31,7 @@ export function TodoList() {
 
   return (
     <Panel className="flex h-full flex-col">
-      <h2 className="mb-5 text-[18px] font-bold text-ink sm:text-[20px]">To do List</h2>
+      <h2 className="mb-5 text-h4 font-bold text-ink">To do List</h2>
 
       <ul className="flex flex-col gap-3">
         {todos.map((todo) => (
@@ -63,9 +63,7 @@ export function TodoList() {
                 </svg>
               </span>
               <span
-                className={`truncate text-[14px] ${
-                  todo.done ? "text-[#5b5bd6] line-through" : "text-ink"
-                }`}
+                className={`truncate text-small ${ todo.done ? "text-[#5b5bd6] line-through" : "text-ink" }`}
               >
                 {todo.label}
               </span>
@@ -98,11 +96,11 @@ export function TodoList() {
               onChange={(event) => setDraft(event.target.value)}
               onBlur={() => !draft && setAdding(false)}
               placeholder="What needs doing?"
-              className="h-11 flex-1 rounded-xl border border-line px-4 text-[14px] text-ink outline-none transition-colors duration-200 focus:border-sky"
+              className="h-11 flex-1 rounded-xl border border-line px-4 text-small text-ink outline-none transition-colors duration-200 focus:border-sky"
             />
             <button
               type="submit"
-              className="h-11 shrink-0 rounded-xl bg-sky px-4 text-[14px] font-medium text-white transition-colors duration-200 hover:bg-sky-hover"
+              className="h-11 shrink-0 rounded-xl bg-sky px-4 text-small font-medium text-white transition-colors duration-200 hover:bg-sky-hover"
             >
               Add
             </button>
@@ -111,9 +109,9 @@ export function TodoList() {
           <button
             type="button"
             onClick={() => setAdding(true)}
-            className="group flex items-center gap-2.5 text-[14px] text-body transition-colors duration-200 hover:text-[#5b5bd6]"
+            className="group flex items-center gap-2.5 text-small text-body transition-colors duration-200 hover:text-[#5b5bd6]"
           >
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#5b5bd6] text-white transition-transform duration-200 group-hover:scale-110">
+            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#5b5bd6] text-white">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" aria-hidden="true">
                 <path d="M12 5v14M5 12h14" />
               </svg>

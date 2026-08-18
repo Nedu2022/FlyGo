@@ -13,18 +13,18 @@ export function AboutHero() {
   return (
     <section className={`${WIDE} pt-8 sm:pt-10`}>
       <div className="animate-rise overflow-hidden rounded-2xl bg-steel">
-        <div className="grid items-center gap-10 px-7 py-14 sm:px-14 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14 lg:py-20">
+        <div className="grid items-center gap-10 px-7 py-14 sm:px-14 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-14 lg:py-16">
           <div>
-            <h1 className="max-w-[620px] text-[32px] font-bold leading-[1.22] text-white sm:text-[44px]">
+            <h1 className="max-w-[620px] text-display font-bold leading-[1.22] text-white">
               Your Ultimate Gateway to Effortless, Enjoyable, and Memorable Travel
               Experiences Across the Globe
             </h1>
-            <p className="mt-5 max-w-[440px] text-[16px] leading-relaxed text-white/75">
+            <p className="mt-5 max-w-[440px] text-copy leading-relaxed text-white/75">
               Connecting you with the best flights and stays for unforgettable journeys.
             </p>
             <Link
               href="/"
-              className="mt-8 inline-flex h-[46px] items-center justify-center rounded-md bg-brand px-7 text-[15px] font-medium text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-all duration-200 hover:bg-brand-hover hover:shadow-[0_8px_22px_rgba(245,134,52,0.45)] active:translate-y-px"
+              className="mt-8 inline-flex h-[46px] items-center justify-center rounded-md bg-brand px-7 text-copy font-medium text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px"
             >
               Learn more
             </Link>
@@ -57,9 +57,10 @@ function AppPreview() {
         />
       </div>
 
-      {/* Portrait video card overlapping the lower-left corner. */}
-      <div className="absolute -bottom-8 left-6 hidden w-[112px] overflow-hidden rounded-lg bg-[linear-gradient(150deg,#5c6a7d,#2c3644)] shadow-[0_18px_40px_-14px_rgba(0,0,0,0.65)] sm:block">
-        <div className="flex h-[150px] items-center justify-center">
+      {/* Portrait video card clipping the lower-left corner and hanging below,
+          so it frames the screenshot instead of covering it. */}
+      <div className="absolute -bottom-10 -left-6 hidden w-[96px] overflow-hidden rounded-lg bg-[linear-gradient(150deg,#5c6a7d,#2c3644)] shadow-[0_18px_40px_-14px_rgba(0,0,0,0.65)] lg:block">
+        <div className="flex h-[128px] items-center justify-center">
           <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/90">
             <svg width="13" height="13" viewBox="0 0 24 24" fill="var(--color-steel)" aria-hidden="true">
               <path d="M8 5v14l11-7L8 5Z" />
@@ -121,17 +122,15 @@ export function StatementBlock({
 
   const copy = (
     <div className={flip ? "lg:text-right" : ""}>
-      <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-brand">
+      <p className="text-small font-semibold uppercase tracking-[0.18em] text-brand">
         {eyebrow}
       </p>
-      <h2 className="mt-2 text-[30px] font-bold tracking-tight text-ink sm:text-[34px]">
+      <h2 className="mt-2 text-h1 font-bold tracking-tight text-ink">
         {title}
       </h2>
       {/* Measure is capped so the paragraph stays readable at full width. */}
       <p
-        className={`mt-6 max-w-[620px] text-[15px] leading-[1.75] text-body ${
-          flip ? "lg:ml-auto" : ""
-        }`}
+        className={`mt-6 max-w-[620px] text-copy leading-[1.75] text-body ${ flip ? "lg:ml-auto" : "" }`}
       >
         {body}
       </p>
@@ -140,7 +139,7 @@ export function StatementBlock({
 
   return (
     <section
-      className={`reveal ${WIDE} grid items-center gap-10 py-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:py-12`}
+      className={`reveal ${WIDE} grid items-center gap-8 py-8 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-16 lg:py-10`}
     >
       {flip ? (
         <>
@@ -191,16 +190,16 @@ export function OffersBanner() {
         className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,var(--color-steel)_0%,var(--color-steel)_38%,rgba(47,109,148,0.55)_58%,transparent_80%)]"
       />
       <div className={`${WIDE} py-20`}>
-        <h2 className="max-w-[520px] text-[30px] font-bold leading-[1.22] text-white sm:text-[38px]">
+        <h2 className="max-w-[520px] text-display font-bold leading-[1.22] text-white">
           Limited-Time Offers for Your Next Adventure
         </h2>
-        <p className="mt-4 max-w-[420px] text-[15px] leading-relaxed text-white/80">
+        <p className="mt-4 max-w-[420px] text-copy leading-relaxed text-white/80">
           Don&apos;t miss out on these incredible travel deals—book today and start
           planning your next journey.
         </p>
         <Link
           href="/flights"
-          className="mt-7 inline-flex h-[46px] items-center justify-center rounded-md bg-brand px-7 text-[15px] font-medium text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-all duration-200 hover:bg-brand-hover hover:shadow-[0_8px_22px_rgba(245,134,52,0.45)] active:translate-y-px"
+          className="mt-7 inline-flex h-[46px] items-center justify-center rounded-md bg-brand px-7 text-copy font-medium text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px"
         >
           Find Deals
         </Link>
@@ -215,15 +214,15 @@ export function CoreValues() {
       className={`reveal ${WIDE} grid gap-12 py-16 lg:grid-cols-[minmax(0,0.72fr)_minmax(0,1.28fr)] lg:gap-16 lg:py-20`}
     >
       <div>
-        <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-brand">
+        <p className="text-small font-semibold uppercase tracking-[0.18em] text-brand">
           Our Values
         </p>
-        <h2 className="mt-2 text-[30px] font-bold leading-[1.25] tracking-tight text-ink sm:text-[34px]">
+        <h2 className="mt-2 text-h1 font-bold leading-[1.25] tracking-tight text-ink">
           Our Core Values:
           <br />
           The Pillars of Our Journey
         </h2>
-        <p className="mt-5 max-w-[420px] text-[15px] leading-relaxed text-body">
+        <p className="mt-5 max-w-[420px] text-copy leading-relaxed text-body">
           Guided by principles that inspire trust, innovation, and a commitment to
           creating exceptional travel experiences.
         </p>
@@ -233,13 +232,13 @@ export function CoreValues() {
         {CORE_VALUES.map((value) => (
           <article
             key={value.title}
-            className="rounded-lg bg-sky-tint p-7 transition-transform duration-300 hover:-translate-y-1"
+            className="rounded-lg bg-sky-tint p-7"
           >
             <span className="mb-7 inline-flex h-12 w-12 items-center justify-center rounded-lg bg-sky text-white">
               <ValueIcon name={value.icon} size={24} />
             </span>
-            <h3 className="text-[16px] font-bold text-ink">{value.title}</h3>
-            <p className="mt-3 text-[14px] leading-relaxed text-body">{value.body}</p>
+            <h3 className="text-copy font-bold text-ink">{value.title}</h3>
+            <p className="mt-3 text-small leading-relaxed text-body">{value.body}</p>
           </article>
         ))}
       </div>

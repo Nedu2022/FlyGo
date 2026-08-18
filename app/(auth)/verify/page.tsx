@@ -56,7 +56,7 @@ export default function VerifyPage() {
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-10 pt-6">
         <div className="animate-rise">
-          <p className="mb-5 text-center text-[19px] text-ink">Enter OTP</p>
+          <p className="mb-5 text-center text-lead text-ink">Enter OTP</p>
           <OtpInput value={code} onChange={setCode} onComplete={verify} invalid={invalid} />
         </div>
 
@@ -64,7 +64,7 @@ export default function VerifyPage() {
           Verify &amp; Continue
         </PrimaryButton>
 
-        <div className="flex items-center justify-between gap-4 text-[16px]">
+        <div className="flex items-center justify-between gap-4 text-copy">
           <button
             type="button"
             onClick={() => setCooldown(RESEND_SECONDS)}

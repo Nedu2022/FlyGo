@@ -38,9 +38,7 @@ export function SearchCard({
             type="button"
             onClick={() => setTab(item)}
             aria-pressed={tab === item}
-            className={`relative flex-1 pb-3 text-[16px] transition-colors duration-200 ${
-              tab === item ? "text-white" : "text-white/75 hover:text-white"
-            }`}
+            className={`relative flex-1 pb-3 text-copy transition-colors duration-200 ${ tab === item ? "text-white" : "text-white/75 hover:text-white" }`}
           >
             {item}
             <span
@@ -53,18 +51,15 @@ export function SearchCard({
         ))}
       </div>
 
-      <div className="mt-5 flex flex-wrap gap-2.5">
+      {/* One-way / round trip only means anything for flights. */}
+      <div className={`mt-5 flex-wrap gap-2.5 ${tab === "Flight" ? "flex" : "hidden"}`}>
         {TRIP_KINDS.map((item) => (
           <button
             key={item}
             type="button"
             onClick={() => setKind(item)}
             aria-pressed={kind === item}
-            className={`h-[38px] rounded-full px-5 text-[14px] transition-colors duration-200 ${
-              kind === item
-                ? "bg-white font-medium text-ink"
-                : "bg-white/15 text-white hover:bg-white/25"
-            }`}
+            className={`h-[38px] rounded-full px-5 text-small transition-colors duration-200 ${ kind === item ? "bg-white font-medium text-ink" : "bg-white/15 text-white hover:bg-white/25" }`}
           >
             {item}
           </button>
@@ -116,7 +111,7 @@ export function SearchCard({
 
       <button
         type="submit"
-        className="mt-6 h-[44px] w-full rounded-md bg-brand text-[15px] text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-all duration-200 hover:bg-brand-hover hover:shadow-[0_8px_20px_rgba(245,134,52,0.45)] active:translate-y-px"
+        className="mt-6 h-[44px] w-full rounded-md bg-brand text-copy text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px"
       >
         Search
       </button>
@@ -139,7 +134,7 @@ function Pane({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 flex items-center gap-2 text-[14px] text-white">
+      <span className="mb-2 flex items-center gap-2 text-small text-white">
         {toggle}
         {label}
       </span>
@@ -152,9 +147,7 @@ function Pane({
         <input
           defaultValue={defaultValue}
           disabled={disabled}
-          className={`w-full min-w-0 truncate bg-transparent text-[15px] outline-none ${
-            disabled ? "text-white/35" : "text-white"
-          }`}
+          className={`w-full min-w-0 truncate bg-transparent text-copy outline-none ${ disabled ? "text-white/35" : "text-white" }`}
         />
       </span>
     </label>

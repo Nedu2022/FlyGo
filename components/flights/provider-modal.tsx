@@ -50,29 +50,29 @@ export function ProviderModal({
         </button>
 
         <div className="p-7 sm:p-8">
-          <h2 id="provider-modal-title" className="text-[24px] font-bold text-ink">
+          <h2 id="provider-modal-title" className="text-h3 font-bold text-ink">
             {TRIP.route}
           </h2>
 
-          <h3 className="mt-7 text-[19px] font-semibold text-ink">Itinerary</h3>
-          <p className="mt-4 text-[15px] text-body">
+          <h3 className="mt-7 text-lead font-semibold text-ink">Itinerary</h3>
+          <p className="mt-4 text-copy text-body">
             {TRIP.dates} &nbsp;•&nbsp; Business
           </p>
-          <p className="mt-3 text-[15px] text-body">12pm-6pm</p>
+          <p className="mt-3 text-copy text-body">12pm-6pm</p>
 
           <button
             type="button"
-            className="group mt-5 flex items-center gap-2 text-[15px] text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="group mt-5 flex items-center gap-2 text-copy text-brand transition-colors duration-200 hover:text-brand-hover"
           >
             View details
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" className="transition-transform duration-200 group-hover:translate-x-1">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
               <path d="M4 12h15M14 7l5 5-5 5" />
             </svg>
           </button>
 
-          <h3 className="mt-8 text-[21px] font-bold text-ink">Total</h3>
-          <p className="mt-2 text-[24px] font-semibold text-sky">{PROVIDERS[0].price}</p>
-          <p className="mt-1 text-[15px] text-body">per person</p>
+          <h3 className="mt-8 text-h4 font-bold text-ink">Total</h3>
+          <p className="mt-2 text-h3 font-semibold text-sky">{PROVIDERS[0].price}</p>
+          <p className="mt-1 text-copy text-body">per person</p>
         </div>
 
         <ul className="max-h-[320px] overflow-y-auto border-l border-line sm:max-h-none">
@@ -90,14 +90,14 @@ export function ProviderModal({
                   className="h-[30px] w-auto object-contain"
                 />
               </span>
-              <span className="min-w-0 flex-1 text-[16px] text-sky">{provider.price}</span>
+              <span className="min-w-0 flex-1 text-copy text-sky">{provider.price}</span>
               <button
                 type="button"
                 onClick={() => {
                   onClose();
                   router.push("/booking/details");
                 }}
-                className="h-[32px] shrink-0 rounded-md bg-brand px-4 text-[14px] text-white transition-colors duration-200 hover:bg-brand-hover"
+                className="h-[32px] shrink-0 rounded-md bg-brand px-4 text-small text-white transition-colors duration-200 hover:bg-brand-hover"
               >
                 Select
               </button>

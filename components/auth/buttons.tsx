@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 const primaryBase =
-  "relative flex h-[56px] w-full items-center justify-center rounded-[10px] bg-sky text-[17px] font-medium text-white shadow-[0_2px_10px_rgba(86,172,233,0.35)] transition-all duration-200 hover:bg-sky-hover hover:shadow-[0_8px_22px_rgba(86,172,233,0.42)] active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky disabled:cursor-not-allowed disabled:opacity-70";
+  "relative flex h-[56px] w-full items-center justify-center rounded-[10px] bg-sky text-lead font-medium text-white transition-colors duration-200 hover:bg-sky-hover active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky disabled:cursor-not-allowed disabled:opacity-70";
 
 type PrimaryButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   pending?: boolean;
@@ -69,7 +69,7 @@ export function GoogleButton({ label = "Register with Google" }: { label?: strin
   return (
     <button
       type="button"
-      className="group flex h-[60px] w-full items-center justify-center gap-4 rounded-[10px] border border-line bg-white text-[17px] font-semibold text-ink shadow-[0_2px_10px_rgba(16,24,40,0.08)] transition-all duration-200 hover:border-muted hover:shadow-[0_6px_18px_rgba(16,24,40,0.1)] active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
+      className="group flex h-[60px] w-full items-center justify-center gap-4 rounded-[10px] border border-line bg-white text-lead font-semibold text-ink transition-colors duration-200 hover:border-muted active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
     >
       <GoogleMark />
       {label}
@@ -84,7 +84,7 @@ function GoogleMark() {
       height="26"
       viewBox="0 0 48 48"
       aria-hidden="true"
-      className="transition-transform duration-300 group-hover:scale-110"
+      className="transition-colors duration-300"
     >
       <path
         fill="#EA4335"
@@ -107,7 +107,7 @@ export function OrDivider() {
   return (
     <div className="flex items-center gap-5" aria-hidden="true">
       <span className="h-px flex-1 bg-line" />
-      <span className="text-[15px] text-muted">Or</span>
+      <span className="text-copy text-muted">Or</span>
       <span className="h-px flex-1 bg-line" />
     </div>
   );

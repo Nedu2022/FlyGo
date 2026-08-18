@@ -54,7 +54,7 @@ export default function ResetPasswordPage() {
             required
           />
           {mismatch ? (
-            <p role="alert" className="animate-rise mt-2 text-[15px] text-red-500">
+            <p role="alert" className="animate-rise mt-2 text-copy text-red-500">
               Those passwords don&apos;t match yet.
             </p>
           ) : null}
@@ -68,7 +68,7 @@ export default function ResetPasswordPage() {
 
         <Link
           href="/signin"
-          className="text-center text-[16px] font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+          className="text-center text-copy font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
         >
           Back to Login
         </Link>

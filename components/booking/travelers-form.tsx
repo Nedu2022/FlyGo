@@ -22,7 +22,7 @@ export function TravelersForm() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <p className="rounded-md bg-sky-tint px-5 py-4 text-[14px] leading-relaxed text-ink">
+      <p className="rounded-md bg-sky-tint px-5 py-4 text-small leading-relaxed text-ink">
         {TRAVELER_NOTICE}
       </p>
 
@@ -45,7 +45,7 @@ export function TravelersForm() {
                 <rect width="22" height="15" rx="2" fill="#008751" />
                 <rect x="7.3" width="7.4" height="15" fill="#ffffff" />
               </svg>
-              <span className="text-[15px] text-label">234</span>
+              <span className="text-copy text-label">234</span>
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-label">
                 <path d="m6 9 6 7 6-7Z" />
               </svg>
@@ -55,7 +55,7 @@ export function TravelersForm() {
               name="phone"
               autoComplete="tel"
               placeholder="234"
-              className="h-full w-full bg-transparent px-4 text-[15px] text-ink outline-none placeholder:text-muted"
+              className="h-full w-full bg-transparent px-4 text-copy text-ink outline-none placeholder:text-muted"
             />
           </div>
         </Field>
@@ -94,7 +94,7 @@ export function TravelersForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-9 h-[52px] w-full max-w-[680px] rounded-lg bg-sky text-[16px] font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px disabled:opacity-70"
+        className="mt-9 h-[52px] w-full max-w-[680px] rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px disabled:opacity-70"
       >
         {pending ? "Saving…" : "Continue"}
       </button>
@@ -103,12 +103,12 @@ export function TravelersForm() {
 }
 
 const inputClass =
-  "h-[52px] w-full rounded-lg border border-line bg-white px-4 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-muted focus:border-sky";
+  "h-[52px] w-full rounded-lg border border-line bg-white px-4 text-copy text-ink outline-none transition-colors duration-200 placeholder:text-muted focus:border-sky";
 
 function Field({ label, children }: { label: string; children: ReactNode }) {
   return (
     <div>
-      <p className="mb-2 text-[15px] text-ink">{label}</p>
+      <p className="mb-2 text-copy text-ink">{label}</p>
       {children}
     </div>
   );
@@ -138,7 +138,7 @@ function SelectBox({
       <select
         id={id}
         name={name}
-        className="h-full w-full cursor-pointer appearance-none bg-transparent px-3 pr-8 text-[15px] text-label outline-none"
+        className="h-full w-full cursor-pointer appearance-none bg-transparent px-3 pr-8 text-copy text-label outline-none"
       >
         {options.map((option) => (
           <option key={option}>{option}</option>
@@ -161,7 +161,7 @@ function DateTriplet({ name }: { name: string }) {
         <select
           id={`${name}-month`}
           name={`${name}Month`}
-          className="h-full w-full cursor-pointer appearance-none bg-transparent px-4 pr-8 text-[15px] text-label outline-none"
+          className="h-full w-full cursor-pointer appearance-none bg-transparent px-4 pr-8 text-copy text-label outline-none"
         >
           {MONTHS.map((month) => (
             <option key={month}>{month}</option>
@@ -177,7 +177,7 @@ function DateTriplet({ name }: { name: string }) {
         maxLength={2}
         placeholder="DD"
         aria-label="Day"
-        className="h-full w-full flex-1 border-r border-line bg-transparent px-4 text-[15px] text-ink outline-none placeholder:text-muted"
+        className="h-full w-full flex-1 border-r border-line bg-transparent px-4 text-copy text-ink outline-none placeholder:text-muted"
       />
       <input
         name={`${name}Year`}
@@ -185,7 +185,7 @@ function DateTriplet({ name }: { name: string }) {
         maxLength={4}
         placeholder="YYYY"
         aria-label="Year"
-        className="h-full w-full flex-1 bg-transparent px-4 text-[15px] text-ink outline-none placeholder:text-muted"
+        className="h-full w-full flex-1 bg-transparent px-4 text-copy text-ink outline-none placeholder:text-muted"
       />
     </div>
   );

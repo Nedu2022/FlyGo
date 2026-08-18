@@ -78,7 +78,7 @@ export function OtpInput({
 
   return (
     <div
-      className={`flex justify-center gap-3 sm:gap-4 ${invalid ? "animate-shake" : ""}`}
+      className={`flex w-full justify-center gap-2 sm:gap-3 ${invalid ? "animate-shake" : ""}`}
       role="group"
       aria-label="One-time passcode"
     >
@@ -97,9 +97,7 @@ export function OtpInput({
           autoComplete={index === 0 ? "one-time-code" : "off"}
           maxLength={length}
           aria-label={`Digit ${index + 1}`}
-          className={`h-[58px] w-[52px] rounded-[10px] border bg-white text-center text-[24px] text-ink outline-none transition-[border-color,box-shadow] duration-200 focus:border-sky focus:shadow-[0_0_0_4px_var(--color-sky-soft)] sm:h-[62px] sm:w-[58px] ${
-            invalid ? "border-red-400" : digit ? "animate-pop border-sky" : "border-line"
-          }`}
+          className={`h-[54px] w-full min-w-0 max-w-[58px] flex-1 rounded-[10px] border bg-white text-center text-h3 text-ink outline-none transition-[border-color,box-shadow] duration-200 focus:border-sky focus:shadow-[0_0_0_4px_var(--color-sky-soft)] sm:h-[62px] ${ invalid ? "border-red-400" : digit ? "animate-pop border-sky" : "border-line" }`}
         />
       ))}
     </div>

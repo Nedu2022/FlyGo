@@ -4,9 +4,9 @@ import { useId, useState, type InputHTMLAttributes, type ReactNode } from "react
 
 /** Tall, softly-bordered input; focus lifts a faint blue halo rather than a ring. */
 const inputBase =
-  "h-[56px] w-full rounded-[10px] border border-line bg-white px-5 text-[16px] text-ink outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-muted hover:border-muted focus:border-sky focus:shadow-[0_0_0_4px_var(--color-sky-soft)]";
+  "h-[56px] w-full rounded-[10px] border border-line bg-white px-5 text-copy text-ink outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-muted hover:border-muted focus:border-sky focus:shadow-[0_0_0_4px_var(--color-sky-soft)]";
 
-export const fieldLabel = "mb-2 block text-[16px] text-label";
+export const fieldLabel = "mb-2 block text-copy text-label";
 
 type FieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -67,7 +67,7 @@ export function PasswordField({ label, starred, className = "", ...props }: Fiel
           onClick={() => setVisible((v) => !v)}
           aria-pressed={visible}
           aria-controls={id}
-          className="absolute right-4 top-1/2 -translate-y-1/2 rounded px-1 text-[15px] font-semibold text-ink transition-colors duration-200 hover:text-sky"
+          className="absolute right-4 top-1/2 -translate-y-1/2 rounded px-1 text-copy font-semibold text-ink transition-colors duration-200 hover:text-sky"
         >
           {visible ? "Hide" : "Show"}
         </button>
@@ -113,7 +113,7 @@ export function PhoneOrEmailField({
             <span aria-hidden="true" className="flex">
               {selected.flag}
             </span>
-            <span className="text-[16px] text-label">{dial}</span>
+            <span className="text-copy text-label">{dial}</span>
             <Chevron />
             <select
               aria-label="Country dialling code"
@@ -138,9 +138,7 @@ export function PhoneOrEmailField({
             setValue(event.target.value);
             props.onChange?.(event);
           }}
-          className={`h-full w-full bg-transparent text-[16px] text-ink outline-none placeholder:text-muted ${
-            isPhone ? "pr-5" : "px-5"
-          }`}
+          className={`h-full w-full bg-transparent text-copy text-ink outline-none placeholder:text-muted ${ isPhone ? "pr-5" : "px-5" }`}
         />
         {/* Carries the dial code to the server when the value is a number. */}
         {isPhone && value ? <input type="hidden" name="dialCode" value={dial} /> : null}
@@ -162,7 +160,7 @@ export function Checkbox({
   return (
     <label
       htmlFor={id}
-      className="inline-flex cursor-pointer select-none items-center gap-3 text-[16px] text-body"
+      className="inline-flex cursor-pointer select-none items-center gap-3 text-copy text-body"
     >
       <span className="relative inline-flex h-[22px] w-[22px] items-center justify-center">
         <input
@@ -255,7 +253,7 @@ export function PhoneField({ label, starred, className = "", ...props }: FieldPr
           <span aria-hidden="true" className="flex">
             {selected.flag}
           </span>
-          <span className="text-[16px] text-label">{dial}</span>
+          <span className="text-copy text-label">{dial}</span>
           <Chevron />
           <select
             aria-label="Country dialling code"
@@ -275,7 +273,7 @@ export function PhoneField({ label, starred, className = "", ...props }: FieldPr
           id={id}
           type="tel"
           inputMode="tel"
-          className="h-full w-full bg-transparent pr-5 text-[16px] text-ink outline-none placeholder:text-muted"
+          className="h-full w-full bg-transparent pr-5 text-copy text-ink outline-none placeholder:text-muted"
         />
         <input type="hidden" name="dialCode" value={dial} />
       </div>
@@ -309,7 +307,7 @@ export function CountrySelect({
         {label}
       </label>
       <div className="relative flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)] hover:border-muted">
-        <span className="pointer-events-none flex items-center gap-2.5 pl-5 text-[16px] text-ink">
+        <span className="pointer-events-none flex items-center gap-2.5 pl-5 text-copy text-ink">
           {selected.code}
           <span aria-hidden="true" className="flex">
             {selected.flag}

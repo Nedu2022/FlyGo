@@ -29,7 +29,7 @@ export default function InsightsPage() {
         </Panel>
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-[1.35fr_1fr]">
+      <div className="mt-6 grid gap-6 [&>*]:min-w-0 xl:grid-cols-[1.35fr_1fr]">
         <RevenueChart title="Earnings Over Time" action={<span />} height={300} />
         <Panel>
           <PanelHeading title="Occupancy Rate" />

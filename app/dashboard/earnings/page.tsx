@@ -21,7 +21,7 @@ export default function EarningsPage() {
         ))}
       </div>
 
-      <div className="mt-6 grid gap-6 xl:grid-cols-2">
+      <div className="mt-6 grid gap-6 [&>*]:min-w-0 xl:grid-cols-2">
         <RevenueChart action={<FilterButton />} height={300} />
         <TopProperties />
       </div>

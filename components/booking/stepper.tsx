@@ -14,12 +14,10 @@ export function BookingStepper({ current }: { current: number }) {
 
         return (
           <li key={step.ordinal} className={`min-w-[220px] ${isLast ? "flex-none" : "flex-1"}`}>
-            <p className="text-[15px] text-ink">{step.ordinal}</p>
+            <p className="text-copy text-ink">{step.ordinal}</p>
             <div className="flex items-center py-2">
               <span
-                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[15px] text-white transition-colors duration-300 ${
-                  done ? "bg-sky" : "bg-muted"
-                }`}
+                className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-copy text-white transition-colors duration-300 ${ done ? "bg-sky" : "bg-muted" }`}
               >
                 {number}
               </span>
@@ -32,7 +30,7 @@ export function BookingStepper({ current }: { current: number }) {
                 />
               ) : null}
             </div>
-            <p className="text-[16px] font-medium text-ink">{step.label}</p>
+            <p className="text-copy font-medium text-ink">{step.label}</p>
           </li>
         );
       })}

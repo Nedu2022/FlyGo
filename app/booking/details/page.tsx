@@ -22,12 +22,12 @@ export default function BookingDetailsPage() {
               height={249}
               className="mx-auto h-[180px] w-auto"
             />
-            <p className="mt-5 text-[16px] text-ink">
+            <p className="mt-5 text-copy text-ink">
               Booking for more than one passenger?
             </p>
             <Link
               href="/booking/details"
-              className="mt-2 inline-block text-[15px] text-brand transition-colors duration-200 hover:text-brand-hover"
+              className="mt-2 inline-block text-copy text-brand transition-colors duration-200 hover:text-brand-hover"
             >
               Add another passenger
             </Link>

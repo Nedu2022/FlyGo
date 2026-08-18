@@ -29,7 +29,7 @@ export default function BookingsPage() {
       }
     >
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <label className="flex items-center gap-2 text-[16px] text-ink">
+        <label className="flex items-center gap-2 text-copy text-ink">
           Category:
           <span className="relative inline-flex items-center gap-1.5 font-medium text-sky">
             {category}
@@ -51,16 +51,16 @@ export default function BookingsPage() {
         <FilterButton />
       </div>
 
-      <section className="mt-5 rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] sm:p-6">
+      <section className="mt-5 min-w-0 rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] sm:p-6">
         {selected.length > 0 ? (
-          <p className="mb-4 text-[14px] text-sky">{selected.length} selected</p>
+          <p className="mb-4 text-small text-sky">{selected.length} selected</p>
         ) : null}
 
         <div className="overflow-x-auto">
           <table className="w-full min-w-[900px] border-collapse text-left">
             <thead>
               <tr className="bg-brand text-white">
-                <th scope="col" className="rounded-l-lg py-4 pl-5 pr-3 text-[14px] font-medium">
+                <th scope="col" className="rounded-l-lg py-4 pl-5 pr-3 text-small font-medium">
                   <span className="flex items-center gap-4">
                     <Tick
                       checked={allSelected}
@@ -74,11 +74,11 @@ export default function BookingsPage() {
                   </span>
                 </th>
                 {["Property Name", "Booking Amount", "Booking Dates", "Duration", "Status"].map((head) => (
-                  <th key={head} scope="col" className="px-3 py-4 text-[14px] font-medium">
+                  <th key={head} scope="col" className="px-3 py-4 text-small font-medium">
                     {head}
                   </th>
                 ))}
-                <th scope="col" className="rounded-r-lg px-3 py-4 text-[14px] font-medium">
+                <th scope="col" className="rounded-r-lg px-3 py-4 text-small font-medium">
                   Action
                 </th>
               </tr>
@@ -89,7 +89,7 @@ export default function BookingsPage() {
                   key={index}
                   className="border-b border-line transition-colors duration-200 hover:bg-sky-tint"
                 >
-                  <td className="py-4 pl-5 pr-3 text-[14px] text-ink">
+                  <td className="py-4 pl-5 pr-3 text-small text-ink">
                     <span className="flex items-center gap-4">
                       <Tick
                         checked={selected.includes(index)}
@@ -105,13 +105,13 @@ export default function BookingsPage() {
                       {booking.guest}
                     </span>
                   </td>
-                  <td className="px-3 py-4 text-[14px] text-body">{booking.property}</td>
-                  <td className="px-3 py-4 text-[14px] text-body">{booking.amount}</td>
-                  <td className="px-3 py-4 text-[14px] text-body">{booking.dates}</td>
-                  <td className="px-3 py-4 text-[14px] text-body">{booking.duration}</td>
+                  <td className="px-3 py-4 text-small text-body">{booking.property}</td>
+                  <td className="px-3 py-4 text-small text-body">{booking.amount}</td>
+                  <td className="px-3 py-4 text-small text-body">{booking.dates}</td>
+                  <td className="px-3 py-4 text-small text-body">{booking.duration}</td>
                   <td className="px-3 py-4">
                     <span
-                      className={`inline-block rounded-full border px-3 py-1 text-[13px] ${STATUS_TONES[booking.status]}`}
+                      className={`inline-block rounded-full border px-3 py-1 text-small ${STATUS_TONES[booking.status]}`}
                     >
                       {booking.status}
                     </span>
@@ -138,9 +138,7 @@ export default function BookingsPage() {
                             <button
                               type="button"
                               onClick={() => setMenu(null)}
-                              className={`w-full px-4 py-2.5 text-left text-[14px] transition-colors hover:bg-shell ${
-                                item === "Cancel booking" ? "text-red-500" : "text-ink"
-                              }`}
+                              className={`w-full px-4 py-2.5 text-left text-small transition-colors hover:bg-shell ${ item === "Cancel booking" ? "text-red-500" : "text-ink" }`}
                             >
                               {item}
                             </button>

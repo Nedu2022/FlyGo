@@ -54,17 +54,17 @@ export default function VerificationPage() {
         >
           <CloudUpload />
 
-          <p className="mt-5 text-[17px] text-ink">png, pdf, jpg, docx accepted</p>
+          <p className="mt-5 text-lead text-ink">png, pdf, jpg, docx accepted</p>
 
           <button
             type="button"
             onClick={() => input.current?.click()}
-            className="mt-5 h-[46px] rounded-md bg-sky px-8 text-[16px] font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+            className="mt-5 h-[46px] rounded-md bg-sky px-8 text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
           >
             Browse
           </button>
 
-          <p className="mt-5 text-[17px] text-ink">select your file or drag and drop</p>
+          <p className="mt-5 text-lead text-ink">select your file or drag and drop</p>
 
           <input
             ref={input}
@@ -81,14 +81,14 @@ export default function VerificationPage() {
               {files.map((file) => (
                 <li
                   key={file.name}
-                  className="flex items-center gap-3 rounded-lg bg-white px-4 py-2.5 text-left text-[14px] text-ink shadow-[0_1px_4px_rgba(16,24,40,0.08)]"
+                  className="flex items-center gap-3 rounded-lg bg-white px-4 py-2.5 text-left text-small text-ink shadow-[0_1px_4px_rgba(16,24,40,0.08)]"
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-sky)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M6 3.5h7l5 5v12a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1v-16a1 1 0 0 1 1-1Z" />
                     <path d="M13 3.5v5h5" />
                   </svg>
                   <span className="min-w-0 flex-1 truncate">{file.name}</span>
-                  <span className="shrink-0 text-[12px] text-muted">
+                  <span className="shrink-0 text-tiny text-muted">
                     {(file.size / 1024).toFixed(0)} KB
                   </span>
                   <button

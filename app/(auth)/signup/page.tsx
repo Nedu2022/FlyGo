@@ -55,12 +55,12 @@ export default function SignUpPage() {
           <li key={type.title}>
             <Link
               href={type.href}
-              className="group flex items-center gap-5 rounded-xl border border-line bg-white px-6 py-5 transition-all duration-200 hover:border-sky hover:bg-sky-tint hover:shadow-[0_10px_28px_-16px_rgba(86,172,233,0.6)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
+              className="group flex items-center gap-5 rounded-xl border border-line bg-white px-6 py-5 transition-colors duration-200 hover:border-sky hover:bg-sky-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
             >
               <TypeIcon name={type.icon} />
               <span className="min-w-0 flex-1">
-                <span className="block text-[19px] font-semibold text-ink">{type.title}</span>
-                <span className="mt-1 block text-[15px] text-body">{type.body}</span>
+                <span className="block text-lead font-semibold text-ink">{type.title}</span>
+                <span className="mt-1 block text-copy text-body">{type.body}</span>
               </span>
               <svg
                 width="22"
@@ -72,7 +72,7 @@ export default function SignUpPage() {
                 strokeLinecap="round"
                 strokeLinejoin="round"
                 aria-hidden="true"
-                className="shrink-0 opacity-0 transition-all duration-200 group-hover:translate-x-1 group-hover:opacity-100"
+                className="shrink-0"
               >
                 <path d="M4 12h15M14 7l5 5-5 5" />
               </svg>

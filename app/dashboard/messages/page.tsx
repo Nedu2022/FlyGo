@@ -42,15 +42,15 @@ export default function MessagesPage() {
         {/* Thread list */}
         <div className="flex min-h-0 flex-col lg:border-r lg:border-line lg:p-5">
           <div className="flex items-center justify-between gap-3">
-            <h2 className="flex items-center gap-2 text-[20px] font-bold text-ink">
+            <h2 className="flex items-center gap-2 text-h4 font-bold text-ink">
               Chat
-              <span className="rounded bg-red-500 px-1.5 py-0.5 text-[11px] font-semibold text-white">
+              <span className="rounded bg-red-500 px-1.5 py-0.5 text-tiny font-semibold text-white">
                 137
               </span>
             </h2>
             <button
               type="button"
-              className="flex items-center gap-2 text-[14px] text-body transition-colors hover:text-sky"
+              className="flex items-center gap-2 text-small text-body transition-colors hover:text-sky"
             >
               Agents
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -69,7 +69,7 @@ export default function MessagesPage() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search in dashboard..."
-              className="w-full bg-transparent text-[14px] text-ink outline-none placeholder:text-muted"
+              className="w-full bg-transparent text-small text-ink outline-none placeholder:text-muted"
             />
           </label>
 
@@ -89,15 +89,15 @@ export default function MessagesPage() {
                     <Avatar name={thread.name} size={40} />
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center justify-between gap-2">
-                        <span className="truncate text-[14px] font-semibold text-ink">
+                        <span className="truncate text-small font-semibold text-ink">
                           {thread.name}
                         </span>
-                        <span className="shrink-0 text-[12px] text-muted">
+                        <span className="shrink-0 text-tiny text-muted">
                           {thread.role || thread.time}
                         </span>
                       </span>
                       <span className="mt-0.5 flex items-center gap-2">
-                        <span className="min-w-0 flex-1 truncate text-[13px] text-label">
+                        <span className="min-w-0 flex-1 truncate text-small text-label">
                           {thread.preview}
                         </span>
                         {thread.unread ? (
@@ -121,8 +121,8 @@ export default function MessagesPage() {
           <div className="flex items-center gap-3 border-b border-line pb-4">
             <Avatar name={active.name} size={44} />
             <div>
-              <p className="text-[16px] font-semibold text-ink">{active.name}</p>
-              <p className="flex items-center gap-1.5 text-[13px] text-label">
+              <p className="text-copy font-semibold text-ink">{active.name}</p>
+              <p className="flex items-center gap-1.5 text-small text-label">
                 <span className="h-2 w-2 rounded-full bg-[#22c55e]" />
                 Online
               </p>
@@ -153,10 +153,10 @@ export default function MessagesPage() {
                   </span>
                 ) : null}
 
-                <span className="max-w-[80%] rounded-xl bg-[#0f1c33] px-4 py-3 text-[14px] leading-relaxed text-white">
+                <span className="max-w-[80%] rounded-xl bg-[#0f1c33] px-4 py-3 text-small leading-relaxed text-white">
                   {message.text}
                 </span>
-                <span className="text-[12px] text-muted">{message.time}</span>
+                <span className="text-tiny text-muted">{message.time}</span>
               </li>
             ))}
           </ul>
@@ -181,7 +181,7 @@ export default function MessagesPage() {
                 value={draft}
                 onChange={(event) => setDraft(event.target.value)}
                 placeholder="Type your message"
-                className="w-full bg-transparent text-[14px] text-ink outline-none placeholder:text-muted"
+                className="w-full bg-transparent text-small text-ink outline-none placeholder:text-muted"
               />
               <button type="button" aria-label="Add emoji" className="shrink-0 text-muted transition-colors hover:text-sky">
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
@@ -194,7 +194,7 @@ export default function MessagesPage() {
             <button
               type="submit"
               aria-label="Send message"
-              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#0f1c33] text-white transition-transform duration-200 hover:-translate-y-0.5"
+              className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-[#0f1c33] text-white transition-colors duration-200"
             >
               <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M3.4 20.4 21 12 3.4 3.6 3.4 10l12 2-12 2z" />

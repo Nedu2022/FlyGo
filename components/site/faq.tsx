@@ -9,10 +9,10 @@ export function Faq() {
 
   return (
     <section className="reveal mx-auto w-full max-w-[900px] px-5 py-16 sm:px-8">
-      <h2 className="text-center text-[28px] font-bold text-ink sm:text-[32px]">
+      <h2 className="text-center text-h2 font-bold text-ink">
         Frequently asked questions
       </h2>
-      <p className="mt-2 text-center text-[13px] text-body">
+      <p className="mt-2 text-center text-small text-body">
         Everything you need to know about the Flygo and pricing.
       </p>
 
@@ -28,7 +28,7 @@ export function Faq() {
                   aria-expanded={isOpen}
                   className="flex w-full items-center justify-between gap-6 py-5 text-left"
                 >
-                  <span className="text-[15px] font-medium text-ink">{faq.question}</span>
+                  <span className="text-copy font-medium text-ink">{faq.question}</span>
                   <span className="shrink-0 text-brand">
                     <svg
                       width="22"
@@ -59,7 +59,7 @@ export function Faq() {
                 }`}
               >
                 <div className="min-h-0 overflow-hidden">
-                  <p className="max-w-[680px] pb-5 text-[13px] leading-relaxed text-body">
+                  <p className="max-w-[680px] pb-5 text-small leading-relaxed text-body">
                     {faq.answer}
                   </p>
                 </div>

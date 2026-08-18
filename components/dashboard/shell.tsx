@@ -54,9 +54,9 @@ export function DashPage({
           </button>
 
           <div className="min-w-0">
-            <h1 className="text-[22px] font-bold text-ink sm:text-[25px]">{title}</h1>
+            <h1 className="text-h3 font-bold text-ink">{title}</h1>
             {subtitle ? (
-              <p className="mt-0.5 max-w-[560px] text-[14px] text-label">{subtitle}</p>
+              <p className="mt-0.5 max-w-[560px] text-small text-label">{subtitle}</p>
             ) : null}
           </div>
 
@@ -69,7 +69,7 @@ export function DashPage({
             <button
               type="button"
               aria-label="Notifications, 3 unread"
-              className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand transition-transform duration-200 hover:-translate-y-0.5"
+              className="relative flex h-11 w-11 items-center justify-center rounded-xl bg-brand-soft text-brand transition-colors duration-200"
             >
               <DashIcon name="bell" size={22} />
               <span className="absolute right-2.5 top-2.5 h-2 w-2 rounded-full bg-red-500 ring-2 ring-brand-soft" />
@@ -77,8 +77,8 @@ export function DashPage({
             <div className="flex items-center gap-3">
               <Avatar name={HOST.displayName} size={44} />
               <div className="hidden leading-tight sm:block">
-                <p className="text-[15px] font-semibold text-ink">{HOST.displayName}</p>
-                <p className="text-[13px] text-label">{HOST.role}</p>
+                <p className="text-copy font-semibold text-ink">{HOST.displayName}</p>
+                <p className="text-small text-label">{HOST.role}</p>
               </div>
             </div>
           </div>
@@ -106,9 +106,7 @@ export function BarAction({
     <button
       type="button"
       onClick={onClick}
-      className={`flex shrink-0 items-center gap-2 text-[15px] font-medium transition-colors duration-200 ${
-        tone === "sky" ? "text-sky hover:text-sky-hover" : "text-brand hover:text-brand-hover"
-      }`}
+      className={`flex shrink-0 items-center gap-2 text-copy font-medium transition-colors duration-200 ${ tone === "sky" ? "text-sky hover:text-sky-hover" : "text-brand hover:text-brand-hover" }`}
     >
       {icon ? <DashIcon name="plus" size={18} strokeWidth={2.2} /> : null}
       {label}
@@ -121,7 +119,7 @@ export function FilterButton() {
   return (
     <button
       type="button"
-      className="flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line bg-white px-4 text-[14px] text-body transition-colors duration-200 hover:border-sky hover:text-sky"
+      className="flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line bg-white px-4 text-small text-body transition-colors duration-200 hover:border-sky hover:text-sky"
     >
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
         <path d="M3 7h13M18 7h3M3 17h3M8 17h13" />
@@ -135,7 +133,7 @@ export function FilterButton() {
 
 function LanguagePicker() {
   return (
-    <label className="hidden items-center gap-2 rounded-lg px-2 py-1.5 text-[15px] text-ink transition-colors hover:bg-shell sm:flex">
+    <label className="hidden items-center gap-2 rounded-lg px-2 py-1.5 text-copy text-ink transition-colors hover:bg-shell sm:flex">
       <span className="sr-only">Language</span>
       <svg width="26" height="18" viewBox="0 0 22 15" aria-hidden="true" className="rounded-[2px]">
         <rect width="22" height="15" fill="#ffffff" />

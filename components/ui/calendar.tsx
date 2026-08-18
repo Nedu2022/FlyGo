@@ -54,7 +54,7 @@ export function Calendar({
             aria-expanded={pickingMonth}
             className="group flex items-center gap-3 text-left"
           >
-            <span className="text-[24px] font-bold text-ink">{MONTHS[view.month]}</span>
+            <span className="text-h3 font-bold text-ink">{MONTHS[view.month]}</span>
             <svg
               width="20"
               height="20"
@@ -79,7 +79,7 @@ export function Calendar({
 
         <div className="mt-6 grid grid-cols-7 gap-y-3 text-center">
           {WEEKDAYS.map((day) => (
-            <span key={day} className="text-[13px] text-muted">
+            <span key={day} className="text-small text-muted">
               {day}
             </span>
           ))}
@@ -95,13 +95,7 @@ export function Calendar({
                   onClose?.();
                 }}
                 aria-current={selected ? "date" : undefined}
-                className={`mx-auto flex h-9 w-9 items-center justify-center rounded text-[15px] transition-colors duration-150 ${
-                  selected
-                    ? "bg-sky font-medium text-white"
-                    : outside
-                      ? "text-muted hover:bg-shell"
-                      : "text-ink hover:bg-sky-tint"
-                }`}
+                className={`mx-auto flex h-9 w-9 items-center justify-center rounded text-copy transition-colors duration-150 ${ selected ? "bg-sky font-medium text-white" : outside ? "text-muted hover:bg-shell" : "text-ink hover:bg-sky-tint" }`}
               >
                 {date.getDate()}
               </button>
@@ -123,9 +117,7 @@ export function Calendar({
                     setPickingMonth(false);
                   }}
                   aria-current={on}
-                  className={`w-full px-6 py-3 text-left text-[19px] transition-colors duration-150 ${
-                    on ? "bg-sky text-white" : "text-ink hover:bg-shell"
-                  }`}
+                  className={`w-full px-6 py-3 text-left text-lead transition-colors duration-150 ${ on ? "bg-sky text-white" : "text-ink hover:bg-shell" }`}
                 >
                   {month}
                 </button>
@@ -197,7 +189,7 @@ export function DateField({
 
   return (
     <div ref={wrap} className="relative">
-      <span className="mb-2 flex items-center gap-2 text-[14px] text-white">
+      <span className="mb-2 flex items-center gap-2 text-small text-white">
         {toggle}
         {label}
       </span>
@@ -213,7 +205,7 @@ export function DateField({
       >
         <span className={disabled ? "text-white/35" : "text-white/80"}>{icon}</span>
         <span
-          className={`truncate text-[15px] ${disabled ? "text-white/35" : "text-white"}`}
+          className={`truncate text-copy ${disabled ? "text-white/35" : "text-white"}`}
         >
           {FORMAT.format(value)}
         </span>

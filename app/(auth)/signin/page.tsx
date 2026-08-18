@@ -47,7 +47,7 @@ export default function SignInPage() {
             <Checkbox label="Remember me" checked={remember} onChange={setRemember} />
             <Link
               href="/forgot-password"
-              className="text-[16px] text-brand transition-colors duration-200 hover:text-brand-hover"
+              className="text-copy text-brand transition-colors duration-200 hover:text-brand-hover"
             >
               Forgot password?
             </Link>
@@ -61,7 +61,7 @@ export default function SignInPage() {
         <OrDivider />
         <GoogleButton label="Sign in with Google" />
 
-        <p className="text-center text-[16px] text-body">
+        <p className="text-center text-copy text-body">
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"

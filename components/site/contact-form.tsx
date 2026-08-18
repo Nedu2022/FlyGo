@@ -23,7 +23,7 @@ export function ContactForm() {
     return (
       <p
         role="status"
-        className="animate-rise rounded-lg bg-sky-tint px-6 py-8 text-center text-[16px] text-ink"
+        className="animate-rise rounded-lg bg-sky-tint px-6 py-8 text-center text-copy text-ink"
       >
         Thanks — your message is on its way. We&apos;ll be in touch within one working day.
       </p>
@@ -56,7 +56,7 @@ export function ContactForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-10 inline-flex h-[46px] items-center justify-center rounded-md bg-brand px-6 text-[15px] font-medium text-white shadow-[0_2px_10px_rgba(245,134,52,0.35)] transition-all duration-200 hover:bg-brand-hover hover:shadow-[0_8px_22px_rgba(245,134,52,0.42)] active:translate-y-px disabled:cursor-not-allowed disabled:opacity-70"
+        className="mt-10 inline-flex h-[46px] items-center justify-center rounded-md bg-brand px-6 text-copy font-medium text-white shadow-[0_2px_10px_rgba(245,134,52,0.35)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px disabled:cursor-not-allowed disabled:opacity-70"
       >
         {pending ? "Sending…" : "Leave us a message"}
       </button>
@@ -78,11 +78,11 @@ function UnderlineField({
 }) {
   const id = useId();
   const shared =
-    "w-full border-0 border-b border-line bg-transparent pb-3 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-muted focus:border-sky";
+    "w-full border-0 border-b border-line bg-transparent pb-3 text-copy text-ink outline-none transition-colors duration-200 placeholder:text-muted focus:border-sky";
 
   return (
     <div>
-      <label htmlFor={id} className="mb-3 block text-[15px] text-label">
+      <label htmlFor={id} className="mb-3 block text-copy text-label">
         {label}
       </label>
       {multiline ? (

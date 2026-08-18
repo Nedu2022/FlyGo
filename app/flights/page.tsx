@@ -26,12 +26,12 @@ export default function FlightSearchPage() {
             <SortTabs />
 
             <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-              <p className="text-[16px] text-ink">
+              <h1 className="text-copy text-ink">
                 Showing {RESULT_COUNT.showing} of{" "}
                 <span className="text-brand">{RESULT_COUNT.total}</span>
-              </p>
+              </h1>
 
-              <label className="relative flex items-center gap-2 text-[16px] text-ink">
+              <label className="relative flex items-center gap-2 text-copy text-ink">
                 <span className="text-body">Sort by</span>
                 <select className="cursor-pointer appearance-none bg-transparent pr-6 outline-none">
                   {SORT_MODES.map((mode) => (

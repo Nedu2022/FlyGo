@@ -69,7 +69,7 @@ export function AiPlanner() {
             <SelectField label="When are you traveling?" name="when" options={PLANNER_WHEN} />
 
             <fieldset>
-              <legend className="mb-4 text-[15px] text-ink">What are you interested in?</legend>
+              <legend className="mb-4 text-copy text-ink">What are you interested in?</legend>
               <div className="grid gap-4 sm:grid-cols-2">
                 {PLANNER_INTERESTS.map((interest) => (
                   <Check
@@ -95,7 +95,7 @@ export function AiPlanner() {
             <Submit>Find My Perfect Trip</Submit>
 
             {done ? (
-              <p role="status" className="animate-rise text-center text-[15px] text-sky">
+              <p role="status" className="animate-rise text-center text-copy text-sky">
                 Building your itinerary — we&apos;ll email your matches shortly.
               </p>
             ) : null}
@@ -105,11 +105,11 @@ export function AiPlanner() {
 
       <div className="flex flex-col items-center gap-6 lg:flex-row-reverse lg:items-start">
         <div className="text-center lg:text-right">
-          <p className="text-[14px] text-label">AI</p>
-          <h2 className="mt-1 text-[28px] font-bold leading-tight tracking-tight text-ink sm:text-[34px]">
+          <p className="text-small text-label">AI</p>
+          <h2 className="mt-1 text-h1 font-bold leading-tight tracking-tight text-ink">
             Travel Smarter with AI-Powered Suggestions
           </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-body">
+          <p className="mt-4 text-copy leading-relaxed text-body">
             Get personalized recommendations based on your budget, location, and
             preferences—explore like never before!
           </p>
@@ -152,9 +152,7 @@ function Dot({
   active: boolean;
   onClick?: () => void;
 }) {
-  const shared = `flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-[14px] transition-colors duration-300 ${
-    active ? "bg-brand text-white" : "bg-line text-label"
-  }`;
+  const shared = `flex h-8 w-8 shrink-0 items-center justify-center rounded-full text-small transition-colors duration-300 ${ active ? "bg-brand text-white" : "bg-line text-label" }`;
 
   return onClick ? (
     <button type="button" onClick={onClick} aria-label="Back to step 1" className={shared}>
@@ -177,14 +175,14 @@ function SelectField({
   const id = useId();
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-[15px] text-ink">
+      <label htmlFor={id} className="mb-2 block text-copy text-ink">
         {label}
       </label>
       <div className="relative flex h-[52px] items-center rounded-lg border border-line bg-white transition-colors duration-200 focus-within:border-sky">
         <select
           id={id}
           name={name}
-          className="h-full w-full cursor-pointer appearance-none bg-transparent px-4 pr-10 text-[15px] text-ink outline-none"
+          className="h-full w-full cursor-pointer appearance-none bg-transparent px-4 pr-10 text-copy text-ink outline-none"
         >
           {options.map((option) => (
             <option key={option}>{option}</option>
@@ -212,11 +210,11 @@ function CountryField({
   const id = useId();
   return (
     <div>
-      <label htmlFor={id} className="mb-2 block text-[15px] text-ink">
+      <label htmlFor={id} className="mb-2 block text-copy text-ink">
         {label}
       </label>
       <div className="flex h-[52px] items-center rounded-lg border border-line bg-white transition-colors duration-200 focus-within:border-sky">
-        <span className="relative flex h-full shrink-0 items-center gap-1.5 pl-4 pr-3 text-[15px] text-ink">
+        <span className="relative flex h-full shrink-0 items-center gap-1.5 pl-4 pr-3 text-copy text-ink">
           {code}
           <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-label">
             <path d="m6 9 6 7 6-7Z" />
@@ -235,7 +233,7 @@ function CountryField({
           id={id}
           name={name}
           placeholder={placeholder}
-          className="h-full w-full min-w-0 bg-transparent pr-4 text-[15px] text-ink outline-none placeholder:text-muted"
+          className="h-full w-full min-w-0 bg-transparent pr-4 text-copy text-ink outline-none placeholder:text-muted"
         />
       </div>
     </div>
@@ -253,7 +251,7 @@ function Check({
 }) {
   const id = useId();
   return (
-    <label htmlFor={id} className="flex cursor-pointer items-center gap-3 text-[15px] text-ink">
+    <label htmlFor={id} className="flex cursor-pointer items-center gap-3 text-copy text-ink">
       <span className="relative inline-flex h-[22px] w-[22px] shrink-0 items-center justify-center">
         <input
           id={id}
@@ -284,7 +282,7 @@ function Submit({ children }: { children: ReactNode }) {
   return (
     <button
       type="submit"
-      className="mt-2 h-[52px] w-full rounded-md bg-brand text-[16px] text-white shadow-[0_2px_10px_rgba(245,134,52,0.35)] transition-all duration-200 hover:bg-brand-hover hover:shadow-[0_8px_20px_rgba(245,134,52,0.42)] active:translate-y-px"
+      className="mt-2 h-[52px] w-full rounded-md bg-brand text-copy text-white shadow-[0_2px_10px_rgba(245,134,52,0.35)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px"
     >
       {children}
     </button>

@@ -40,7 +40,7 @@ export function PlaceholderImage({
           <circle cx="8.5" cy="9.5" r="1.5" />
           <path d="m21 16-5-5L5 20" />
         </svg>
-        <span className="text-[12px] font-medium uppercase tracking-wide opacity-70">
+        <span className="text-tiny font-medium uppercase tracking-wide opacity-70">
           {label}
         </span>
       </span>

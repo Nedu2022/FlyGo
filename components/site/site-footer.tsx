@@ -13,20 +13,20 @@ export function SiteFooter() {
       <div className="mx-auto grid w-full max-w-[1200px] gap-10 px-5 py-16 sm:px-8 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1.15fr_1fr_1.1fr]">
         <div>
           <LogoWord />
-          <p className="mt-5 max-w-[300px] text-[14px] leading-relaxed text-white/70">
+          <p className="mt-5 max-w-[300px] text-small leading-relaxed text-white/70">
             {FOOTER_BLURB}
           </p>
         </div>
 
         {FOOTER_LINKS.map((column) => (
           <div key={column.heading}>
-            <h3 className="text-[16px] font-semibold">{column.heading}</h3>
+            <h3 className="text-copy font-semibold">{column.heading}</h3>
             <ul className="mt-5 space-y-3">
               {column.links.map((link) => (
                 <li key={link.label}>
                   <Link
                     href={link.href}
-                    className="text-[14px] text-white/75 transition-colors duration-200 hover:text-sky"
+                    className="text-small text-white/75 transition-colors duration-200 hover:text-sky"
                   >
                     {link.label}
                   </Link>
@@ -37,8 +37,8 @@ export function SiteFooter() {
         ))}
 
         <div className="lg:text-right">
-          <h3 className="text-[16px] font-semibold">Contact Us</h3>
-          <ul className="mt-5 space-y-2.5 text-[14px] text-white/75">
+          <h3 className="text-copy font-semibold">Contact Us</h3>
+          <ul className="mt-5 space-y-2.5 text-small text-white/75">
             <li>
               <a
                 href={`mailto:${FOOTER_CONTACT.email}`}
@@ -58,7 +58,7 @@ export function SiteFooter() {
             <li>{FOOTER_CONTACT.address}</li>
           </ul>
 
-          <h4 className="mt-7 text-[15px] font-semibold">Follow Us On Social</h4>
+          <h4 className="mt-7 text-copy font-semibold">Follow Us On Social</h4>
           <div className="mt-4 flex flex-wrap gap-3 lg:justify-end">
             {FOOTER_SOCIALS.map((social) => (
               <SocialIcon key={social.name} name={social.name} label={social.label} href={social.href} />
@@ -67,7 +67,7 @@ export function SiteFooter() {
         </div>
       </div>
 
-      <div className="border-t border-white/10 py-6 text-center text-[14px] text-white/55">
+      <div className="border-t border-white/10 py-6 text-center text-small text-white/55">
         © 2024 Flygo. All rights reserved.
       </div>
     </footer>
@@ -116,7 +116,7 @@ function SocialIcon({
     <a
       href={href}
       aria-label={label}
-      className={`flex h-9 w-9 items-center justify-center rounded-full text-white transition-transform duration-200 hover:-translate-y-0.5 hover:scale-110 ${style.bg}`}
+      className={`flex h-9 w-9 items-center justify-center rounded-full text-white ${style.bg}`}
     >
       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d={style.path} />

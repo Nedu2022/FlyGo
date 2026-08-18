@@ -33,7 +33,7 @@ export function Sidebar({
         }`}
       >
         <div className="px-8 pb-6 pt-7">
-          <Logo href="/dashboard" height={54} />
+          <Logo href="/dashboard" imgClass="h-[46px]" />
         </div>
 
         <nav className="flex-1 overflow-y-auto px-4 pb-6">
@@ -50,11 +50,7 @@ export function Sidebar({
                     href={item.href}
                     onClick={onClose}
                     aria-current={active ? "page" : undefined}
-                    className={`flex items-center gap-4 rounded-xl px-4 py-3.5 text-[15px] transition-all duration-200 ${
-                      active
-                        ? "bg-sky font-semibold text-white shadow-[0_6px_18px_rgba(86,172,233,0.4)]"
-                        : "text-label hover:bg-sky-tint hover:text-sky"
-                    }`}
+                    className={`flex items-center gap-4 rounded-xl px-4 py-3.5 text-copy transition-all duration-200 ${ active ? "bg-sky font-semibold text-white shadow-[0_6px_18px_rgba(86,172,233,0.4)]" : "text-label hover:bg-sky-tint hover:text-sky" }`}
                   >
                     <DashIcon name={item.icon} size={22} />
                     {item.label}
@@ -68,7 +64,7 @@ export function Sidebar({
         <div className="border-t border-line px-4 py-4">
           <Link
             href="/signin"
-            className="flex items-center gap-4 rounded-xl px-4 py-3.5 text-[15px] text-label transition-colors duration-200 hover:bg-red-50 hover:text-red-500"
+            className="flex items-center gap-4 rounded-xl px-4 py-3.5 text-copy text-label transition-colors duration-200 hover:bg-red-50 hover:text-red-500"
           >
             <DashIcon name="signout" size={22} />
             Sign out

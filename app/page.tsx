@@ -16,13 +16,13 @@ export default function FlightsHomePage() {
       <Hero />
 
       <section className={`reveal ${PAGE} pt-10`}>
-        <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-brand">
+        <p className="text-small font-semibold uppercase tracking-[0.18em] text-brand">
           Top Destinations
         </p>
-        <h2 className="mt-2 text-[28px] font-bold tracking-tight text-ink sm:text-[34px]">
+        <h2 className="mt-2 text-h1 font-bold tracking-tight text-ink">
           Trending Destinations Just for You
         </h2>
-        <p className="mt-4 max-w-[620px] text-[15px] leading-relaxed text-body">
+        <p className="mt-4 max-w-[620px] text-copy leading-relaxed text-body">
           From exotic beaches to bustling cityscapes, explore top-rated destinations loved
           by travelers around the world.
         </p>

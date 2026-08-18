@@ -21,22 +21,22 @@ export function FlightInfoCard({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
             <div>
-              <p className="text-[19px] text-ink">
+              <p className="text-lead text-ink">
                 {result.depart} <span className="px-1 text-label">-</span> {result.arrive}
               </p>
-              <p className="mt-1 text-[15px] text-label">{result.airline}</p>
+              <p className="mt-1 text-copy text-label">{result.airline}</p>
             </div>
 
-            <p className="text-[15px] text-body">{result.stops}</p>
+            <p className="text-copy text-body">{result.stops}</p>
 
             <div>
-              <p className="text-[17px] text-ink">{result.duration}</p>
-              <p className="mt-1 text-[15px] text-label">{result.route}</p>
+              <p className="text-lead text-ink">{result.duration}</p>
+              <p className="mt-1 text-copy text-label">{result.route}</p>
             </div>
 
             <div className="text-right">
-              <p className="text-[14px] text-label">starting from</p>
-              <p className="mt-0.5 text-[26px] font-bold text-brand">{result.price}</p>
+              <p className="text-small text-label">starting from</p>
+              <p className="mt-0.5 text-h3 font-bold text-brand">{result.price}</p>
             </div>
           </div>
 

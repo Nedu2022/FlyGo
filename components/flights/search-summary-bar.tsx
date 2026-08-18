@@ -30,14 +30,14 @@ export function SearchSummaryBar() {
                 value={from}
                 onChange={(event) => setFrom(event.target.value)}
                 aria-label="From"
-                className="min-w-0 flex-1 bg-transparent text-[16px] text-ink outline-none"
+                className="min-w-0 flex-1 bg-transparent text-copy text-ink outline-none"
               />
-              <span className="text-[16px] text-ink">–</span>
+              <span className="text-copy text-ink">–</span>
               <input
                 value={to}
                 onChange={(event) => setTo(event.target.value)}
                 aria-label="To"
-                className="min-w-0 flex-1 bg-transparent text-[16px] text-ink outline-none"
+                className="min-w-0 flex-1 bg-transparent text-copy text-ink outline-none"
               />
               <button
                 type="button"
@@ -46,7 +46,7 @@ export function SearchSummaryBar() {
                   setFrom(to);
                   setTo(from);
                 }}
-                className="shrink-0 text-ink transition-transform duration-300 hover:rotate-180"
+                className="shrink-0 text-ink"
               >
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M4 8h15l-3-3M20 16H5l3 3" />
@@ -60,7 +60,7 @@ export function SearchSummaryBar() {
               <select
                 aria-label="Trip type"
                 defaultValue={TRIP.trip}
-                className="w-full cursor-pointer appearance-none bg-transparent pr-6 text-[16px] text-ink outline-none"
+                className="w-full cursor-pointer appearance-none bg-transparent pr-6 text-copy text-ink outline-none"
               >
                 <option>Round-Trip</option>
                 <option>One-way</option>
@@ -74,7 +74,7 @@ export function SearchSummaryBar() {
             <input
               defaultValue={TRIP.dates}
               aria-label="Departure and return dates"
-              className="w-full bg-transparent text-[16px] text-ink outline-none"
+              className="w-full bg-transparent text-copy text-ink outline-none"
             />
           </NotchedField>
 
@@ -82,7 +82,7 @@ export function SearchSummaryBar() {
             <input
               defaultValue={TRIP.passengers}
               aria-label="Passengers and cabin class"
-              className="w-full bg-transparent text-[16px] text-ink outline-none"
+              className="w-full bg-transparent text-copy text-ink outline-none"
             />
           </NotchedField>
 
@@ -114,7 +114,7 @@ function NotchedField({
 }) {
   return (
     <div className={`relative rounded-lg border border-ink/70 px-4 pb-3 pt-3.5 ${className}`}>
-      <span className="absolute -top-2 left-3 bg-white px-1.5 text-[13px] text-body">
+      <span className="absolute -top-2 left-3 bg-white px-1.5 text-small text-body">
         {label}
       </span>
       {children}

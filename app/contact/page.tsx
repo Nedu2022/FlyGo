@@ -19,11 +19,11 @@ export default function ContactPage() {
       <section className="mx-auto w-full max-w-[1200px] px-5 pb-16 pt-12 sm:px-8">
         <div className="flex items-start justify-between gap-8">
           <div className="animate-rise">
-            <h1 className="flex flex-wrap items-center gap-4 text-[30px] font-bold tracking-tight text-ink sm:text-[36px]">
+            <h1 className="flex flex-wrap items-center gap-4 text-h1 font-bold tracking-tight text-ink">
               Get in Touch with Us
               <Handset />
             </h1>
-            <p className="mt-3 max-w-[420px] text-[15px] leading-relaxed text-body">
+            <p className="mt-3 max-w-[420px] text-copy leading-relaxed text-body">
               Have questions or need support? We&apos;re here to help you 24/7.
             </p>
           </div>
@@ -43,19 +43,19 @@ export default function ContactPage() {
       <section className="bg-sky-tint">
         <div className="mx-auto grid w-full max-w-[1200px] gap-10 px-5 py-16 sm:px-8 lg:grid-cols-[1.1fr_1fr_1fr_1fr]">
           <div>
-            <p className="text-[13px] font-semibold uppercase tracking-[0.18em] text-brand">
+            <p className="text-small font-semibold uppercase tracking-[0.18em] text-brand">
               Contact Info
             </p>
-            <h2 className="mt-3 max-w-[280px] text-[24px] font-bold leading-tight text-ink sm:text-[28px]">
+            <h2 className="mt-3 max-w-[280px] text-h2 font-bold leading-tight text-ink">
               We are always happy to assist you
             </h2>
           </div>
 
           {CONTACT_INFO.map((group) => (
             <div key={group.heading}>
-              <h3 className="text-[16px] font-bold text-ink">{group.heading}</h3>
+              <h3 className="text-copy font-bold text-ink">{group.heading}</h3>
               <span aria-hidden="true" className="mt-3 block h-[3px] w-7 bg-ink" />
-              <ul className="mt-5 space-y-4 text-[14px] leading-relaxed text-body">
+              <ul className="mt-5 space-y-4 text-small leading-relaxed text-body">
                 {group.lines.map((line) => (
                   <li key={line} className="whitespace-pre-line">
                     {line}
@@ -66,10 +66,10 @@ export default function ContactPage() {
           ))}
 
           <div>
-            <h3 className="text-[16px] font-bold text-ink">Social Media:</h3>
+            <h3 className="text-copy font-bold text-ink">Social Media:</h3>
             <span aria-hidden="true" className="mt-3 block h-[3px] w-7 bg-ink" />
-            <p className="mt-5 text-[14px] text-body">Follow us on:</p>
-            <ul className="mt-3 list-disc pl-5 text-[14px] leading-relaxed text-body">
+            <p className="mt-5 text-small text-body">Follow us on:</p>
+            <ul className="mt-3 list-disc pl-5 text-small leading-relaxed text-body">
               <li>
                 {CONTACT_SOCIAL_LINKS.map((name, index) => (
                   <span key={name}>
@@ -83,7 +83,7 @@ export default function ContactPage() {
             </ul>
             <Link
               href="/signup"
-              className="mt-6 inline-flex h-[42px] items-center justify-center rounded-md bg-sky px-5 text-[14px] font-medium text-white transition-colors duration-200 hover:bg-sky-hover"
+              className="mt-6 inline-flex h-[42px] items-center justify-center rounded-md bg-sky px-5 text-small font-medium text-white transition-colors duration-200 hover:bg-sky-hover"
             >
               Create an account
             </Link>
@@ -137,7 +137,7 @@ function SocialBubble({ name }: { name: string }) {
     <a
       href="#"
       aria-label={name}
-      className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-all duration-200 hover:-translate-y-0.5 hover:border-sky hover:bg-sky hover:text-white"
+      className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-ink transition-all duration-200 hover:border-sky hover:bg-sky hover:text-white"
     >
       <svg width="19" height="19" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
         <path d={paths[name]} />

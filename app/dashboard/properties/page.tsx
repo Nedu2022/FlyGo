@@ -17,9 +17,9 @@ export default function PropertiesPage() {
         </>
       }
     >
-      <section className="rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] sm:p-6">
+      <section className="min-w-0 rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] sm:p-6">
         <div className="mb-6 flex items-center justify-between gap-4">
-          <h2 className="text-[18px] font-semibold text-ink">All Properties</h2>
+          <h2 className="text-lead font-semibold text-ink">All Properties</h2>
           <FilterButton />
         </div>
 
@@ -37,14 +37,14 @@ export default function PropertiesPage() {
 
 function ListingCard({ listing }: { listing: Listing }) {
   return (
-    <article className="group relative rounded-xl border border-line bg-white transition-shadow duration-300 hover:shadow-[0_12px_30px_-16px_rgba(16,24,40,0.35)]">
+    <article className="group relative rounded-xl border border-line bg-white">
       <div className="relative h-[170px] w-full overflow-hidden rounded-t-xl">
         <Image
           src={listing.image}
           alt={listing.name}
           fill
           sizes="(max-width: 768px) 92vw, 340px"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.04]"
+          className="object-cover transition-colors duration-500"
         />
       </div>
 
@@ -56,7 +56,7 @@ function ListingCard({ listing }: { listing: Listing }) {
       </div>
 
       <div className="px-4 pb-4 pt-7">
-        <h3 className="flex items-center gap-2 text-[15px] font-semibold text-ink">
+        <h3 className="flex items-center gap-2 text-copy font-semibold text-ink">
           {listing.name}
           {listing.live ? (
             <span
@@ -65,10 +65,10 @@ function ListingCard({ listing }: { listing: Listing }) {
             />
           ) : null}
         </h3>
-        <p className="mt-1 text-[13px] text-label">{listing.views}</p>
+        <p className="mt-1 text-small text-label">{listing.views}</p>
 
         <div className="mt-2 flex items-end justify-between gap-3">
-          <p className="flex items-center gap-1.5 text-[13px] text-brand">
+          <p className="flex items-center gap-1.5 text-small text-brand">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
               <circle cx="12" cy="12" r="9" />
               <path d="M12 7.5v5M12 16h.01" />

@@ -12,7 +12,7 @@ export function FlightResultCard({
   onView: () => void;
 }) {
   return (
-    <article className="rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.08),0_10px_28px_-18px_rgba(16,24,40,0.25)] transition-shadow duration-300 hover:shadow-[0_8px_30px_-12px_rgba(16,24,40,0.22)] sm:p-6">
+    <article className="rounded-2xl bg-white p-5 shadow-[0_1px_3px_rgba(16,24,40,0.08),0_10px_28px_-18px_rgba(16,24,40,0.25)] sm:p-6">
       <div className="flex flex-col gap-5 sm:flex-row sm:items-start sm:gap-6">
         <Image
           src={result.logo}
@@ -25,22 +25,22 @@ export function FlightResultCard({
         <div className="min-w-0 flex-1">
           <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3">
             <div>
-              <p className="text-[19px] text-ink">
+              <p className="text-lead text-ink">
                 {result.depart} <span className="px-1 text-label">-</span> {result.arrive}
               </p>
-              <p className="mt-1 text-[15px] text-label">{result.airline}</p>
+              <p className="mt-1 text-copy text-label">{result.airline}</p>
             </div>
 
-            <p className="text-[15px] text-body">{result.stops}</p>
+            <p className="text-copy text-body">{result.stops}</p>
 
             <div>
-              <p className="text-[17px] text-ink">{result.duration}</p>
-              <p className="mt-1 text-[15px] text-label">{result.route}</p>
+              <p className="text-lead text-ink">{result.duration}</p>
+              <p className="mt-1 text-copy text-label">{result.route}</p>
             </div>
 
             <div className="text-right">
-              <p className="text-[14px] text-label">starting from</p>
-              <p className="mt-0.5 text-[26px] font-bold text-brand">{result.price}</p>
+              <p className="text-small text-label">starting from</p>
+              <p className="mt-0.5 text-h3 font-bold text-brand">{result.price}</p>
             </div>
           </div>
 
@@ -49,7 +49,7 @@ export function FlightResultCard({
           <button
             type="button"
             onClick={onView}
-            className="mt-4 h-[52px] w-full rounded-lg bg-sky text-[16px] font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+            className="mt-4 h-[52px] w-full rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
           >
             View Flight
           </button>

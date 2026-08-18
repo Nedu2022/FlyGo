@@ -30,17 +30,17 @@ export function BookingSummary() {
   return (
     <Panel>
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-[18px] font-bold text-ink sm:text-[20px]">
+        <h2 className="text-h4 font-bold text-ink">
           Booking Summary
           {selected.length > 0 ? (
-            <span className="ml-3 align-middle text-[13px] font-medium text-sky">
+            <span className="ml-3 align-middle text-small font-medium text-sky">
               {selected.length} selected
             </span>
           ) : null}
         </h2>
         <Link
           href="/dashboard/bookings"
-          className="text-[14px] font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+          className="text-small font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
         >
           View Full Bookings
         </Link>
@@ -50,7 +50,7 @@ export function BookingSummary() {
         <table className="w-full min-w-[820px] border-collapse text-left">
           <thead>
             <tr className="bg-brand text-white">
-              <th scope="col" className="rounded-l-lg py-4 pl-5 pr-3 text-[14px] font-semibold">
+              <th scope="col" className="rounded-l-lg py-4 pl-5 pr-3 text-small font-semibold">
                 <span className="flex items-center gap-4">
                   <Tick
                     checked={allSelected}
@@ -64,11 +64,11 @@ export function BookingSummary() {
                 </span>
               </th>
               {["Property", "Bill", "Check-In Date", "Duration", "Status"].map((head) => (
-                <th key={head} scope="col" className="px-3 py-4 text-[14px] font-semibold">
+                <th key={head} scope="col" className="px-3 py-4 text-small font-semibold">
                   {head}
                 </th>
               ))}
-              <th scope="col" className="rounded-r-lg px-3 py-4 text-[14px] font-semibold">
+              <th scope="col" className="rounded-r-lg px-3 py-4 text-small font-semibold">
                 Action
               </th>
             </tr>
@@ -79,7 +79,7 @@ export function BookingSummary() {
                 key={`${booking.guest}-${index}`}
                 className="border-b border-line transition-colors duration-200 hover:bg-sky-tint"
               >
-                <td className="py-4 pl-5 pr-3 text-[14px] text-ink">
+                <td className="py-4 pl-5 pr-3 text-small text-ink">
                   <span className="flex items-center gap-4">
                     <Tick
                       checked={selected.includes(index)}
@@ -89,18 +89,18 @@ export function BookingSummary() {
                     {booking.guest}
                   </span>
                 </td>
-                <td className="px-3 py-4 text-[14px] text-body">{booking.property}</td>
-                <td className="px-3 py-4 text-[14px] text-body">{booking.bill}</td>
-                <td className="px-3 py-4 text-[14px] text-body">{booking.checkIn}</td>
-                <td className="px-3 py-4 text-[14px] text-body">{booking.duration}</td>
+                <td className="px-3 py-4 text-small text-body">{booking.property}</td>
+                <td className="px-3 py-4 text-small text-body">{booking.bill}</td>
+                <td className="px-3 py-4 text-small text-body">{booking.checkIn}</td>
+                <td className="px-3 py-4 text-small text-body">{booking.duration}</td>
                 <td className="px-3 py-4">
                   <span
-                    className={`inline-block rounded-full border px-3 py-1 text-[13px] font-medium ${STATUS_TONES[booking.status]}`}
+                    className={`inline-block rounded-full border px-3 py-1 text-small font-medium ${STATUS_TONES[booking.status]}`}
                   >
                     {booking.status}
                   </span>
                 </td>
-                <td className={`px-3 py-4 text-[14px] ${ACTION_TONES[booking.action]}`}>
+                <td className={`px-3 py-4 text-small ${ACTION_TONES[booking.action]}`}>
                   {booking.action}
                 </td>
               </tr>

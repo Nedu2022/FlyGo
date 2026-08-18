@@ -18,17 +18,17 @@ export default function DashboardPage() {
       actions={<BarAction label="Add new post" />}
     >
       <div className="flex flex-col gap-6">
-        <div className="grid gap-6 xl:grid-cols-[1fr_300px]">
+        <div className="grid gap-6 [&>*]:min-w-0 xl:grid-cols-[1fr_300px]">
           <MonthSummary />
           <QuickLinks />
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[1fr_360px]">
+        <div className="grid gap-6 [&>*]:min-w-0 xl:grid-cols-[1fr_360px]">
           <RevenueChart />
           <Notifications />
         </div>
 
-        <div className="grid gap-6 xl:grid-cols-[1fr_420px]">
+        <div className="grid gap-6 [&>*]:min-w-0 xl:grid-cols-[1fr_420px]">
           <TopProperties />
           <TodoList />
         </div>

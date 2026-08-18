@@ -18,10 +18,10 @@ export function Newsletter() {
     <section className="bg-sky text-white">
       <div className="mx-auto grid w-full max-w-[1200px] items-center gap-8 px-5 py-14 sm:px-8 lg:grid-cols-[1.1fr_1fr]">
         <div>
-          <h2 className="text-[26px] font-bold sm:text-[30px]">
+          <h2 className="text-h2 font-bold">
             Subcribe to our Newsletter
           </h2>
-          <p className="mt-3 max-w-[520px] text-[14px] leading-relaxed text-white/85">
+          <p className="mt-3 max-w-[520px] text-small leading-relaxed text-white/85">
             Subscribe for Updates: Stay informed about the latest investor updates,
             financial results, and announcements by subscribing to our newsletter.
           </p>
@@ -38,18 +38,18 @@ export function Newsletter() {
             value={email}
             onChange={(event) => setEmail(event.target.value)}
             placeholder="Enter your email"
-            className="h-[62px] min-w-0 flex-1 bg-transparent px-5 text-[15px] text-white outline-none placeholder:text-white/80"
+            className="h-[62px] min-w-0 flex-1 bg-transparent px-5 text-copy text-white outline-none placeholder:text-white/80"
           />
           <button
             type="submit"
-            className="h-[62px] shrink-0 bg-white px-7 text-[15px] font-medium text-sky transition-colors duration-200 hover:bg-white/90"
+            className="h-[62px] shrink-0 bg-white px-7 text-copy font-medium text-sky transition-colors duration-200 hover:bg-white/90"
           >
             {done ? "Subscribed" : "Subscribe"}
           </button>
         </form>
 
         {done ? (
-          <p role="status" className="animate-fade text-[14px] text-white/90 lg:col-start-2">
+          <p role="status" className="animate-fade text-small text-white/90 lg:col-start-2">
             Thanks — look out for our next dispatch.
           </p>
         ) : null}

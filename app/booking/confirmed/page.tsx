@@ -24,10 +24,10 @@ export default function BookingConfirmedPage() {
             className="animate-badge-in mx-auto h-[170px] w-[170px]"
           />
 
-          <h1 className="mt-8 text-[30px] font-bold tracking-tight text-ink sm:text-[34px]">
+          <h1 className="mt-8 text-h1 font-bold tracking-tight text-ink">
             Your Flight is Booked!
           </h1>
-          <p className="mt-4 text-[17px] text-label">
+          <p className="mt-4 text-lead text-label">
             Thank you for choosing Flygo! Your booking details have been sent to your email.
           </p>
 
@@ -35,14 +35,14 @@ export default function BookingConfirmedPage() {
 
           <Link
             href="#"
-            className="animate-rise mt-10 flex h-[56px] w-full max-w-[460px] items-center justify-center rounded-lg bg-sky text-[16px] font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px sm:mx-auto"
+            className="animate-rise mt-10 flex h-[56px] w-full max-w-[460px] items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px sm:mx-auto"
           >
             Download E-Ticket &amp; Boarding Pass
           </Link>
 
           <Link
             href="/hotels"
-            className="mt-5 inline-block text-[15px] text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="mt-5 inline-block text-copy text-brand transition-colors duration-200 hover:text-brand-hover"
           >
             Book a Hotel for Your Trip
           </Link>
@@ -58,8 +58,8 @@ function BoardingPass() {
   return (
     <div className="animate-rise mx-auto mt-10 max-w-[570px] overflow-hidden rounded-xl border-2 border-sky text-left">
       <div className="bg-sky px-5 py-3 text-white">
-        <p className="text-[19px] font-bold">{BOOKED_TRIP.passenger}</p>
-        <p className="mt-0.5 text-[13px] font-semibold">Seat No: {BOOKED_TRIP.seat}</p>
+        <p className="text-lead font-bold">{BOOKED_TRIP.passenger}</p>
+        <p className="mt-0.5 text-small font-semibold">Seat No: {BOOKED_TRIP.seat}</p>
       </div>
 
       <div className="flex flex-col bg-white sm:flex-row">
@@ -81,40 +81,40 @@ function BoardingPass() {
                     className="h-[26px] w-auto object-contain"
                   />
                 ) : (
-                  <span className="text-[12px] leading-tight text-body">{leg.carrier}</span>
+                  <span className="text-tiny leading-tight text-body">{leg.carrier}</span>
                 )}
               </span>
 
               <div className="text-right">
-                <p className="text-[15px] font-semibold text-ink">{leg.departTime}</p>
-                <p className="text-[13px] text-body">{leg.departCode}</p>
+                <p className="text-copy font-semibold text-ink">{leg.departTime}</p>
+                <p className="text-small text-body">{leg.departCode}</p>
               </div>
 
               <div className="min-w-0 flex-1 text-center">
-                <p className="text-[11px] text-body">{leg.duration}</p>
+                <p className="text-tiny text-body">{leg.duration}</p>
                 <Rail stops={leg.stops} />
-                <p className="text-[11px]">
+                <p className="text-tiny">
                   <span className="text-[#e0518a]">{leg.stops}</span>{" "}
                   <span className="text-body">{leg.via}</span>
                 </p>
               </div>
 
               <div>
-                <p className="text-[15px] font-semibold text-ink">
+                <p className="text-copy font-semibold text-ink">
                   {leg.arriveTime}
-                  {leg.nextDay ? <sup className="text-[10px] font-normal">+1</sup> : null}
+                  {leg.nextDay ? <sup className="text-micro font-normal">+1</sup> : null}
                 </p>
-                <p className="text-[13px] text-body">{leg.arriveCode}</p>
+                <p className="text-small text-body">{leg.arriveCode}</p>
               </div>
             </div>
           ))}
         </div>
 
         <div className="flex shrink-0 flex-col items-center justify-center gap-3 border-line px-6 py-5 sm:border-l">
-          <p className="text-[19px] font-semibold text-ink">{BOOKED_TRIP.price}</p>
+          <p className="text-lead font-semibold text-ink">{BOOKED_TRIP.price}</p>
           <Link
             href="#"
-            className="flex h-[36px] items-center gap-2 rounded-md bg-brand px-4 text-[14px] font-medium text-white transition-colors duration-200 hover:bg-brand-hover"
+            className="flex h-[36px] items-center gap-2 rounded-md bg-brand px-4 text-small font-medium text-white transition-colors duration-200 hover:bg-brand-hover"
           >
             View
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

@@ -35,11 +35,7 @@ export function PaymentForm() {
               type="button"
               onClick={() => setMethod(option.id)}
               aria-pressed={active}
-              className={`relative flex h-[64px] min-w-[180px] flex-1 items-center gap-3 rounded-lg border px-5 text-[16px] transition-colors duration-200 ${
-                active
-                  ? "border-sky bg-sky-tint text-sky"
-                  : "border-line bg-white text-label hover:border-muted"
-              }`}
+              className={`relative flex h-[64px] min-w-[180px] flex-1 items-center gap-3 rounded-lg border px-5 text-copy transition-colors duration-200 ${ active ? "border-sky bg-sky-tint text-sky" : "border-line bg-white text-label hover:border-muted" }`}
             >
               <MethodMark id={option.id} />
               {option.label}
@@ -63,7 +59,7 @@ export function PaymentForm() {
           <Field label="cvc" name="cvc" placeholder="000" inputMode="numeric" maxLength={4} />
         </div>
       ) : (
-        <p className="animate-rise mt-8 max-w-[760px] rounded-lg bg-sky-tint px-5 py-4 text-[15px] text-ink">
+        <p className="animate-rise mt-8 max-w-[760px] rounded-lg bg-sky-tint px-5 py-4 text-copy text-ink">
           You&apos;ll be redirected to {method === "flutterwave" ? "Flutterwave" : "Paystack"} to
           finish paying securely.
         </p>
@@ -72,7 +68,7 @@ export function PaymentForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-9 h-[52px] w-full max-w-[760px] rounded-lg bg-sky text-[16px] font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px disabled:opacity-70"
+        className="mt-9 h-[52px] w-full max-w-[760px] rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px disabled:opacity-70"
       >
         {pending ? "Processing…" : "Continue"}
       </button>
@@ -93,7 +89,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={name} className="mb-2 block text-[15px] text-ink">
+      <label htmlFor={name} className="mb-2 block text-copy text-ink">
         {label}
       </label>
       <input
@@ -101,7 +97,7 @@ function Field({
         id={name}
         name={name}
         required
-        className="h-[52px] w-full rounded-lg border border-line bg-white px-4 text-[15px] text-ink outline-none transition-colors duration-200 placeholder:text-muted focus:border-sky"
+        className="h-[52px] w-full rounded-lg border border-line bg-white px-4 text-copy text-ink outline-none transition-colors duration-200 placeholder:text-muted focus:border-sky"
       />
     </div>
   );

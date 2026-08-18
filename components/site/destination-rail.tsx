@@ -1,59 +1,24 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { TRENDING, type Destination } from "@/lib/flight-data";
+import { Rail } from "@/components/site/rail";
 
-const PER_PAGE = 4;
-
-/**
- * Card rail that pages four at a time. The track is nudged left by half a card
- * on wide screens so the next card peeks in, as the design shows.
- */
-export function DestinationRail({
-  items = TRENDING,
-  perPage = PER_PAGE,
-}: {
-  items?: Destination[];
-  perPage?: number;
-}) {
-  const pages = Math.max(1, Math.ceil(items.length / perPage));
-  const [page, setPage] = useState(0);
-
+export function DestinationRail({ items = TRENDING }: { items?: Destination[] }) {
   return (
-    <div>
-      <div className="overflow-hidden">
-        <ul
-          className="flex gap-6 transition-transform duration-500 ease-out"
-          style={{ transform: `translateX(-${page * 100}%)` }}
+    <Rail label="destinations">
+      {items.map((item, index) => (
+        <li
+          key={`${item.name}-${index}`}
+          // Exactly four per viewport on desktop, so a page scroll lands on a
+          // card edge instead of slicing one in half.
+          className="w-[78%] shrink-0 snap-start sm:w-[calc((100%-1.5rem)/2)] lg:w-[calc((100%-4.5rem)/4)]"
         >
-          {items.map((item) => (
-            <li
-              key={`${item.name}-${item.reviews}`}
-              className="w-[calc(100%-1.5rem)] shrink-0 sm:w-[calc(50%-0.75rem)] lg:w-[calc(28%-0.75rem)]"
-            >
-              <DestinationCard destination={item} />
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mt-6 flex items-center justify-center gap-2">
-        {Array.from({ length: pages }, (_, i) => (
-          <button
-            key={i}
-            type="button"
-            aria-label={`Show page ${i + 1}`}
-            aria-current={i === page}
-            onClick={() => setPage(i)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              i === page ? "w-5 bg-brand" : "w-2 bg-line hover:bg-muted"
-            }`}
-          />
-        ))}
-      </div>
-    </div>
+          <DestinationCard destination={item} />
+        </li>
+      ))}
+    </Rail>
   );
 }
 
@@ -61,7 +26,7 @@ export function DestinationCard({ destination }: { destination: Destination }) {
   return (
     <Link
       href="/flights"
-      className="group block rounded-lg bg-white p-3 shadow-[0_1px_3px_rgba(16,24,40,0.08),0_10px_28px_-18px_rgba(16,24,40,0.3)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_16px_34px_-16px_rgba(16,24,40,0.35)]"
+      className="group block rounded-lg bg-white p-3 shadow-[0_1px_3px_rgba(16,24,40,0.08),0_10px_28px_-18px_rgba(16,24,40,0.3)]"
     >
       <div className="relative h-[150px] w-full overflow-hidden rounded-md">
         <Image
@@ -69,26 +34,26 @@ export function DestinationCard({ destination }: { destination: Destination }) {
           alt={destination.name}
           fill
           sizes="(max-width: 768px) 90vw, 300px"
-          className="object-cover transition-transform duration-500 group-hover:scale-[1.05]"
+          className="object-cover"
         />
       </div>
 
       <div className="flex items-end justify-between gap-3 px-1 pb-1 pt-4">
         <div className="min-w-0">
-          <h3 className="text-[16px] font-bold text-ink">{destination.name}</h3>
-          <p className="mt-1.5 flex items-center gap-1.5 text-[13px] text-body">
+          <h3 className="text-copy font-bold text-ink">{destination.name}</h3>
+          <p className="mt-1.5 flex items-center gap-1.5 text-small text-body">
             <Star />
             {destination.rating} ({destination.reviews})
           </p>
-          <p className="mt-1.5 flex items-center gap-1.5 text-[13px] text-body">
+          <p className="mt-1.5 flex items-center gap-1.5 text-small text-body">
             <Pin />
             {destination.country}
           </p>
         </div>
 
         <div className="shrink-0 text-right">
-          <p className="text-[12px] text-label">Start from</p>
-          <p className="text-[22px] font-bold text-sky">{destination.price}</p>
+          <p className="text-tiny text-label">Start from</p>
+          <p className="text-h4 font-bold text-sky">{destination.price}</p>
         </div>
       </div>
     </Link>

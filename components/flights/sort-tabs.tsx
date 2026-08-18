@@ -17,13 +17,11 @@ export function SortTabs() {
           className={`relative min-w-[150px] flex-1 border-r border-line px-5 py-4 text-left transition-colors duration-200 last:border-r-0 hover:bg-sky-tint`}
         >
           <span
-            className={`block text-[17px] ${
-              index === active ? "font-semibold text-ink" : "text-ink"
-            }`}
+            className={`block text-lead ${ index === active ? "font-semibold text-ink" : "text-ink" }`}
           >
             {tab.label}
           </span>
-          <span className="mt-1 block text-[14px] text-label">
+          <span className="mt-1 block text-small text-label">
             {tab.price} . {tab.duration}
           </span>
           <span
@@ -37,7 +35,7 @@ export function SortTabs() {
 
       <button
         type="button"
-        className="flex min-w-[150px] flex-1 items-center justify-center gap-3 px-5 py-4 text-[16px] text-ink transition-colors duration-200 hover:bg-sky-tint"
+        className="flex min-w-[150px] flex-1 items-center justify-center gap-3 px-5 py-4 text-copy text-ink transition-colors duration-200 hover:bg-sky-tint"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
           <path d="M4 7h16M4 12h11M4 17h7" />

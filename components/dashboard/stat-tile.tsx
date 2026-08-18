@@ -25,8 +25,8 @@ export function StatTile({
         <DashIcon name={icon} size={24} strokeWidth={1.7} />
       </span>
       <span className="min-w-0">
-        <span className="block text-[13px] text-label">{label}</span>
-        <span className="mt-0.5 block truncate text-[20px] font-bold text-ink">{value}</span>
+        <span className="block text-small text-label">{label}</span>
+        <span className="mt-0.5 block truncate text-h4 font-bold text-ink">{value}</span>
       </span>
     </div>
   );

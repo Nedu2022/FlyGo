@@ -154,7 +154,7 @@ export function OccupancyGauge({ height = 260 }: { height?: number }) {
       </ResponsiveContainer>
 
       <span
-        className="pointer-events-none absolute inset-x-0 flex justify-center text-[26px] font-bold text-ink"
+        className="pointer-events-none absolute inset-x-0 flex justify-center text-h3 font-bold text-ink"
         style={{ top: height * 0.42 }}
       >
         {OCCUPANCY.occupied}%

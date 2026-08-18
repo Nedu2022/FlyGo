@@ -39,7 +39,7 @@ export default function ForgotPasswordPage() {
           Send Reset Link
         </PrimaryButton>
 
-        <p className="text-center text-[16px] text-body">
+        <p className="text-center text-copy text-body">
           Remembered your password?{" "}
           <Link
             href="/signin"

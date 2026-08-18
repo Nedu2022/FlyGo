@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { PlaceholderImage } from "@/components/ui/placeholder-image";
 import type { FlightDeal, Hotel, PopularDestination } from "@/lib/site-data";
 
@@ -24,7 +25,7 @@ function CardImage({ src, className }: { src: string; className: string }) {
 }
 
 const cardBase =
-  "group overflow-hidden rounded-xl bg-white shadow-[0_2px_14px_rgba(16,24,40,0.09)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_12px_30px_rgba(16,24,40,0.14)]";
+  "group overflow-hidden rounded-xl bg-white shadow-[0_2px_14px_rgba(16,24,40,0.09)]";
 
 export function FlightCard({ deal }: { deal: FlightDeal }) {
   return (
@@ -32,20 +33,20 @@ export function FlightCard({ deal }: { deal: FlightDeal }) {
       <div className="overflow-hidden p-2 pb-0">
         <CardImage
           src={deal.image}
-          className="h-[130px] w-full rounded-lg transition-transform duration-500 group-hover:scale-[1.04]"
+          className="h-[130px] w-full rounded-lg transition-colors duration-500"
         />
       </div>
       <div className="px-3 pb-3 pt-3">
-        <h3 className="flex items-center gap-1.5 text-[14px] font-semibold text-ink">
+        <h3 className="flex items-center gap-1.5 text-small font-semibold text-ink">
           {deal.from}
           <RouteIcon />
           {deal.to}
         </h3>
         <div className="mt-2 flex items-end justify-between">
-          <p className="text-[12px] text-body">
-            From <span className="text-[15px] font-bold text-brand">{deal.price}</span>
+          <p className="text-tiny text-body">
+            From <span className="text-copy font-bold text-brand">{deal.price}</span>
           </p>
-          <p className="text-[11px] text-muted">{deal.trip}</p>
+          <p className="text-tiny text-muted">{deal.trip}</p>
         </div>
       </div>
     </article>
@@ -62,18 +63,18 @@ export function DestinationCard({
       <div className="overflow-hidden p-2 pb-0">
         <CardImage
           src={destination.image}
-          className="h-[112px] w-full rounded-lg transition-transform duration-500 group-hover:scale-[1.04]"
+          className="h-[112px] w-full rounded-lg transition-colors duration-500"
         />
       </div>
       <div className="px-4 pb-4 pt-3 text-center">
-        <p className="text-[11px] text-muted">{destination.region}</p>
-        <h3 className="text-[15px] font-semibold text-ink">{destination.name}</h3>
+        <p className="text-tiny text-muted">{destination.region}</p>
+        <h3 className="text-copy font-semibold text-ink">{destination.name}</h3>
         <div className="mt-2 flex items-end justify-between">
-          <p className="text-[12px] text-body">
+          <p className="text-tiny text-body">
             From{" "}
-            <span className="text-[15px] font-bold text-brand">{destination.price}</span>
+            <span className="text-copy font-bold text-brand">{destination.price}</span>
           </p>
-          <p className="text-[11px] text-muted">{destination.trip}</p>
+          <p className="text-tiny text-muted">{destination.trip}</p>
         </div>
       </div>
     </article>
@@ -92,55 +93,72 @@ export function ResortCountryCard({
   };
 }) {
   return (
-    <article className={cardBase}>
-      <div className="overflow-hidden p-2 pb-0">
-        <CardImage
+    <Link
+      href="/hotels"
+      className="group block rounded-lg bg-white p-3 shadow-[0_1px_3px_rgba(16,24,40,0.08),0_10px_28px_-18px_rgba(16,24,40,0.3)]"
+    >
+      <div className="relative h-[170px] w-full overflow-hidden rounded-md">
+        <Image
           src={country.image}
-          className="h-[112px] w-full rounded-lg transition-transform duration-500 group-hover:scale-[1.04]"
+          alt={country.name}
+          fill
+          sizes="(max-width: 768px) 90vw, 380px"
+          className="object-cover"
         />
       </div>
-      <div className="px-4 pb-4 pt-3 text-center">
-        <p className="text-[11px] text-muted">{country.region}</p>
-        <h3 className="text-[15px] font-semibold text-ink">{country.name}</h3>
-        <div className="mt-2 flex items-end justify-between">
-          <p className="text-[12px] text-body">
-            Budget{" "}
-            <span className="text-[15px] font-bold text-brand">{country.budget}</span>
-          </p>
-          <div className="text-right">
-            <Stars count={5} />
-            <p className="text-[10px] text-muted">{country.love}</p>
-          </div>
+
+      <div className="flex items-end justify-between gap-3 px-1 pb-1 pt-4">
+        <div className="min-w-0">
+          <p className="text-small text-label">{country.region}</p>
+          <h3 className="mt-0.5 text-lead font-bold text-ink">{country.name}</h3>
+          <p className="mt-1.5 text-small text-body">{country.love}</p>
+        </div>
+        <div className="shrink-0 text-right">
+          <p className="text-tiny text-label">Budget</p>
+          <p className="text-h4 font-bold text-sky">{country.budget}</p>
         </div>
       </div>
-    </article>
+    </Link>
   );
 }
 
 export function HotelCard({ hotel }: { hotel: Hotel }) {
   return (
-    <article className={`${cardBase} flex flex-col`}>
-      <div className="overflow-hidden p-2 pb-0">
-        <CardImage
+    <Link
+      href="/hotels"
+      className="group flex h-full flex-col rounded-lg bg-white p-3 shadow-[0_1px_3px_rgba(16,24,40,0.08),0_10px_28px_-18px_rgba(16,24,40,0.3)]"
+    >
+      <div className="relative h-[150px] w-full overflow-hidden rounded-md">
+        <Image
           src={hotel.image}
-          className="h-[112px] w-full rounded-lg transition-transform duration-500 group-hover:scale-[1.04]"
+          alt={hotel.name}
+          fill
+          sizes="(max-width: 768px) 90vw, 300px"
+          className="object-cover"
         />
       </div>
-      <div className="flex flex-1 flex-col px-3 pb-3 pt-3">
-        <h3 className="text-[14px] font-semibold leading-snug text-ink">{hotel.name}</h3>
-        <Stars count={hotel.stars} className="mt-1" />
-        <p className="mt-2 text-[11px] leading-relaxed text-body">{hotel.address}</p>
-        <div className="mt-2 flex items-center gap-2">
-          <span className="rounded bg-blue px-1.5 py-0.5 text-[11px] font-semibold text-white">
-            {hotel.score}
-          </span>
-          <span className="text-[11px] text-body">{hotel.reviews}</span>
-        </div>
-        <p className="mt-auto pt-3 text-right text-[12px] text-body">
-          From <span className="text-[15px] font-bold text-brand">{hotel.price}</span>
+
+      <div className="flex flex-1 flex-col px-1 pb-1 pt-4">
+        <h3 className="text-copy font-bold leading-snug text-ink">{hotel.name}</h3>
+        <Stars count={hotel.stars} className="mt-1.5" />
+        <p className="mt-2 line-clamp-2 text-small leading-relaxed text-body">
+          {hotel.address}
         </p>
+
+        <div className="mt-auto flex items-end justify-between gap-3 pt-4">
+          <span className="flex items-center gap-2">
+            <span className="rounded bg-sky px-2 py-0.5 text-tiny font-semibold text-white">
+              {hotel.score}
+            </span>
+            <span className="text-tiny text-label">{hotel.reviews}</span>
+          </span>
+          <span className="shrink-0 text-right">
+            <span className="block text-tiny text-label">Start from</span>
+            <span className="block text-h4 font-bold text-sky">{hotel.price}</span>
+          </span>
+        </div>
       </div>
-    </article>
+    </Link>
   );
 }
 

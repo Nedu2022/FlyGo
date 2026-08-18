@@ -47,7 +47,7 @@ export default function AvailabilityPage() {
       }
     >
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <label className="flex items-center gap-2 text-[16px] text-ink">
+        <label className="flex items-center gap-2 text-copy text-ink">
           Property name:
           <span className="relative inline-flex items-center gap-1.5 font-medium text-sky">
             {property}
@@ -97,7 +97,7 @@ export default function AvailabilityPage() {
               {WEEKDAYS.map((day) => (
                 <span
                   key={day}
-                  className="border-r border-line px-4 py-3 text-[14px] text-body last:border-r-0"
+                  className="border-r border-line px-4 py-3 text-small text-body last:border-r-0"
                 >
                   {day}
                 </span>
@@ -115,12 +115,12 @@ export default function AvailabilityPage() {
                       outside ? "bg-shell/60" : "bg-white"
                     }`}
                   >
-                    <span className={`text-[17px] ${outside ? "text-muted" : "text-ink"}`}>
+                    <span className={`text-lead ${outside ? "text-muted" : "text-ink"}`}>
                       {day}
                     </span>
                     {entry ? (
                       <span
-                        className={`mt-auto flex h-6 min-w-[24px] items-center justify-center rounded-full px-1.5 text-[12px] font-medium text-white ${TONES[entry.tone]}`}
+                        className={`mt-auto flex h-6 min-w-[24px] items-center justify-center rounded-full px-1.5 text-tiny font-medium text-white ${TONES[entry.tone]}`}
                         title={`${entry.count} bookings`}
                       >
                         {entry.count}
@@ -135,14 +135,14 @@ export default function AvailabilityPage() {
       </section>
 
       <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
-        <ul className="flex flex-wrap items-center gap-5 text-[13px] text-body">
+        <ul className="flex flex-wrap items-center gap-5 text-small text-body">
           <Key tone="open" label="Available" />
           <Key tone="busy" label="Booked" />
           <Key tone="blocked" label="Blocked" />
         </ul>
         <button
           type="button"
-          className="h-[44px] rounded-lg bg-sky px-6 text-[15px] font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+          className="h-[44px] rounded-lg bg-sky px-6 text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
         >
           Link Calendar
         </button>
@@ -197,7 +197,7 @@ function Spinner({
 }) {
   return (
     <span className="flex items-center gap-2">
-      <span className="text-[20px] text-ink">{value}</span>
+      <span className="text-h4 text-ink">{value}</span>
       <span className="flex flex-col gap-1">
         <button type="button" onClick={onUp} aria-label={`Next ${label}`} className="text-muted transition-colors hover:text-sky">
           <svg width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

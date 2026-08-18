@@ -19,14 +19,14 @@ export default function SupportPage() {
           <li key={channel.title}>
             <Link
               href={channel.href}
-              className="group flex h-full flex-col rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] transition-transform duration-300 hover:-translate-y-1"
+              className="group flex h-full flex-col rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(16,24,40,0.06),0_8px_24px_-12px_rgba(16,24,40,0.12)] transition-colors duration-300"
             >
-              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-soft text-sky transition-transform duration-200 group-hover:scale-110">
+              <span className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-sky-soft text-sky">
                 <DashIcon name={channel.icon} size={24} />
               </span>
-              <h2 className="text-[17px] font-semibold text-ink">{channel.title}</h2>
-              <p className="mt-2 flex-1 text-[14px] leading-relaxed text-body">{channel.body}</p>
-              <span className="mt-4 text-[14px] font-medium text-sky">{channel.action}</span>
+              <h2 className="text-lead font-semibold text-ink">{channel.title}</h2>
+              <p className="mt-2 flex-1 text-small leading-relaxed text-body">{channel.body}</p>
+              <span className="mt-4 text-small font-medium text-sky">{channel.action}</span>
             </Link>
           </li>
         ))}

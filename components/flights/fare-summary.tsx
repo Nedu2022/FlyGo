@@ -16,7 +16,7 @@ export function FareSummary({
 }: FareSummaryProps) {
   return (
     <div>
-      <h2 className="border-b border-line pb-4 text-[20px] font-semibold text-ink">
+      <h2 className="border-b border-line pb-4 text-h4 font-semibold text-ink">
         Fare summary
       </h2>
 
@@ -25,15 +25,15 @@ export function FareSummary({
       <Row label="Total:" value={FARE_SUMMARY.total} />
 
       <div className="pt-4">
-        <p className="text-[14px] font-semibold text-ink">Refundable</p>
-        <p className="mt-1.5 text-[14px] leading-relaxed text-body">
+        <p className="text-small font-semibold text-ink">Refundable</p>
+        <p className="mt-1.5 text-small leading-relaxed text-body">
           Total fare displayed above has been rounded off and may thus show a slight
           difference.
         </p>
 
         <Link
           href={action.href}
-          className="mt-5 flex h-[48px] w-full items-center justify-center rounded-lg bg-sky text-[16px] font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+          className="mt-5 flex h-[48px] w-full items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
         >
           {action.label}
         </Link>
@@ -41,7 +41,7 @@ export function FareSummary({
         {secondaryAction ? (
           <Link
             href={secondaryAction.href}
-            className="mt-3 block text-center text-[14px] text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="mt-3 block text-center text-small text-brand transition-colors duration-200 hover:text-brand-hover"
           >
             {secondaryAction.label}
           </Link>
@@ -55,10 +55,10 @@ function Row({ label, note, value }: { label: string; note?: string; value: stri
   return (
     <div className="flex items-start justify-between gap-4 border-b border-line py-4">
       <div>
-        <p className="text-[16px] font-medium text-ink">{label}</p>
-        {note ? <p className="mt-0.5 text-[13px] text-body">{note}</p> : null}
+        <p className="text-copy font-medium text-ink">{label}</p>
+        {note ? <p className="mt-0.5 text-small text-body">{note}</p> : null}
       </div>
-      <p className="text-[17px] text-sky">{value}</p>
+      <p className="text-lead text-sky">{value}</p>
     </div>
   );
 }

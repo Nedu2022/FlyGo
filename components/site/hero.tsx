@@ -53,21 +53,21 @@ export function Hero() {
               className="h-[42px] w-auto self-start"
             />
 
-            <h1 className="mt-7 text-[27px] font-bold leading-[1.28] tracking-tight text-white sm:text-[38px]">
+            <h1 className="mt-7 text-display font-bold leading-[1.28] tracking-tight text-white">
               Explore the World with Ease.{" "}
               {/* Two fixed lines from sm up; below that it wraps naturally,
                   otherwise the unbreakable line widens the whole card. */}
               <br className="hidden sm:inline" />
               Book Flights &amp; Hotels in Minutes.
             </h1>
-            <p className="mt-4 text-[15px] leading-relaxed text-white/65">
+            <p className="mt-4 text-copy leading-relaxed text-white/65">
               Discover hidden gems, iconic cities, and breathtaking views—your journey
               begins now.
             </p>
 
             <Link
               href="/flights"
-              className="mt-6 inline-flex h-[46px] w-fit items-center justify-center rounded-md bg-brand px-9 text-[15px] text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-all duration-200 hover:bg-brand-hover hover:shadow-[0_8px_22px_rgba(245,134,52,0.45)] active:translate-y-px"
+              className="mt-6 inline-flex h-[46px] w-fit items-center justify-center rounded-md bg-brand px-9 text-copy text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px"
             >
               Explore
             </Link>
@@ -104,7 +104,7 @@ export function Hero() {
 
         {/* Strip: under the card on mobile, inside the notch on desktop. */}
         <div className="relative -mt-20 flex w-fit max-w-full items-center gap-5 rounded-r-2xl rounded-bl-2xl bg-white py-4 pl-1 pr-8 sm:-mt-[72px] sm:gap-7 sm:pr-14 lg:absolute lg:bottom-0 lg:left-0 lg:mt-0 lg:h-[var(--band)] lg:w-[48%] lg:rounded-none lg:bg-transparent lg:p-0 lg:pl-14">
-          <h2 className="text-[20px] font-bold tracking-tight text-ink sm:text-[26px] lg:text-[30px]">
+          <h2 className="text-h2 font-bold tracking-tight text-ink">
             Let Us Plan Your Perfect Getaway.
           </h2>
           <Image

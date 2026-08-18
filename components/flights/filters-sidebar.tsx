@@ -11,7 +11,7 @@ import {
 export function FiltersSidebar() {
   return (
     <aside className="w-full lg:w-[260px] lg:shrink-0">
-      <h2 className="text-[22px] font-bold text-ink">Filters</h2>
+      <h2 className="text-h4 font-bold text-ink">Filters</h2>
 
       <FilterGroup heading="Price">
         <DualRange minLabel={PRICE_RANGE.min} maxLabel={PRICE_RANGE.max} />
@@ -58,7 +58,7 @@ function FilterGroup({
           aria-expanded={open}
           className="flex w-full items-center justify-between gap-3 text-left"
         >
-          <span className="text-[18px] font-semibold text-ink">{heading}</span>
+          <span className="text-lead font-semibold text-ink">{heading}</span>
           <svg
             width="20"
             height="20"
@@ -120,7 +120,7 @@ function DualRange({ minLabel, maxLabel }: { minLabel: string; maxLabel: string 
         />
       </div>
 
-      <div className="mt-3 flex items-center justify-between text-[15px] text-body">
+      <div className="mt-3 flex items-center justify-between text-copy text-body">
         <span>{minLabel}</span>
         <span>{maxLabel}</span>
       </div>
@@ -141,11 +141,7 @@ function RatingChips() {
             type="button"
             onClick={() => setActive(selected ? null : rating)}
             aria-pressed={selected}
-            className={`flex h-[42px] w-[42px] items-center justify-center rounded-full border text-[14px] transition-colors duration-200 ${
-              selected
-                ? "border-brand bg-brand text-white"
-                : "border-brand text-body hover:bg-brand-soft"
-            }`}
+            className={`flex h-[42px] w-[42px] items-center justify-center rounded-full border text-small transition-colors duration-200 ${ selected ? "border-brand bg-brand text-white" : "border-brand text-body hover:bg-brand-soft" }`}
           >
             {rating}
           </button>
@@ -158,7 +154,7 @@ function RatingChips() {
 function CheckboxRow({ label }: { label: string }) {
   const id = useId();
   return (
-    <label htmlFor={id} className="flex cursor-pointer items-center gap-4 text-[16px] text-body">
+    <label htmlFor={id} className="flex cursor-pointer items-center gap-4 text-copy text-body">
       <span className="relative inline-flex h-[22px] w-[22px] shrink-0 items-center justify-center">
         <input
           id={id}
