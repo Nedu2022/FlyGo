@@ -30,7 +30,7 @@ export function Hero() {
         className="relative lg:aspect-[1437/639]"
         style={{ ["--band" as string]: BAND }}
       >
-        <div aria-hidden="true" className="absolute inset-0 rounded-2xl bg-steel lg:hidden" />
+        <div aria-hidden="true" className="absolute inset-0 bg-steel lg:hidden" />
         <svg
           aria-hidden="true"
           viewBox="0 0 1437 639"
@@ -42,7 +42,7 @@ export function Hero() {
 
         {/* Fills the card above the notch band. */}
         <div
-          className="relative grid gap-8 px-6 pb-24 pt-7 sm:px-10 sm:pb-28 sm:pt-9 lg:absolute lg:inset-x-0 lg:top-0 lg:bottom-[var(--band)] lg:grid-cols-[minmax(0,1.18fr)_minmax(0,1fr)] lg:gap-12 lg:px-14 lg:pb-0 lg:pt-11"
+          className="relative grid gap-8 px-3 pb-24 pt-7 sm:px-10 sm:pb-28 sm:pt-9 lg:absolute lg:inset-x-0 lg:top-0 lg:bottom-[var(--band)] lg:grid-cols-[minmax(0,1.18fr)_minmax(0,1fr)] lg:gap-12 lg:px-14 lg:pb-0 lg:pt-11"
         >
           <div className="flex min-w-0 flex-col lg:min-h-0">
             <Image
@@ -103,8 +103,8 @@ export function Hero() {
         />
 
         {/* Strip: under the card on mobile, inside the notch on desktop. */}
-        <div className="relative -mt-20 flex w-fit max-w-full items-center gap-5 rounded-r-2xl rounded-bl-2xl bg-white py-4 pl-1 pr-8 sm:-mt-[72px] sm:gap-7 sm:pr-14 lg:absolute lg:bottom-0 lg:left-0 lg:mt-0 lg:h-[var(--band)] lg:w-[48%] lg:rounded-none lg:bg-transparent lg:p-0 lg:pl-14">
-          <h2 className="text-h2 font-bold tracking-tight text-ink">
+        <div className="relative -mt-20 flex w-full items-center justify-between gap-4 bg-white px-4 py-4 sm:-mt-[72px] sm:gap-7 sm:px-6 sm:pr-14 lg:absolute lg:bottom-0 lg:left-0 lg:mt-0 lg:h-[var(--band)] lg:w-[48%] lg:justify-start lg:rounded-none lg:bg-transparent lg:p-0 lg:pl-14">
+          <h2 className="max-w-[410px] text-h2 font-bold leading-[1.12] tracking-tight text-ink">
             Let Us Plan Your Perfect Getaway.
           </h2>
           <Image
@@ -112,7 +112,7 @@ export function Hero() {
             alt="FLYGO Bookings"
             width={126}
             height={56}
-            className="h-[32px] w-auto shrink-0 sm:h-[40px]"
+            className="h-[28px] w-auto shrink-0 sm:h-[40px]"
           />
         </div>
       </div>

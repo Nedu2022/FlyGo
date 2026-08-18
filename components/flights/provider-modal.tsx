@@ -35,9 +35,9 @@ export function ProviderModal({
         if (event.target === ref.current) onClose();
       }}
       aria-labelledby="provider-modal-title"
-      className="w-[min(94vw,860px)] rounded-2xl p-0 shadow-[0_30px_80px_-20px_rgba(16,24,40,0.5)] backdrop:bg-ink/45 backdrop:backdrop-blur-[2px] open:animate-rise"
+      className="m-auto max-h-[calc(100dvh-1rem)] w-[calc(100vw-1rem)] max-w-[760px] overflow-hidden rounded-xl p-0 shadow-[0_30px_80px_-20px_rgba(16,24,40,0.5)] backdrop:bg-ink/45 backdrop:backdrop-blur-[2px] open:animate-rise sm:w-[92vw] sm:rounded-2xl"
     >
-      <div className="relative grid gap-0 sm:grid-cols-[1fr_1.15fr]">
+      <div className="relative grid max-h-[calc(100dvh-1rem)] gap-0 sm:grid-cols-[minmax(240px,0.85fr)_minmax(0,1.15fr)]">
         <button
           type="button"
           onClick={onClose}
@@ -49,7 +49,7 @@ export function ProviderModal({
           </svg>
         </button>
 
-        <div className="p-7 sm:p-8">
+        <div className="p-5 sm:p-8">
           <h2 id="provider-modal-title" className="text-h3 font-bold text-ink">
             {TRIP.route}
           </h2>
@@ -75,19 +75,19 @@ export function ProviderModal({
           <p className="mt-1 text-copy text-body">per person</p>
         </div>
 
-        <ul className="max-h-[320px] overflow-y-auto border-l border-line sm:max-h-none">
+        <ul className="min-h-0 overflow-y-auto border-t border-line sm:max-h-none sm:border-l sm:border-t-0 sm:pt-10">
           {PROVIDERS.map((provider) => (
             <li
               key={provider.name}
-              className="flex items-center gap-4 border-b border-line px-5 py-4 last:border-b-0"
+              className="flex items-center gap-2 border-b border-line px-4 py-3 last:border-b-0 sm:gap-4 sm:px-5 sm:py-4"
             >
-              <span className="flex w-[120px] shrink-0 items-center">
+              <span className="flex w-[92px] shrink-0 items-center sm:w-[120px]">
                 <Image
                   src={provider.logo}
                   alt={provider.name}
                   width={138}
                   height={66}
-                  className="h-[30px] w-auto object-contain"
+                  className="h-[26px] w-auto object-contain sm:h-[30px]"
                 />
               </span>
               <span className="min-w-0 flex-1 text-copy text-sky">{provider.price}</span>

@@ -29,7 +29,7 @@ export function SearchCard({
         event.preventDefault();
         router.push("/flights");
       }}
-      className="rounded-xl bg-white/12 p-5 backdrop-blur-[2px] sm:p-6"
+      className="rounded-xl bg-white/12 p-4 backdrop-blur-[2px] sm:p-6"
     >
       <div className="flex gap-2">
         {TABS.map((item) => (
@@ -38,7 +38,7 @@ export function SearchCard({
             type="button"
             onClick={() => setTab(item)}
             aria-pressed={tab === item}
-            className={`relative flex-1 pb-3 text-copy transition-colors duration-200 ${ tab === item ? "text-white" : "text-white/75 hover:text-white" }`}
+            className={`relative flex-1 pb-2 text-copy transition-colors duration-200 sm:pb-3 ${ tab === item ? "text-white" : "text-white/75 hover:text-white" }`}
           >
             {item}
             <span
@@ -52,21 +52,21 @@ export function SearchCard({
       </div>
 
       {/* One-way / round trip only means anything for flights. */}
-      <div className={`mt-5 flex-wrap gap-2.5 ${tab === "Flight" ? "flex" : "hidden"}`}>
+      <div className={`mt-3 flex-wrap gap-2 ${tab === "Flight" ? "flex" : "hidden"} sm:mt-5 sm:gap-2.5`}>
         {TRIP_KINDS.map((item) => (
           <button
             key={item}
             type="button"
             onClick={() => setKind(item)}
             aria-pressed={kind === item}
-            className={`h-[38px] rounded-full px-5 text-small transition-colors duration-200 ${ kind === item ? "bg-white font-medium text-ink" : "bg-white/15 text-white hover:bg-white/25" }`}
+            className={`h-[34px] rounded-full px-4 text-small transition-colors duration-200 sm:h-[38px] sm:px-5 ${ kind === item ? "bg-white font-medium text-ink" : "bg-white/15 text-white hover:bg-white/25" }`}
           >
             {item}
           </button>
         ))}
       </div>
 
-      <div key={tab} className="animate-fade mt-5 grid gap-x-5 gap-y-4 sm:grid-cols-2">
+      <div key={tab} className="animate-fade mt-4 grid gap-x-5 gap-y-3 sm:mt-5 sm:grid-cols-2 sm:gap-y-4">
         {tab === "Flight" ? (
           <>
             <Pane label="From" icon={<TakeOff />} defaultValue="New York (NY)" />
@@ -111,7 +111,7 @@ export function SearchCard({
 
       <button
         type="submit"
-        className="mt-6 h-[44px] w-full rounded-md bg-brand text-copy text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px"
+        className="mt-4 h-[42px] w-full rounded-md bg-brand text-copy text-white shadow-[0_2px_10px_rgba(245,134,52,0.4)] transition-colors duration-200 hover:bg-brand-hover active:translate-y-px sm:mt-6 sm:h-[44px]"
       >
         Search
       </button>
@@ -134,12 +134,12 @@ function Pane({
 }) {
   return (
     <label className="block">
-      <span className="mb-2 flex items-center gap-2 text-small text-white">
+      <span className="mb-1 flex items-center gap-2 text-small text-white sm:mb-2">
         {toggle}
         {label}
       </span>
       <span
-        className={`flex h-[46px] items-center gap-2.5 rounded-lg px-4 transition-colors duration-200 ${
+        className={`flex h-[40px] items-center gap-2 rounded-lg px-3 transition-colors duration-200 sm:h-[46px] sm:gap-2.5 sm:px-4 ${
           disabled ? "bg-white/8" : "bg-white/15 hover:bg-white/22"
         }`}
       >
