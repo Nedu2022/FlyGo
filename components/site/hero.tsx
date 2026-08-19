@@ -50,7 +50,7 @@ export function Hero() {
               alt=""
               width={69}
               height={69}
-              className="h-[42px] w-auto self-start"
+              className="hidden h-[42px] w-auto self-start lg:block"
             />
 
             <h1 className="mt-7 text-display font-bold leading-[1.28] tracking-tight text-white">
@@ -112,7 +112,7 @@ export function Hero() {
             alt="FLYGO Bookings"
             width={126}
             height={56}
-            className="h-[28px] w-auto shrink-0 sm:h-[40px]"
+            className="hidden h-[28px] w-auto shrink-0 sm:h-[40px] lg:block"
           />
         </div>
       </div>
