@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const MONTHS = [
   "January", "February", "March", "April", "May", "June",
@@ -46,7 +47,7 @@ export function Calendar({
 
   return (
     <div className="flex items-start gap-4">
-      <div className="w-[330px] rounded-2xl bg-white p-6 shadow-[0_20px_50px_-18px_rgba(16,24,40,0.35)]">
+      <div className="w-[min(330px,calc(100vw-2rem))] rounded-2xl bg-white p-6 shadow-[0_20px_50px_-18px_rgba(16,24,40,0.35)]">
         <div className="flex items-center justify-between gap-3">
           <button
             type="button"
@@ -168,54 +169,94 @@ export function DateField({
   toggle?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
-  const wrap = useRef<HTMLDivElement>(null);
+  const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
+  const trigger = useRef<HTMLButtonElement>(null);
+  const popover = useRef<HTMLDivElement>(null);
+
+  // Anchors the portal-rendered popover under the trigger. A backdrop-blur
+  // ancestor (the glass search card) creates its own stacking context, which
+  // traps a same-tree z-index popover and lets normal-flow content further
+  // down the page win hit-testing wherever the popover visually overflows
+  // past the card. Rendering into <body> sidesteps that entirely, so every
+  // row stays clickable regardless of what's behind it. Coordinates are in
+  // document space (viewport rect + scroll offset) so the popover scrolls
+  // with the page like a normal element, instead of chasing the trigger via
+  // a scroll listener under `position: fixed`.
+  const place = () => {
+    const rect = trigger.current?.getBoundingClientRect();
+    if (!rect) return;
+    const width = Math.min(330, window.innerWidth - 16);
+    const left = Math.max(8, Math.min(rect.left, window.innerWidth - width - 8)) + window.scrollX;
+    setCoords({ top: rect.bottom + window.scrollY + 8, left });
+  };
 
   // Close on an outside click or Esc, the way a native popover behaves.
   useEffect(() => {
     if (!open) return;
+    place();
     const onDown = (event: MouseEvent) => {
-      if (!wrap.current?.contains(event.target as Node)) setOpen(false);
+      const target = event.target as Node;
+      if (trigger.current?.contains(target) || popover.current?.contains(target)) return;
+      setOpen(false);
     };
     const onKey = (event: KeyboardEvent) => {
       if (event.key === "Escape") setOpen(false);
     };
+    const onResize = () => place();
     document.addEventListener("mousedown", onDown);
     document.addEventListener("keydown", onKey);
+    window.addEventListener("resize", onResize);
     return () => {
       document.removeEventListener("mousedown", onDown);
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("resize", onResize);
     };
   }, [open]);
 
   return (
-    <div ref={wrap} className="relative">
-      <span className="mb-2 flex items-center gap-2 text-small text-white">
-        {toggle}
-        {label}
-      </span>
-
-      <button
-        type="button"
-        disabled={disabled}
-        onClick={() => setOpen((v) => !v)}
-        aria-expanded={open}
-        className={`flex h-[46px] w-full items-center gap-2.5 rounded-lg px-4 text-left transition-colors duration-200 ${
-          disabled ? "bg-white/8" : "bg-white/15 hover:bg-white/22"
+    <div className="relative min-w-0">
+      {/* Matches the ticket-stub cells in the search card: micro label, then
+          icon + value on one compact line. */}
+      <div
+        className={`rounded-lg px-3 py-2 ring-1 ring-inset transition-colors duration-200 ${
+          disabled
+            ? "bg-white/6 ring-white/5"
+            : "bg-white/10 ring-white/10 hover:bg-white/15 hover:ring-white/20"
         }`}
       >
-        <span className={disabled ? "text-white/35" : "text-white/80"}>{icon}</span>
-        <span
-          className={`truncate text-copy ${disabled ? "text-white/35" : "text-white"}`}
-        >
-          {FORMAT.format(value)}
+        <span className="flex items-center gap-1.5 text-micro font-semibold uppercase tracking-[0.16em] text-white/55">
+          {toggle}
+          {label}
         </span>
-      </button>
 
-      {open && !disabled ? (
-        <div className="absolute left-0 top-full z-40 mt-2">
-          <Calendar value={value} onSelect={onChange} onClose={() => setOpen(false)} />
-        </div>
-      ) : null}
+        <button
+          ref={trigger}
+          type="button"
+          disabled={disabled}
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          className="mt-0.5 flex w-full items-center gap-1.5 text-left outline-none focus-visible:underline focus-visible:decoration-white/70 focus-visible:underline-offset-4"
+        >
+          <span className={`shrink-0 ${disabled ? "text-white/30" : "text-white/70"}`}>{icon}</span>
+          <span
+            className={`truncate text-small font-semibold ${disabled ? "text-white/30" : "text-white"}`}
+          >
+            {FORMAT.format(value)}
+          </span>
+        </button>
+      </div>
+
+      {open && !disabled && coords
+        ? createPortal(
+            <div
+              ref={popover}
+              style={{ position: "absolute", top: coords.top, left: coords.left, zIndex: 100 }}
+            >
+              <Calendar value={value} onSelect={onChange} onClose={() => setOpen(false)} />
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }
