@@ -6,18 +6,28 @@ import { useRouter } from "next/navigation";
 import { AuthShell, StepMarker } from "@/components/auth/auth-shell";
 import { Checkbox, PasswordField, PhoneOrEmailField } from "@/components/auth/fields";
 import { GoogleButton, OrDivider, PrimaryButton } from "@/components/auth/buttons";
+import { getApiErrorMessage, useAuth } from "@/components/auth/auth-context";
 
 export default function SignInPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [remember, setRemember] = useState(false);
   const [pending, setPending] = useState(false);
+  const [error, setError] = useState("");
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
-    // Stand-in for the real sign-in call.
-    await new Promise((resolve) => setTimeout(resolve, 900));
-    router.push("/dashboard");
+    setError("");
+    const form = new FormData(event.currentTarget);
+    try {
+      const user = await login(String(form.get("identifier")), String(form.get("password")));
+      router.push(user.status === "DOCUMENTS_REQUIRED" ? "/onboarding/documents" : "/dashboard");
+    } catch (requestError) {
+      setError(getApiErrorMessage(requestError, "Unable to sign in with those details."));
+    } finally {
+      setPending(false);
+    }
   }
 
   return (
@@ -57,6 +67,8 @@ export default function SignInPage() {
         <PrimaryButton type="submit" pending={pending} className="mt-2">
           Sign in
         </PrimaryButton>
+
+        {error ? <p role="alert" className="-mt-2 text-small text-red-600">{error}</p> : null}
 
         <OrDivider />
         <GoogleButton label="Sign in with Google" />
