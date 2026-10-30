@@ -95,7 +95,7 @@ export function SiteHeader({
         <button
           type="button"
           onClick={() => openAssistant()}
-          className="ml-2 hidden h-11 items-center gap-2 rounded-full px-3 text-copy font-semibold text-ink md:flex"
+          className="ml-2 hidden h-11 items-center gap-2 rounded-full px-3 text-copy font-medium text-ink md:flex"
         >
           <Sparkles size={20} strokeWidth={2} aria-hidden="true" className="text-brand" />
           Ask AI
@@ -206,14 +206,14 @@ export function SiteHeader({
             <a href={`tel:${FOOTER_CONTACT.phone}`} className="mt-6 flex items-center gap-3 rounded-2xl bg-shell px-4 py-4">
               <Headset size={24} strokeWidth={1.9} aria-hidden="true" className="shrink-0 text-brand" />
               <span>
-                <span className="block text-small font-semibold text-ink">Need help? We&apos;re here 24/7</span>
+                <span className="block text-small font-medium text-ink">Need help? We&apos;re here 24/7</span>
                 <span className="block text-small text-body">{FOOTER_CONTACT.phone}</span>
               </span>
             </a>
           </nav>
 
           <div className="grid grid-cols-2 gap-3 px-5 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
-            <Link href="/signin" className="flex h-12 items-center justify-center rounded-xl bg-shell text-copy font-semibold text-ink">
+            <Link href="/signin" className="flex h-12 items-center justify-center rounded-xl bg-shell text-copy font-medium text-ink">
               Sign in
             </Link>
             <Link href="/signup" className="flex h-12 items-center justify-center rounded-xl bg-sky text-copy font-semibold text-white">

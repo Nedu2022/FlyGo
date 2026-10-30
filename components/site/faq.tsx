@@ -69,7 +69,7 @@ export function FaqAccordion({ items }: { items: FaqItem[] }) {
                 onClick={() => setOpen(isOpen ? null : index)}
                 className="flex w-full items-center justify-between gap-6 py-5 text-left sm:py-6"
               >
-                <span className="text-copy font-semibold leading-snug text-ink sm:text-lead">{faq.question}</span>
+                <span className="text-copy font-medium leading-snug text-ink sm:text-lead">{faq.question}</span>
                 <span
                   aria-hidden="true"
                   className={`relative flex h-8 w-8 shrink-0 items-center justify-center rounded-full transition-colors duration-300 ${

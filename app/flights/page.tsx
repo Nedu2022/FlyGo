@@ -92,7 +92,7 @@ export default function FlightSearchPage() {
           <div className="min-w-0 space-y-4">
             <div className="hidden items-center justify-between gap-3 rounded-2xl bg-white p-4 sm:flex sm:p-5">
               <div>
-                <h2 className="text-copy font-bold text-ink">
+                <h2 className="text-copy font-semibold text-ink">
                   {filtered.length} of {FLIGHT_RESULTS.length} flights
                 </h2>
               </div>
@@ -101,7 +101,7 @@ export default function FlightSearchPage() {
                 role="switch"
                 aria-checked={alerts}
                 onClick={() => setAlerts((v) => !v)}
-                className="flex shrink-0 items-center gap-2 rounded-full bg-shell py-1.5 pl-3 pr-1.5 text-small font-semibold text-ink sm:gap-3 sm:pl-4"
+                className="flex shrink-0 items-center gap-2 rounded-full bg-shell py-1.5 pl-3 pr-1.5 text-small font-medium text-ink sm:gap-3 sm:pl-4"
               >
                 <Bell size={16} strokeWidth={2} aria-hidden="true" />
                 <span className="hidden min-[400px]:inline">{alerts ? "Tracking prices" : "Track prices"}</span>

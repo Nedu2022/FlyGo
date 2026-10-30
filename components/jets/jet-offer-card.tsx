@@ -21,7 +21,7 @@ export function JetOfferCard({ offer, from, to }: { offer: JetOffer; from: strin
     <article className="rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05),0_10px_28px_-18px_rgba(16,24,40,0.3)]">
       <div className="grid gap-5 p-5 sm:p-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-center">
         <div className="min-w-0">
-          <p className="text-h3 font-bold tracking-tight text-ink">{aircraft.size}</p>
+          <p className="text-h3 font-semibold tracking-tight text-ink">{aircraft.size}</p>
           <p className="text-small text-body">
             {aircraft.model} · {offer.operator}
           </p>
@@ -91,7 +91,7 @@ function Done({ title, body }: { title: string; body: string }) {
         <Check size={18} strokeWidth={2.6} aria-hidden="true" />
       </span>
       <span>
-        <span className="block text-copy font-semibold text-ink">{title}</span>
+        <span className="block text-copy font-medium text-ink">{title}</span>
         <span className="block text-small text-body">{body}</span>
       </span>
     </div>
@@ -113,7 +113,7 @@ function WholeJet({ offer }: { offer: JetOffer }) {
         />
       ) : (
         <>
-          <p className="text-copy font-semibold text-ink">When do you want to fly?</p>
+          <p className="text-copy font-medium text-ink">When do you want to fly?</p>
           <div className="mt-3 grid gap-3 sm:grid-cols-2">
             <Choice
               label="Date"
@@ -149,7 +149,7 @@ function Share({ offer }: { offer: JetOffer }) {
 
   return (
     <Panel>
-      <p className="text-copy font-semibold text-ink">People going to the same place</p>
+      <p className="text-copy font-medium text-ink">People going to the same place</p>
       <p className="text-small text-body">
         The price is split by everyone in the group. The more people join, the less each pays.
       </p>
@@ -205,14 +205,14 @@ function GroupRow({
     <div className={`rounded-2xl bg-shell p-4 ${disabled ? "opacity-50" : ""}`}>
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
-          <p className="text-copy font-semibold text-ink">
+          <p className="text-copy font-medium text-ink">
             {group.people} {group.people === 1 ? "person" : "people"} going · {group.date}
           </p>
           <p className="text-small text-body">{group.window}</p>
         </div>
         <div className="text-right">
           <p className="text-tiny text-label">With you, each pays</p>
-          <p className="text-h3 font-bold leading-tight tracking-tight text-ink">{usd(each)}</p>
+          <p className="text-h3 font-semibold leading-tight tracking-tight text-ink">{usd(each)}</p>
           <p className="text-tiny text-label">
             {withYou} people · drops to {usd(full)} if all {seats} seats fill
           </p>
@@ -241,7 +241,7 @@ function GroupRow({
           >
             <Minus size={16} strokeWidth={2.4} aria-hidden="true" />
           </button>
-          <span className="w-16 text-center text-small font-semibold text-ink" aria-live="polite">
+          <span className="w-16 text-center text-small font-medium text-ink" aria-live="polite">
             {mine} {mine === 1 ? "seat" : "seats"}
           </span>
           <button
@@ -288,7 +288,7 @@ function Choice({
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="w-full cursor-pointer appearance-none bg-transparent text-copy font-semibold text-ink outline-none"
+          className="w-full cursor-pointer appearance-none bg-transparent text-copy font-medium text-ink outline-none"
         >
           {options.map((option) => (
             <option key={option}>{option}</option>

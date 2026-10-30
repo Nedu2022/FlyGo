@@ -31,7 +31,7 @@ export function AboutHero() {
         </Link>
         <Link
           href="/contact"
-          className="inline-flex h-12 items-center justify-center rounded-lg bg-white/15 px-6 text-copy font-semibold text-white ring-1 ring-white/40 backdrop-blur transition-colors duration-200"
+          className="inline-flex h-12 items-center justify-center rounded-lg bg-white/15 px-6 text-copy font-medium text-white ring-1 ring-white/40 backdrop-blur transition-colors duration-200"
         >
           Talk to us
         </Link>
@@ -156,7 +156,7 @@ export function CoreValues() {
             <span className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white text-ink">
               <ValueIcon name={value.icon} size={24} />
             </span>
-            <h3 className="text-lead font-bold text-ink">{value.title}</h3>
+            <h3 className="text-lead font-semibold text-ink">{value.title}</h3>
             <p className="mt-3 text-small leading-relaxed text-body">{value.body}</p>
           </article>
         ))}

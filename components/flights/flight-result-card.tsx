@@ -30,7 +30,7 @@ export function FlightResultCard({
         <div className="flex items-center gap-3">
           <AirlineMark airline={result.airline} code={result.code} logo={result.logo} />
           <div className="min-w-0 flex-1">
-            <p className="truncate text-copy font-semibold text-ink">{result.airline}</p>
+            <p className="truncate text-copy font-medium text-ink">{result.airline}</p>
             <p className="text-tiny text-label">
               {result.cabin} · {result.outbound.from} ⇄ {result.outbound.to}
             </p>
@@ -102,7 +102,7 @@ function Tags({ result, badge }: { result: FlightResult; badge?: string }) {
         </span>
       ) : null}
       {result.seatsLeft ? (
-        <span className="rounded-full bg-shell px-2.5 py-1 text-tiny font-semibold text-body">
+        <span className="rounded-full bg-shell px-2.5 py-1 text-tiny font-medium text-body">
           {result.seatsLeft} seats left
         </span>
       ) : null}
@@ -113,11 +113,11 @@ function Tags({ result, badge }: { result: FlightResult; badge?: string }) {
 function Leg({ leg, label }: { leg: FlightLeg; label: string }) {
   return (
     <div>
-      <p className="text-micro font-semibold uppercase tracking-[0.14em] text-label">{label}</p>
+      <p className="text-micro font-medium uppercase tracking-[0.14em] text-label">{label}</p>
       <div className="mt-1.5 flex min-w-0 items-center gap-3 sm:gap-5">
         <div className="shrink-0">
-          <p className="text-h3 font-bold leading-none tracking-tight text-ink">{leg.depart}</p>
-          <p className="mt-1 text-small font-semibold text-body">{leg.from}</p>
+          <p className="text-h3 font-semibold leading-none tracking-tight text-ink">{leg.depart}</p>
+          <p className="mt-1 text-small font-medium text-body">{leg.from}</p>
         </div>
 
         <div className="min-w-0 flex-1 text-center">
@@ -141,11 +141,11 @@ function Leg({ leg, label }: { leg: FlightLeg; label: string }) {
         </div>
 
         <div className="shrink-0 text-right">
-          <p className="text-h3 font-bold leading-none tracking-tight text-ink">
+          <p className="text-h3 font-semibold leading-none tracking-tight text-ink">
             {leg.arrive}
-            {leg.nextDay ? <sup className="ml-0.5 text-micro font-semibold text-brand">+1</sup> : null}
+            {leg.nextDay ? <sup className="ml-0.5 text-micro font-medium text-brand">+1</sup> : null}
           </p>
-          <p className="mt-1 text-small font-semibold text-body">{leg.to}</p>
+          <p className="mt-1 text-small font-medium text-body">{leg.to}</p>
         </div>
       </div>
     </div>
@@ -159,7 +159,7 @@ export function AirlineMark({ airline, code, logo }: { airline: string; code: st
       {logo ? (
         <Image src={logo} alt={airline} width={44} height={44} className="h-8 w-8 object-contain" />
       ) : (
-        <span aria-label={airline} className="text-small font-bold tracking-tight text-steel">
+        <span aria-label={airline} className="text-small font-semibold tracking-tight text-steel">
           {code}
         </span>
       )}

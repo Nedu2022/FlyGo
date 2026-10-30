@@ -81,7 +81,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
                     </span>
                     <span className="min-w-0">
                       <span className="block text-small text-body">{channel.title}</span>
-                      <span className="block truncate text-copy font-semibold text-ink">{channel.value}</span>
+                      <span className="block truncate text-copy font-medium text-ink">{channel.value}</span>
                       <span className="block text-tiny text-label">{channel.note}</span>
                     </span>
                   </span>
@@ -90,7 +90,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
                     <span className="absolute -top-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
                     <span className="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
                   </span>
-                  <span className="flex w-[72px] shrink-0 items-center justify-center text-small font-semibold text-brand">
+                  <span className="flex w-[72px] shrink-0 items-center justify-center text-small font-medium text-brand">
                     {channel.action}
                   </span>
                 </a>
@@ -115,7 +115,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
                 <div key={row.label} className="flex items-center gap-3">
                   <Clock size={18} strokeWidth={2} aria-hidden="true" className="shrink-0 text-label" />
                   <dt className="w-36 text-small text-body">{row.label}</dt>
-                  <dd className="text-small font-semibold text-ink">{row.value}</dd>
+                  <dd className="text-small font-medium text-ink">{row.value}</dd>
                 </div>
               ))}
             </dl>

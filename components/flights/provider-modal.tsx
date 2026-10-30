@@ -50,11 +50,11 @@ export function ProviderModal({
         </button>
 
         <div className="p-5 sm:p-8">
-          <h2 id="provider-modal-title" className="text-h3 font-bold text-ink">
+          <h2 id="provider-modal-title" className="text-h3 font-semibold text-ink">
             {TRIP.route}
           </h2>
 
-          <h3 className="mt-7 text-lead font-semibold text-ink">Itinerary</h3>
+          <h3 className="mt-7 text-lead font-medium text-ink">Itinerary</h3>
           <p className="mt-4 text-copy text-body">
             {TRIP.dates} &nbsp;•&nbsp; Business
           </p>
@@ -70,7 +70,7 @@ export function ProviderModal({
             </svg>
           </button>
 
-          <h3 className="mt-8 text-h4 font-bold text-ink">Total</h3>
+          <h3 className="mt-8 text-h4 font-semibold text-ink">Total</h3>
           <p className="mt-2 text-h3 font-semibold text-sky">{PROVIDERS[0].price}</p>
           <p className="mt-1 text-copy text-body">per person</p>
         </div>

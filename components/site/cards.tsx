@@ -30,7 +30,7 @@ export function ResortCountryCard({
       <div className="absolute inset-x-0 bottom-0 p-6">
         <p className="text-small text-white/80">{country.region}</p>
         <h3 className="text-h1 font-bold leading-tight tracking-tight text-white">{country.name}</h3>
-        <p className="mt-3 text-copy font-semibold text-white">from {country.budget}</p>
+        <p className="mt-3 text-copy font-medium text-white">from {country.budget}</p>
       </div>
     </Link>
   );
@@ -51,14 +51,14 @@ export function HotelCard({ hotel }: { hotel: Hotel }) {
       </div>
       <div className="flex flex-1 flex-col px-1 pt-4">
         <div className="flex items-start justify-between gap-3">
-          <h3 className="line-clamp-1 text-copy font-bold text-ink">{hotel.name}</h3>
-          <span className="flex shrink-0 items-center gap-1 text-small font-semibold text-ink">
+          <h3 className="line-clamp-1 text-copy font-semibold text-ink">{hotel.name}</h3>
+          <span className="flex shrink-0 items-center gap-1 text-small font-medium text-ink">
             <Star size={14} fill="currentColor" strokeWidth={0} aria-hidden="true" />
             {hotel.score}
           </span>
         </div>
         <p className="mt-2 text-small text-body">
-          <span className="text-copy font-bold text-ink">{hotel.price}</span> / night
+          <span className="text-copy font-semibold text-ink">{hotel.price}</span> / night
         </p>
       </div>
     </Link>

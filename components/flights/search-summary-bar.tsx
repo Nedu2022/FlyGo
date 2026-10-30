@@ -37,7 +37,7 @@ export function SearchSummaryBar({ embedded = false }: { embedded?: boolean }) {
         >
           <Search size={18} strokeWidth={2} aria-hidden="true" className="shrink-0 text-ink" />
           <span className="min-w-0 flex-1">
-            <span className="block truncate text-copy font-semibold text-ink">
+            <span className="block truncate text-copy font-medium text-ink">
               {from} → {to}
             </span>
             <span className="block truncate text-tiny text-label">
@@ -45,7 +45,7 @@ export function SearchSummaryBar({ embedded = false }: { embedded?: boolean }) {
               {oneWay ? "" : ` – ${SUMMARY.format(returnDate)}`} · {TRIP.passengers}
             </span>
           </span>
-          <span className="shrink-0 text-small font-semibold text-sky">{editing ? "Close" : "Edit"}</span>
+          <span className="shrink-0 text-small font-medium text-sky">{editing ? "Close" : "Edit"}</span>
         </button>
 
         <form
@@ -158,7 +158,7 @@ function NotchedField({
   return (
     <div className={`min-w-0 rounded-xl bg-shell px-4 py-2.5 ${className}`}>
       <span className="block text-tiny font-medium text-label">{label}</span>
-      <div className="mt-0.5 text-copy font-semibold text-ink [&_input]:font-semibold [&_select]:font-semibold">{children}</div>
+      <div className="mt-0.5 text-copy font-medium text-ink [&_input]:font-medium [&_select]:font-medium">{children}</div>
     </div>
   );
 }

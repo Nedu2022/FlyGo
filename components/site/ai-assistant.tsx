@@ -186,7 +186,7 @@ export function AiAssistant() {
         }`}
       >
         <header className="flex items-center justify-between px-5 py-4">
-          <p className="flex items-center gap-2 text-h4 font-bold text-ink">
+          <p className="flex items-center gap-2 text-h4 font-semibold text-ink">
             <Sparkles size={20} strokeWidth={2} aria-hidden="true" className="text-brand" />
             Ask FLYGO AI
           </p>
@@ -203,7 +203,7 @@ export function AiAssistant() {
         <div ref={list} className="flex-1 space-y-3 overflow-y-auto px-5 pb-4">
           {messages.length === 0 ? (
             <div className="pt-2">
-              <p className="text-h3 font-bold tracking-tight text-ink">Where to next?</p>
+              <p className="text-h3 font-semibold tracking-tight text-ink">Where to next?</p>
               <p className="mt-1 text-copy text-body">Ask in your own words. I&apos;ll find the right flights, stays or jets.</p>
               <ul className="mt-5 space-y-2">
                 {SUGGESTIONS.map((s) => (

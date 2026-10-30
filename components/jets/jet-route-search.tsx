@@ -72,7 +72,7 @@ function CitySelect({
         <select
           value={value}
           onChange={(event) => onChange(event.target.value)}
-          className="w-full cursor-pointer appearance-none bg-transparent text-copy font-semibold text-ink outline-none"
+          className="w-full cursor-pointer appearance-none bg-transparent text-copy font-medium text-ink outline-none"
         >
           {JET_CITIES.map((c) => (
             <option key={c.code} value={c.code}>

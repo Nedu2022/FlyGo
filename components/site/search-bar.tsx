@@ -233,7 +233,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
           {flight ? (
             <>
               <div className="flex min-w-0 flex-1 items-center px-2">
-                <PlaceInput value={from} onChange={setFrom} label="From" placeholderPrefix="From?" className="h-12 text-copy font-medium" />
+                <PlaceInput value={from} onChange={setFrom} label="From" placeholderPrefix="From?" className="h-12 text-copy" />
               </div>
               <button
                 type="button"
@@ -244,7 +244,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 <ArrowLeftRight size={20} strokeWidth={2} aria-hidden="true" />
               </button>
               <div className="flex min-w-0 flex-1 items-center px-2">
-                <PlaceInput value={to} onChange={setTo} label="To" placeholderPrefix="To?" className="h-12 text-copy font-medium" />
+                <PlaceInput value={to} onChange={setTo} label="To" placeholderPrefix="To?" className="h-12 text-copy" />
               </div>
             </>
           ) : (
@@ -255,12 +255,12 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 label="Destination"
                 kind="stay"
                 placeholderPrefix="Where to?"
-                className="h-12 text-copy font-medium"
+                className="h-12 text-copy"
               />
             </div>
           )}
           <div className="flex h-14 shrink-0 items-stretch rounded-xl ring-1 ring-line">
-            <div className="flex items-center px-1 [&_button]:text-copy [&_button]:font-medium">
+            <div className="flex items-center px-1 [&_button]:text-copy">
               {departField}
               <span aria-hidden="true" className="text-label">
                 –
@@ -273,7 +273,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 key={tab}
                 kind={people}
                 initial={flight ? undefined : stayInitial}
-                className="h-12 text-copy font-medium"
+                className="h-12 text-copy"
                 compact
               />
             </div>

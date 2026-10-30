@@ -155,12 +155,12 @@ export function TravellersField({
                     : "animate-fade w-[min(340px,calc(100vw-1rem))] rounded-2xl bg-white p-5 shadow-[0_24px_48px_-16px_rgba(16,24,40,0.35)] ring-1 ring-black/5"
                 }
               >
-                {sheet ? <p className="mb-5 text-h4 font-bold text-ink">{title}</p> : null}
+                {sheet ? <p className="mb-5 text-h4 font-semibold text-ink">{title}</p> : null}
                 <ul className="space-y-4">
                   {rows.map((row) => (
                     <li key={row.key} className="flex items-center justify-between gap-4">
                       <span>
-                        <span className="block text-copy font-semibold text-ink">{row.label}</span>
+                        <span className="block text-copy font-medium text-ink">{row.label}</span>
                         {row.note ? <span className="block text-small text-label">{row.note}</span> : null}
                       </span>
                       <span className="flex items-center gap-3">
@@ -171,7 +171,7 @@ export function TravellersField({
                         >
                           <Minus size={16} strokeWidth={2.4} aria-hidden="true" />
                         </Stepper>
-                        <span className="w-5 text-center text-copy font-semibold text-ink" aria-live="polite">
+                        <span className="w-5 text-center text-copy font-medium text-ink" aria-live="polite">
                           {counts[row.key]}
                         </span>
                         <Stepper
@@ -190,7 +190,7 @@ export function TravellersField({
 
                 {flight ? (
                   <div className="mt-5">
-                    <p className="text-small font-semibold text-ink">Cabin</p>
+                    <p className="text-small font-medium text-ink">Cabin</p>
                     <div className="mt-2 grid grid-cols-2 gap-2" role="radiogroup" aria-label="Cabin class">
                       {CABINS.map((item) => (
                         <button

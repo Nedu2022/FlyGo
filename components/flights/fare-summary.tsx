@@ -25,7 +25,7 @@ export function FareSummary({
       <Row label="Total:" value={FARE_SUMMARY.total} />
 
       <div className="pt-4">
-        <p className="text-small font-semibold text-ink">Refundable</p>
+        <p className="text-small font-medium text-ink">Refundable</p>
         <p className="mt-1.5 text-small leading-relaxed text-body">
           Total fare displayed above has been rounded off and may thus show a slight
           difference.

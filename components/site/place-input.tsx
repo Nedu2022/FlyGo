@@ -191,7 +191,7 @@ export function PlaceInput({
                         <Icon size={18} strokeWidth={1.9} aria-hidden="true" />
                       </span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-copy font-semibold text-ink">
+                        <span className="block truncate text-copy font-medium text-ink">
                           {place.city}
                           {place.code ? <span className="font-normal text-label"> · {place.code}</span> : null}
                         </span>

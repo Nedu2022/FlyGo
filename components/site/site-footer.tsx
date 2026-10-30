@@ -39,7 +39,7 @@ export function SiteFooter({ flush = false }: { flush?: boolean }) {
           >
             {FOOTER_LINKS.map((column, index) => (
               <div key={column.heading} className={index === 0 ? "row-span-2 sm:row-span-1" : ""}>
-                <h3 className="text-copy font-bold text-ink sm:text-lead">
+                <h3 className="text-copy font-semibold text-ink sm:text-lead">
                   {column.heading}
                 </h3>
                 <ul className="mt-4 space-y-3 sm:mt-6 sm:space-y-4">

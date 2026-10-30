@@ -33,7 +33,7 @@ export function ContactForm({ topic }: { topic?: string }) {
           <span className="animate-badge-in mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand">
             <Check size={26} strokeWidth={2.4} aria-hidden="true" />
           </span>
-          <h2 className="mt-5 text-h4 font-bold text-ink">Message sent</h2>
+          <h2 className="mt-5 text-h4 font-semibold text-ink">Message sent</h2>
           <p className="mx-auto mt-2 max-w-[360px] text-copy leading-relaxed text-body">
             Thanks for getting in touch. We&apos;ll reply within one working day.
           </p>

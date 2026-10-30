@@ -45,7 +45,7 @@ export function FiltersSidebar(props: FiltersProps) {
       </button>
 
       <aside className="hidden lg:block lg:w-[260px] lg:shrink-0">
-        <h2 className="text-h4 font-bold text-ink">Filters</h2>
+        <h2 className="text-h4 font-semibold text-ink">Filters</h2>
         <FilterGroups {...props} />
       </aside>
 
@@ -67,7 +67,7 @@ export function FiltersSidebar(props: FiltersProps) {
               />
               <div className="animate-rise absolute inset-x-0 bottom-0 flex max-h-[calc(100%-4rem)] flex-col rounded-t-3xl bg-white shadow-[0_-12px_32px_-16px_rgba(16,24,40,0.35)]">
                 <div className="flex items-center justify-between border-b border-line px-5 py-4">
-                  <h2 className="text-h4 font-bold text-ink">Filters</h2>
+                  <h2 className="text-h4 font-semibold text-ink">Filters</h2>
                   <button
                     type="button"
                     onClick={() => setOpen(false)}
@@ -176,7 +176,7 @@ function FilterGroup({ heading, children, last = false }: { heading: string; chi
           aria-expanded={open}
           className="flex w-full items-center justify-between gap-3 text-left"
         >
-          <span className="text-lead font-semibold text-ink">{heading}</span>
+          <span className="text-lead font-medium text-ink">{heading}</span>
           <svg
             width="20"
             height="20"
@@ -278,7 +278,7 @@ function RatingChips() {
           {min ? `${min} star${min > 1 ? "s" : ""}${min < 5 ? " & up" : ""}` : "Any rating"}
         </p>
         {min ? (
-          <button type="button" onClick={() => setMin(0)} className="text-small font-semibold text-blue">
+          <button type="button" onClick={() => setMin(0)} className="text-small font-medium text-blue">
             Clear
           </button>
         ) : null}

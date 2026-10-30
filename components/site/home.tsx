@@ -63,13 +63,13 @@ export function DealCard({ deal }: { deal: Deal }) {
       </div>
       <div className="px-3 pt-4">
         <div className="flex items-center justify-between gap-3">
-          <span className="text-h4 font-bold tracking-tight text-ink">LOS</span>
+          <span className="text-h4 font-semibold tracking-tight text-ink">LOS</span>
           <span aria-hidden="true" className="flex flex-1 items-center">
             <span className="flex-1 border-t border-dashed border-muted" />
             <Plane size={16} strokeWidth={2} className="mx-1 rotate-45 text-ink" />
             <span className="flex-1 border-t border-dashed border-muted" />
           </span>
-          <span className="text-h4 font-bold tracking-tight text-ink">{CODES[deal.city] ?? deal.city.slice(0, 3).toUpperCase()}</span>
+          <span className="text-h4 font-semibold tracking-tight text-ink">{CODES[deal.city] ?? deal.city.slice(0, 3).toUpperCase()}</span>
         </div>
         <p className="mt-1 text-small text-body">
           From Lagos · {deal.duration}
@@ -83,7 +83,7 @@ export function DealCard({ deal }: { deal: Deal }) {
           {deal.out} – {deal.back}
         </span>
         <span className="text-small text-body">
-          from <span className="text-h4 font-bold text-ink">{deal.price}</span>
+          from <span className="text-h4 font-semibold text-ink">{deal.price}</span>
         </span>
       </div>
     </Link>
@@ -118,7 +118,7 @@ export function TrustCards() {
           </div>
           <TearLine />
           <div className={stub}>
-            <p className="text-h4 font-bold text-ink">Every airline, one search</p>
+            <p className="text-h4 font-semibold text-ink">Every airline, one search</p>
             <p className="mt-1 text-small text-body">We check them all so you get the lowest fare.</p>
           </div>
         </div>
@@ -133,7 +133,7 @@ export function TrustCards() {
           </div>
           <TearLine />
           <div className={stub}>
-            <p className="text-h4 font-bold text-ink">2 million journeys</p>
+            <p className="text-h4 font-semibold text-ink">2 million journeys</p>
             <p className="mt-1 text-small text-body">Planned by travellers across Africa and beyond.</p>
           </div>
         </div>
@@ -148,7 +148,7 @@ export function TrustCards() {
           </div>
           <TearLine />
           <div className={stub}>
-            <p className="text-h4 font-bold text-ink">Rated 4.8 out of 5</p>
+            <p className="text-h4 font-semibold text-ink">Rated 4.8 out of 5</p>
             <p className="mt-1 text-small text-body">Honest prices and help when plans change.</p>
           </div>
         </div>
@@ -178,7 +178,7 @@ export function Services() {
                   <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
                 </span>
                 <span className="min-w-0">
-                  <span className="block text-h4 font-bold text-ink">{title}</span>
+                  <span className="block text-h4 font-semibold text-ink">{title}</span>
                   <span className="block text-small text-body">{body}</span>
                 </span>
               </span>

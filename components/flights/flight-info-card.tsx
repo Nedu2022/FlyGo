@@ -30,7 +30,7 @@ export function FlightInfoCard({
 
             <div className="text-right">
               <p className="text-small text-label">starting from</p>
-              <p className="mt-0.5 text-h3 font-bold text-brand">{result.price}</p>
+              <p className="mt-0.5 text-h3 font-semibold text-brand">{result.price}</p>
             </div>
           </div>
 

@@ -23,7 +23,7 @@ export function SectionHeader({
         {href ? (
           <Link
             href={href}
-            className="mb-0.5 inline-flex sm:mb-1.5 shrink-0 items-center gap-1 text-small font-semibold text-ink underline decoration-line underline-offset-[6px]"
+            className="mb-0.5 inline-flex sm:mb-1.5 shrink-0 items-center gap-1 text-small font-medium text-ink underline decoration-line underline-offset-[6px]"
           >
             <span className="hidden sm:inline">{linkLabel}</span>
             <span className="sm:hidden">See all</span>
