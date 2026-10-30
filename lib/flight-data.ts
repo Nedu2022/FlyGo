@@ -15,8 +15,6 @@ export const TRIP = {
 
 export type SortMode = "best" | "cheapest" | "quickest";
 
-export const SORT_MODES = ["Recommended", "Price: low to high", "Duration", "Departure time"];
-
 /** One direction of a round trip. Times are local to each airport. */
 export type FlightLeg = {
   depart: string;

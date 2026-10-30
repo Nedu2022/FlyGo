@@ -1,4 +1,3 @@
-import Image from "next/image";
 import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
@@ -60,17 +59,3 @@ export function SectionHeading({
   );
 }
 
-/** Icon loaded from the exported asset set, tinted to the section colour. */
-export function AssetIcon({
-  src,
-  size = 24,
-  alt = "",
-}: {
-  src: string;
-  size?: number;
-  alt?: string;
-}) {
-  return (
-    <Image src={src} alt={alt} width={size} height={size} style={{ width: size, height: "auto" }} />
-  );
-}

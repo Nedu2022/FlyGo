@@ -37,7 +37,6 @@
   --color-night: #1a1a1a;
   --color-star: #f5b423;
 
-
   /* --------------------------------------------------------------------
      Fluid type scale. Each step interpolates between a phone (360px) and a
      large desktop (1600px) viewport, so copy adapts continuously instead of
@@ -196,32 +195,6 @@ body {
   }
 }
 
-@keyframes draw {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-
-@keyframes shimmer {
-  0% {
-    transform: translateX(-100%);
-  }
-  60%,
-  100% {
-    transform: translateX(100%);
-  }
-}
-
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
 @keyframes reveal {
   from {
     opacity: 0;
@@ -291,17 +264,6 @@ body {
 .animate-badge-in {
   animation: badge-in 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Success tick draws itself on. */
-.animate-draw {
-  stroke-dasharray: 40;
-  stroke-dashoffset: 40;
-  animation: draw 0.5s 0.35s ease-out forwards;
-}
-
 /* Sections fade up as they scroll into view, where supported. */
 /* No `both` fill: outside the scroll range the section keeps its normal
    painted state, so content can never be stranded at opacity 0. */
@@ -353,21 +315,6 @@ body {
 }
 .no-scrollbar::-webkit-scrollbar {
   display: none;
-}
-
-/* Revenue bars grow up from the axis as the chart paints. */
-@keyframes grow-bar {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
-}
-
-.animate-grow-bar {
-  transform-origin: bottom;
-  animation: grow-bar 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 /* Popularity meters and progress rails fill from the left. */

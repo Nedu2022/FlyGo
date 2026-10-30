@@ -49,10 +49,10 @@ export default function ContactPage() {
           {/* Brand panel: who you're talking to, and every way to reach them. */}
           <div className="relative isolate overflow-hidden bg-shell p-6 sm:p-10 lg:p-12">
             <Image
-              src="/images/brand-mark.svg"
+              src="/images/logo-mark.svg"
               alt=""
-              width={69}
-              height={69}
+              width={31}
+              height={41}
               aria-hidden="true"
               className="pointer-events-none absolute -bottom-16 -right-16 -z-10 h-[260px] w-auto opacity-[0.07] sm:h-[340px]"
             />

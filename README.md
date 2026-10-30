@@ -6,9 +6,9 @@ FLYGO is a modern travel booking experience for discovering flights, finding sta
 
 ## What is included
 
-- **Travel discovery**: destination-led homepage, curated adventures, travel stories, an AI planner surface, and mobile app promotion.
-- **Flight search**: search summary, result cards, filter and sort controls, fare summaries, and provider comparison modal.
-- **Hotel discovery**: hero search, hotel and resort collections, testimonials, journals, FAQ, and destination content.
+- **Travel discovery**: search-first homepage with a rotating photo hero, live destination suggestions, cheapest-flight deals and top-rated stays.
+- **Flight search**: ticket-style result cards, Best/Cheapest/Quickest sorting, flexible-date strip, stops and rating filters, and a provider comparison modal.
+- **Hotel discovery**: hero search, top-rated hotels, resort escapes and an FAQ.
 - **Booking flow**: traveler details, add-on services, payment form, and confirmation screens organized into a four-step shell.
 - **Account flows**: sign in, sign up, address and profile details, verification, password reset, and success states.
 - **Host workspace**: responsive dashboard navigation with overview, bookings, properties, availability, earnings, insights, messages, reviews, settings, and support views.
@@ -64,7 +64,6 @@ app/                 Next.js App Router pages and route layouts
 components/          Reusable UI grouped by product area
 lib/                 Local demo content for flights, sites, and dashboard views
 public/images/       Travel, brand, airline, provider, and interface assets
-scripts/              Local utilities, including screenshot tooling
 ```
 
 The `@/*` path alias maps to the repository root. Styling is defined in `app/globals.css` and uses Tailwind CSS v4 through the PostCSS plugin. Shared shells keep the main experiences consistent:
@@ -79,11 +78,11 @@ The `@/*` path alias maps to the repository root. Styling is defined in `app/glo
 
 Most visible content is intentionally easy to replace. Update the relevant module in `lib/` and keep the component API stable:
 
-- `lib/flight-data.ts` for flight results, providers, fares, and sort modes.
-- `lib/site-data.ts` for destinations, hotels, resort countries, stories, and other public content.
+- `lib/flight-data.ts` for flight results, providers, fares and date prices.
+- `lib/site-data.ts` for deals, hotels, resort countries, FAQs and footer links.
 - `lib/dashboard-data.ts` for host details, metrics, bookings, properties, and todos.
 
-Images are stored under `public/images/` and referenced with paths such as `/images/hero/...`. Add new assets there and use Next.js `Image` for rendered imagery where possible.
+Images are stored under `public/images/` and referenced with paths such as `/images/photos/...`; photo credits are listed in `public/images/photos/SOURCES.md`. Add new assets there and use Next.js `Image` for rendered imagery where possible.
 
 ## Production roadmap
 

@@ -30,26 +30,3 @@ export function Logo({
   );
 }
 
-/**
- * Word-only lockup for the dark footer, where the black "BOOKINGS" line in the
- * full mark would disappear against the background.
- */
-export function LogoWord({
-  className = "",
-  height = 42,
-}: {
-  className?: string;
-  height?: number;
-}) {
-  return (
-    <Link href="/" aria-label="FLYGO — home" className={`inline-flex ${className}`}>
-      <Image
-        src="/images/logo-word.svg"
-        alt="FLYGO"
-        width={126}
-        height={44}
-        style={{ height, width: "auto" }}
-      />
-    </Link>
-  );
-}
