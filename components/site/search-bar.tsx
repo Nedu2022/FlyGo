@@ -8,7 +8,7 @@ import { PlaceInput } from "@/components/site/place-input";
 import { TravellersField } from "@/components/site/travellers-field";
 
 /** Business jet in Lucide's line style; Lucide only ships airliners. */
-function PrivateJet({ size = 24, strokeWidth = 1.9, ...props }: LucideProps) {
+export function PrivateJet({ size = 24, strokeWidth = 1.9, ...props }: LucideProps) {
   return (
     <svg
       width={size}

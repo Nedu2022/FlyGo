@@ -3,8 +3,9 @@ import Link from "next/link";
 import { PAGE } from "@/components/site/container";
 import { Rail, RAIL_ITEM } from "@/components/site/rail";
 import { SectionHeader } from "@/components/site/section-header";
-import { Plane, Star } from "lucide-react";
+import { ArrowRight, BedDouble, Building2, Plane, Star } from "lucide-react";
 import { Avatar } from "@/components/dashboard/icons";
+import { PrivateJet } from "@/components/site/search-bar";
 import { DEALS, type Deal } from "@/lib/site-data";
 
 /** "$1,299" -> 1299, for ordering cheapest first. */
@@ -157,33 +158,38 @@ export function TrustCards() {
 }
 
 const SERVICES = [
-  { title: "Flights", body: "Compare airlines in one search", href: "/flights", image: "/images/photos/hero-sky.webp", position: "70% center" },
-  { title: "Hotels", body: "Top-rated stays, free cancellation", href: "/hotels", image: "/images/photos/stay-suite.webp", position: "center" },
-  { title: "Apartments", body: "Space for families and long stays", href: "/hotels", image: "/images/photos/lisbon-tram.webp", position: "center" },
-  { title: "Private jets", body: "Book a whole jet or share one", href: "/private-jets", image: "/images/photos/jet-hero.webp", position: "35% center" },
+  { title: "Flights", body: "Compare airlines in one search", href: "/flights", icon: Plane },
+  { title: "Hotels", body: "Top-rated stays, free cancellation", href: "/hotels", icon: BedDouble },
+  { title: "Apartments", body: "Room for families and long stays", href: "/hotels", icon: Building2 },
+  { title: "Private jets", body: "Book a whole jet or share one", href: "/private-jets", icon: PrivateJet },
 ];
 
-/** Every FLYGO service, one photo card each. */
+/** Every FLYGO service as a short ticket strip, with an arrow on the stub. */
 export function Services() {
   return (
     <section className={`${PAGE} pt-16 lg:pt-24`}>
       <SectionHeader title="Everything for your trip" />
-      <ul className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
-        {SERVICES.map((service) => (
-          <li key={service.title}>
-            <Link href={service.href} className="block">
-              <div className="relative aspect-[4/5] overflow-hidden rounded-3xl bg-steel sm:aspect-[3/4]">
-                <Image
-                  src={service.image}
-                  alt=""
-                  fill
-                  sizes="(max-width: 1024px) 46vw, 300px"
-                  className="object-cover"
-                  style={{ objectPosition: service.position }}
-                />
-              </div>
-              <p className="mt-3 text-copy font-bold text-ink sm:text-h4">{service.title}</p>
-              <p className="text-small text-body">{service.body}</p>
+      <ul className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4">
+        {SERVICES.map(({ title, body, href, icon: Icon }) => (
+          <li key={title}>
+            <Link href={href} className="flex items-stretch rounded-[24px] bg-shell">
+              <span className="flex min-w-0 flex-1 items-center gap-4 p-4 sm:p-5">
+                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-brand shadow-[0_1px_2px_rgba(16,24,40,0.06)]">
+                  <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-h4 font-bold text-ink">{title}</span>
+                  <span className="block text-small text-body">{body}</span>
+                </span>
+              </span>
+              <span aria-hidden="true" className="relative w-px self-stretch">
+                <span className="absolute inset-y-3 left-0 border-l-2 border-dashed border-line" />
+                <span className="absolute -top-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-white" />
+                <span className="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-white" />
+              </span>
+              <span className="flex w-16 shrink-0 items-center justify-center text-ink sm:w-20">
+                <ArrowRight size={22} strokeWidth={2} aria-hidden="true" />
+              </span>
             </Link>
           </li>
         ))}
