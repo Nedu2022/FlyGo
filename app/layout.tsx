@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ViewTransition } from "react";
-import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -15,15 +15,6 @@ const sans = Plus_Jakarta_Sans({
   display: "swap",
 });
 
-/** Editorial italic for a word or two of emphasis in headlines. */
-const serif = Instrument_Serif({
-  variable: "--font-instrument",
-  subsets: ["latin"],
-  weight: "400",
-  style: "italic",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   title: "FLYGO Bookings",
   description: "Book flights and stays with ease.",
@@ -33,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${sans.variable} ${serif.variable} h-full antialiased`}
+      className={`${sans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <Providers>
