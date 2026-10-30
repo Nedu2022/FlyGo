@@ -58,14 +58,35 @@ export function SiteFooter({ flush = false }: { flush?: boolean }) {
           </nav>
         </div>
 
-        {/* The wordmark, cut out of a golden-hour skyline. */}
-        <div className="mx-auto mt-10 w-full max-w-[1600px] px-2 sm:mt-16 sm:px-4 lg:mt-24">
-          <p
-            aria-hidden="true"
-            className="select-none bg-[url(/images/photos/dubai.webp)] bg-cover bg-[center_62%] bg-clip-text text-center text-[33vw] font-extrabold leading-[0.8] tracking-[-0.06em] text-transparent min-[1600px]:text-[540px]"
-          >
-            FLYGO
-          </p>
+        {/* The wordmark, cut out of a golden-hour skyline. An SVG with
+            textLength stretches the letters to the exact width, so it fits
+            edge to edge whatever the font or screen size. */}
+        <div className="mx-auto mt-10 w-full max-w-[1600px] px-4 sm:mt-16 sm:px-8 lg:mt-24">
+          <svg viewBox="0 0 1000 240" aria-hidden="true" className="block h-auto w-full select-none">
+            <defs>
+              <pattern id="footer-skyline" patternUnits="userSpaceOnUse" width="1000" height="240">
+                <image
+                  href="/images/photos/dubai.webp"
+                  x="0"
+                  y="-260"
+                  width="1000"
+                  height="667"
+                  preserveAspectRatio="xMidYMid slice"
+                />
+              </pattern>
+            </defs>
+            <text
+              x="0"
+              y="228"
+              textLength="1000"
+              lengthAdjust="spacingAndGlyphs"
+              fill="url(#footer-skyline)"
+              className="font-extrabold"
+              style={{ fontSize: 300, letterSpacing: "-0.04em" }}
+            >
+              FLYGO
+            </text>
+          </svg>
         </div>
         <div className="h-6 lg:h-10" />
       </footer>
