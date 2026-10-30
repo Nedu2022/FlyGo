@@ -61,7 +61,7 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
       {/* 1. Every way to reach us, as ticket strips on the golden-hour sky. */}
       <section className="px-0 sm:px-4">
         <div className="sky-golden mx-auto max-w-[1600px] px-4 pb-8 pt-8 sm:rounded-[32px] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14 lg:pb-14 lg:pt-14">
-          <h1 className="text-[clamp(2.5rem,1.6rem+3.6vw,4.5rem)] font-bold leading-[0.98] tracking-tight text-white">
+          <h1 className="text-[clamp(1.875rem,1.35rem+2.6vw,3.75rem)] font-bold leading-[0.98] tracking-tight text-white">
             We&apos;re here, <span className="font-serif text-[1.12em] font-normal italic">day or night.</span>
           </h1>
           <p className="mt-4 max-w-[480px] text-lead text-white/90">Real people, ready to help with any booking.</p>

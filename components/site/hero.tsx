@@ -79,7 +79,7 @@ export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
             <p className="text-tiny font-medium text-white/85 sm:text-small">
               {flight ? "Flights · Hotels · Apartments · Private jets" : "Hotels · Apartments · Resorts"}
             </p>
-            <h1 className="mt-3 text-[clamp(2.125rem,1.5rem+3vw,4.25rem)] font-bold leading-[1] tracking-tight text-white">
+            <h1 className="mt-3 text-[clamp(1.875rem,1.35rem+2.6vw,3.75rem)] font-bold leading-[1] tracking-tight text-white">
               {flight ? (
                 <>
                   The world,
