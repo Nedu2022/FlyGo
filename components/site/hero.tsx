@@ -4,16 +4,16 @@ import { SearchBar, type SearchTab } from "@/components/site/search-bar";
 import { HeroSlides, type Slide } from "@/components/site/hero-slides";
 
 const FLIGHT_SLIDES: Slide[] = [
-  { src: "/images/photos/hero-sky.webp", place: "Above the clouds", position: "70% center" },
-  { src: "/images/photos/stay-santorini.webp", place: "Santorini, Greece" },
-  { src: "/images/photos/dubai-night.webp", place: "Dubai, UAE" },
-  { src: "/images/photos/new-york-wide.webp", place: "New York, USA" },
+  { src: "/images/photos/hero-sky.webp", position: "70% center" },
+  { src: "/images/photos/stay-santorini.webp" },
+  { src: "/images/photos/dubai-night.webp" },
+  { src: "/images/photos/new-york-wide.webp" },
 ];
 
 const STAY_SLIDES: Slide[] = [
-  { src: "/images/photos/hero-pool.webp", place: "Maldives" },
-  { src: "/images/photos/stay-overwater.webp", place: "Overwater villa" },
-  { src: "/images/photos/stay-infinity.webp", place: "Infinity pool" },
+  { src: "/images/photos/hero-pool.webp" },
+  { src: "/images/photos/stay-overwater.webp" },
+  { src: "/images/photos/stay-infinity.webp" },
 ];
 
 /**

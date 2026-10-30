@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export type Slide = { src: string; place: string; position?: string };
+export type Slide = { src: string; position?: string };
 
 const INTERVAL = 6000;
 
 /**
- * Background photos for the hero that crossfade every few seconds, with the
- * current destination named in the corner. Only the first photo is loaded
+ * Background photos for the hero that crossfade every few seconds. Only the
+ * first photo is loaded
  * eagerly; the rest load lazily, and nothing rotates for visitors who prefer
  * reduced motion.
  */
@@ -41,19 +41,6 @@ export function HeroSlides({ slides }: { slides: Slide[] }) {
         />
       ))}
 
-      {slides.length > 1 ? (
-        <div className="absolute right-4 top-4 z-10 flex items-center gap-2 rounded-full bg-black/30 px-3 py-1.5 text-tiny font-medium text-white backdrop-blur-md sm:right-6 sm:top-6">
-          <span aria-live="polite">{slides[index].place}</span>
-          <span className="flex gap-1" aria-hidden="true">
-            {slides.map((slide, i) => (
-              <span
-                key={slide.src}
-                className={`h-1.5 rounded-full bg-white transition-all duration-500 ${i === index ? "w-4" : "w-1.5 opacity-50"}`}
-              />
-            ))}
-          </span>
-        </div>
-      ) : null}
     </>
   );
 }

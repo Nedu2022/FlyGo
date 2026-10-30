@@ -69,7 +69,7 @@ export default function FlightSearchPage() {
     <>
       <SiteHeader variant="solid" />
       <CinematicHero
-        slides={[{ src: "/images/photos/hero-sky.webp", place: "", position: "70% center" }]}
+        slides={[{ src: "/images/photos/hero-sky.webp", position: "70% center" }]}
         title={
           <>
             {TRIP.from} <span className="text-brand">→</span> {TRIP.to}
