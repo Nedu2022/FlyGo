@@ -120,7 +120,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 setTab(value);
                 if (value === "Jet" && kind === "Multi-city") setKind("Return");
               }}
-              className={`flex h-11 shrink-0 items-center gap-2 rounded-full px-4 text-copy transition-colors duration-200 ${
+              className={`flex h-10 shrink-0 items-center gap-2 rounded-full px-3.5 text-small transition-colors duration-200 sm:text-copy ${
                 on
                   ? "bg-ink font-medium text-white"
                   : "bg-white text-ink shadow-[0_1px_2px_rgba(16,24,40,0.06)]"
@@ -158,7 +158,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                   role="radio"
                   aria-checked={kind === item}
                   onClick={() => setKind(item)}
-                  className={`-mb-px border-b-[3px] px-3.5 py-4 text-copy font-semibold ${
+                  className={`-mb-px border-b-[3px] px-3 py-3 text-small font-semibold sm:text-copy ${
                     kind === item ? "border-ink text-ink" : "border-transparent text-label"
                   }`}
                 >
@@ -171,18 +171,18 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
           {flight ? (
             <div className="relative">
               <Row>
-                <PlaceInput value={from} onChange={setFrom} label="From" placeholderPrefix="From?" className="h-[60px] pr-16 text-lead" />
+                <PlaceInput value={from} onChange={setFrom} label="From" placeholderPrefix="From?" className="h-[52px] pr-14 text-copy" />
               </Row>
               <Row last>
-                <PlaceInput value={to} onChange={setTo} label="To" placeholderPrefix="To?" className="h-[60px] pr-16 text-lead" />
+                <PlaceInput value={to} onChange={setTo} label="To" placeholderPrefix="To?" className="h-[52px] pr-14 text-copy" />
               </Row>
               <button
                 type="button"
                 aria-label="Swap origin and destination"
                 onClick={swap}
-                className="absolute right-3 top-1/2 flex h-12 w-12 -translate-y-1/2 items-center justify-center rounded-xl bg-white text-ink ring-1 ring-line"
+                className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg bg-white text-ink ring-1 ring-line"
               >
-                <ArrowUpDown size={20} strokeWidth={2} aria-hidden="true" />
+                <ArrowUpDown size={18} strokeWidth={2} aria-hidden="true" />
               </button>
             </div>
           ) : (
@@ -193,14 +193,14 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 label="Destination"
                 kind="stay"
                 placeholderPrefix="Where to?"
-                className="h-[60px] text-lead"
+                className="h-[52px] text-copy"
               />
             </Row>
           )}
 
           <Perforation />
           <Row>
-            <div className="-mx-3 flex min-w-0 flex-1 items-center [&_button]:h-[60px] [&_button]:text-lead">
+            <div className="-mx-3 flex min-w-0 flex-1 items-center [&_button]:h-[52px] [&_button]:text-copy">
               {departField}
               <span aria-hidden="true" className="text-label">
                 –
@@ -213,12 +213,12 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               key={tab}
               kind={people}
               initial={flight ? undefined : stayInitial}
-              className="h-[60px] text-lead"
+              className="h-[52px] text-copy"
             />
           </Row>
 
           <div className="p-3 pt-0">
-            <button type="submit" className={`flex h-14 w-full items-center justify-center rounded-xl text-lead ${SEARCH_BUTTON}`}>
+            <button type="submit" className={`flex h-12 w-full items-center justify-center rounded-xl text-copy ${SEARCH_BUTTON}`}>
               {jet ? "Find jets" : "Search"}
             </button>
           </div>
@@ -229,7 +229,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
           {flight ? (
             <>
               <div className="flex min-w-0 flex-1 items-center px-2">
-                <PlaceInput value={from} onChange={setFrom} label="From" placeholderPrefix="From?" className="h-12 text-copy" />
+                <PlaceInput value={from} onChange={setFrom} label="From" placeholderPrefix="From?" className="h-10 text-copy" />
               </div>
               <button
                 type="button"
@@ -240,7 +240,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 <ArrowLeftRight size={20} strokeWidth={2} aria-hidden="true" />
               </button>
               <div className="flex min-w-0 flex-1 items-center px-2">
-                <PlaceInput value={to} onChange={setTo} label="To" placeholderPrefix="To?" className="h-12 text-copy" />
+                <PlaceInput value={to} onChange={setTo} label="To" placeholderPrefix="To?" className="h-10 text-copy" />
               </div>
             </>
           ) : (
@@ -251,11 +251,11 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 label="Destination"
                 kind="stay"
                 placeholderPrefix="Where to?"
-                className="h-12 text-copy"
+                className="h-10 text-copy"
               />
             </div>
           )}
-          <div className="flex h-14 shrink-0 items-stretch rounded-xl ring-1 ring-line">
+          <div className="flex h-12 shrink-0 items-stretch rounded-xl ring-1 ring-line">
             <div className="flex items-center px-1 [&_button]:text-copy">
               {departField}
               <span aria-hidden="true" className="text-label">
@@ -269,7 +269,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 key={tab}
                 kind={people}
                 initial={flight ? undefined : stayInitial}
-                className="h-12 text-copy"
+                className="h-10 text-copy"
                 compact
               />
             </div>
@@ -279,7 +279,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
             <span className="absolute -top-[18px] left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
             <span className="absolute -bottom-[18px] left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
           </div>
-          <button type="submit" className={`h-14 shrink-0 rounded-xl px-7 text-lead ${SEARCH_BUTTON}`}>
+          <button type="submit" className={`h-12 shrink-0 rounded-xl px-7 text-copy ${SEARCH_BUTTON}`}>
             {jet ? "Find jets" : "Search"}
           </button>
         </div>
@@ -290,7 +290,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
 
 /** A full-width row on phones, divided by a hairline. */
 function Row({ children, last = false }: { children: ReactNode; last?: boolean }) {
-  return <div className={`flex min-h-[60px] items-center px-4 ${last ? "" : "border-b border-line"}`}>{children}</div>;
+  return <div className={`flex min-h-[52px] items-center px-4 ${last ? "" : "border-b border-line"}`}>{children}</div>;
 }
 
 /** Plain text dropdown, as in "Return ▾". */

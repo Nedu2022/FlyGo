@@ -76,10 +76,10 @@ export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
       <div className="sky-golden relative mx-auto max-w-[1600px] overflow-hidden sm:rounded-[32px]">
         <div className="relative grid gap-6 px-4 pb-6 pt-8 sm:px-10 sm:pb-10 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-4 lg:px-14 lg:pt-16">
           <div>
-            <p className="text-small font-medium text-white/85">
+            <p className="text-tiny font-medium text-white/85 sm:text-small">
               {flight ? "Flights · Hotels · Apartments · Private jets" : "Hotels · Apartments · Resorts"}
             </p>
-            <h1 className="mt-3 text-[clamp(2.5rem,1.6rem+3.6vw,5rem)] font-bold leading-[0.98] tracking-tight text-white">
+            <h1 className="mt-3 text-[clamp(2.125rem,1.5rem+3vw,4.25rem)] font-bold leading-[1] tracking-tight text-white">
               {flight ? (
                 <>
                   The world,
@@ -94,7 +94,7 @@ export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
                 </>
               )}
             </h1>
-            <p className="mt-4 max-w-[420px] text-lead text-white/90">
+            <p className="mt-3 max-w-[420px] text-copy text-white/90 sm:text-lead">
               {flight
                 ? "Every airline, every stay and private jets, compared in one search."
                 : "Handpicked hotels and apartments with free cancellation on most rooms."}
