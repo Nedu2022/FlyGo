@@ -1,5 +1,4 @@
-import Image from "next/image";
-import { ChevronRight, Mail, MapPin, Phone } from "lucide-react";
+import { Clock, Mail, MapPin, Phone } from "lucide-react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { ContactForm } from "@/components/site/contact-form";
@@ -12,31 +11,40 @@ export const metadata = {
   description: "Questions or support? The Flygo team is here to help you 24/7.",
 };
 
-const ICON = { size: 20, strokeWidth: 1.8, "aria-hidden": true } as const;
+const ICON = { size: 22, strokeWidth: 1.9, "aria-hidden": true } as const;
 
 /** Fastest routes first: travel problems are usually urgent. */
 const CHANNELS = [
   {
     title: "Call us",
     value: FOOTER_CONTACT.phone,
-    note: "24 hours a day, 7 days a week",
+    note: "24/7",
     href: `tel:${FOOTER_CONTACT.phone}`,
+    action: "Call",
     icon: <Phone {...ICON} />,
   },
   {
-    title: "Email",
+    title: "Email us",
     value: FOOTER_CONTACT.email,
-    note: "We reply within 24 hours",
+    note: "Reply within 24 hours",
     href: `mailto:${FOOTER_CONTACT.email}`,
+    action: "Email",
     icon: <Mail {...ICON} />,
   },
   {
-    title: "Office",
+    title: "Visit us",
     value: FOOTER_CONTACT.address,
-    note: "Monday to Friday, 9am – 5pm",
-    href: null,
+    note: "Mon–Fri, 9am–5pm",
+    href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(FOOTER_CONTACT.address)}`,
+    action: "Map",
     icon: <MapPin {...ICON} />,
   },
+];
+
+const HOURS = [
+  { label: "Phone", value: "24 hours, every day" },
+  { label: "Email", value: "Reply within 24 hours" },
+  { label: "Office", value: "Mon–Fri, 9am–5pm" },
 ];
 
 /** Search links can pre-pick a topic, e.g. /contact?topic=private-jet. */
@@ -45,68 +53,81 @@ const TOPIC_PARAMS: Record<string, string> = { "private-jet": "Private jet chart
 export default async function ContactPage({ searchParams }: PageProps<"/contact">) {
   const { topic } = await searchParams;
   const preset = typeof topic === "string" ? TOPIC_PARAMS[topic] : undefined;
+
   return (
     <>
       <SiteHeader variant="solid" />
 
-      <main className={`${PAGE} pt-6 sm:pt-10 lg:pt-14`}>
-        <div className="grid overflow-hidden rounded-[28px] shadow-[0_1px_2px_rgba(16,24,40,0.05),0_8px_24px_-16px_rgba(16,24,40,0.25)] lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]">
-          {/* Brand panel: who you're talking to, and every way to reach them. */}
-          <div className="relative isolate overflow-hidden bg-shell p-6 sm:p-10 lg:p-12">
-            <Image
-              src="/images/logo-mark.svg"
-              alt=""
-              width={31}
-              height={41}
-              aria-hidden="true"
-              className="pointer-events-none absolute -bottom-16 -right-16 -z-10 h-[260px] w-auto opacity-[0.07] sm:h-[340px]"
-            />
-            <Image src="/images/logo.svg" alt="FLYGO Bookings" width={126} height={56} className="h-11 w-auto" />
+      {/* 1. Every way to reach us, as ticket strips on the grey panel. */}
+      <section className="px-0 sm:px-4">
+        <div className="mx-auto max-w-[1600px] bg-shell px-4 pb-8 pt-8 sm:rounded-[28px] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14 lg:pb-14 lg:pt-14">
+          <h1 className="text-display font-bold tracking-tight text-ink">
+            Get in touch<span className="text-brand">.</span>
+          </h1>
+          <p className="mt-3 max-w-[480px] text-lead text-body">Real people, ready to help with any booking.</p>
 
-            <h1 className="mt-8 text-display font-bold tracking-tight text-ink">Contact us</h1>
-            <p className="mt-3 max-w-[420px] text-lead leading-relaxed text-body">
-              We&apos;re here to help, day or night.
-            </p>
-
-            <ul className="mt-8 space-y-3">
-              {CHANNELS.map((channel) => {
-                const body = (
-                  <>
-                    <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
+          <ul className="mt-8 grid gap-3 md:grid-cols-3 md:gap-4">
+            {CHANNELS.map((channel) => (
+              <li key={channel.title}>
+                <a
+                  href={channel.href}
+                  target={channel.action === "Map" ? "_blank" : undefined}
+                  rel={channel.action === "Map" ? "noreferrer" : undefined}
+                  className="flex items-stretch rounded-[24px] bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05)]"
+                >
+                  <span className="flex min-w-0 flex-1 items-center gap-4 p-4 sm:p-5">
+                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-brand">
                       {channel.icon}
                     </span>
-                    <span className="min-w-0 flex-1">
+                    <span className="min-w-0">
                       <span className="block text-small text-body">{channel.title}</span>
                       <span className="block truncate text-copy font-semibold text-ink">{channel.value}</span>
-                      <span className="block text-small text-label">{channel.note}</span>
+                      <span className="block text-tiny text-label">{channel.note}</span>
                     </span>
-                  </>
-                );
-                return (
-                  <li key={channel.title}>
-                    {channel.href ? (
-                      <a href={channel.href} className="flex items-center gap-4 rounded-2xl bg-white p-4">
-                        {body}
-                        <ChevronRight size={18} strokeWidth={2} aria-hidden="true" className="shrink-0 text-muted" />
-                      </a>
-                    ) : (
-                      <div className="flex items-center gap-4 rounded-2xl bg-white p-4">{body}</div>
-                    )}
-                  </li>
-                );
-              })}
-            </ul>
-
-          </div>
-
-          <div className="bg-white">
-            <ContactForm topic={preset} />
-          </div>
+                  </span>
+                  <span aria-hidden="true" className="relative w-px self-stretch">
+                    <span className="absolute inset-y-3 left-0 border-l-2 border-dashed border-line" />
+                    <span className="absolute -top-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
+                    <span className="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
+                  </span>
+                  <span className="flex w-[72px] shrink-0 items-center justify-center text-small font-semibold text-brand">
+                    {channel.action}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
         </div>
+      </section>
 
+      <main className={`${PAGE} flex-1`}>
+        {/* 2. The message form, with what to expect beside it. */}
+        <section className="grid gap-8 pt-14 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16 lg:pt-20">
+          <div>
+            <h2 className="text-h2 font-bold tracking-tight text-ink">Send us a message</h2>
+            <p className="mt-2 max-w-[420px] text-copy text-body">
+              Tell us what you need and add your booking reference if you have one. It starts with{" "}
+              <span className="font-semibold text-ink">FG-</span>.
+            </p>
+
+            <dl className="mt-8 hidden space-y-4 lg:block">
+              {HOURS.map((row) => (
+                <div key={row.label} className="flex items-center gap-3">
+                  <Clock size={18} strokeWidth={2} aria-hidden="true" className="shrink-0 text-label" />
+                  <dt className="w-36 text-small text-body">{row.label}</dt>
+                  <dd className="text-small font-semibold text-ink">{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+
+          <ContactForm topic={preset} />
+        </section>
+
+        {/* 3. Answers to the questions people ask most. */}
         <section className="mx-auto max-w-[760px] pt-16 lg:pt-24">
-          <h2 className="text-center text-h1 font-bold tracking-tight text-ink">Common questions</h2>
-          <div className="mt-8">
+          <h2 className="text-h2 font-bold tracking-tight text-ink sm:text-center">Common questions</h2>
+          <div className="mt-6 sm:mt-8">
             <FaqAccordion items={FAQS.slice(0, 5)} />
           </div>
         </section>

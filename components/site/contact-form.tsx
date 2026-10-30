@@ -12,7 +12,7 @@ const TOPICS = [
   "Something else",
 ];
 
-/** Contact form card: labelled fields, a topic dropdown and one clear action. */
+/** Contact form card: labelled fields, a topic dropdown and one clear action. The page supplies the heading. */
 export function ContactForm({ topic }: { topic?: string }) {
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -27,7 +27,7 @@ export function ContactForm({ topic }: { topic?: string }) {
   }
 
   return (
-    <div className="p-6 sm:p-10 lg:p-12">
+    <div className="rounded-[28px] bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.05),0_18px_40px_-24px_rgba(16,24,40,0.35)] ring-1 ring-line sm:p-8">
       {sent ? (
         <div role="status" className="animate-rise py-10 text-center">
           <span className="animate-badge-in mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand">
@@ -40,9 +40,7 @@ export function ContactForm({ topic }: { topic?: string }) {
         </div>
       ) : (
         <form onSubmit={handleSubmit}>
-          <h2 className="text-h2 font-bold tracking-tight text-ink">Send us a message</h2>
-
-          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2">
             <Field label="Full name" name="name" autoComplete="name" required />
             <Field label="Email address" name="email" type="email" autoComplete="email" required />
             <SelectField label="Topic" name="topic" options={TOPICS} defaultValue={topic} />
