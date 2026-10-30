@@ -104,7 +104,13 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        router.push(jet ? "/contact?topic=private-jet" : flight ? "/flights" : "/hotels");
+        router.push(
+          jet
+            ? `/private-jets?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`
+            : flight
+              ? "/flights"
+              : "/hotels",
+        );
       }}
     >
       {/* Product tiles */}
@@ -237,7 +243,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               className={`flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-lead ${SEARCH_BUTTON}`}
             >
               <Search size={20} strokeWidth={2.4} aria-hidden="true" />
-              {jet ? "Request quote" : "Search"}
+              {jet ? "Find jets" : "Search"}
             </button>
           </div>
         </div>
@@ -319,7 +325,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               className={`flex h-14 items-center gap-2 rounded-2xl px-8 text-lead ${SEARCH_BUTTON}`}
             >
               <Search size={20} strokeWidth={2.4} aria-hidden="true" />
-              {jet ? "Request quote" : "Search"}
+              {jet ? "Find jets" : "Search"}
             </button>
           </div>
         </div>

@@ -6,13 +6,6 @@ import { ChevronDown, Minus, Plus } from "lucide-react";
 
 const CABINS = ["Economy", "Premium", "Business", "First"] as const;
 
-/** Private jet sizes, with the most passengers each one seats. */
-const AIRCRAFT = [
-  { name: "Light jet", seats: 7 },
-  { name: "Midsize jet", seats: 9 },
-  { name: "Heavy jet", seats: 16 },
-] as const;
-
 type Counts = { adults: number; children: number; infants: number; rooms: number };
 
 const ROWS: {
@@ -49,7 +42,6 @@ export function TravellersField({
 }) {
   const [counts, setCounts] = useState<Counts>({ adults: 1, children: 0, infants: 0, rooms: 1, ...initial });
   const [cabin, setCabin] = useState<(typeof CABINS)[number]>("Economy");
-  const [aircraft, setAircraft] = useState<(typeof AIRCRAFT)[number]["name"]>("Light jet");
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
   // Phones get a bottom sheet; wider screens a panel anchored under the field.
@@ -61,11 +53,11 @@ export function TravellersField({
   const jet = kind === "jet";
   const people = counts.adults + counts.children + counts.infants;
   const summary = jet
-    ? `${plural(counts.adults, "passenger")}, ${aircraft}`
+    ? plural(counts.adults, "passenger")
     : flight
       ? `${plural(people, "traveller")}, ${cabin}`
       : `${plural(counts.adults + counts.children, "guest")}, ${plural(counts.rooms, "room")}`;
-  const title = jet ? "Passengers & aircraft" : flight ? "Travellers" : "Guests";
+  const title = jet ? "Passengers" : flight ? "Travellers" : "Guests";
   const rows = jet
     ? [{ key: "adults" as const, label: "Passengers", note: "Adults and children", min: 1, max: 16 }]
     : ROWS.filter((row) => (flight ? !row.stay : !row.flight));
@@ -102,11 +94,6 @@ export function TravellersField({
     // One infant per adult, as airlines require.
     if (next.infants > next.adults) next.infants = next.adults;
     setCounts(next);
-    // Move up to a jet that seats everyone.
-    const size = AIRCRAFT.find((a) => a.name === aircraft);
-    if (jet && size && size.seats < next.adults) {
-      setAircraft(AIRCRAFT.find((a) => a.seats >= next.adults)?.name ?? "Heavy jet");
-    }
   };
 
   return (
@@ -204,35 +191,6 @@ export function TravellersField({
                           {item}
                         </button>
                       ))}
-                    </div>
-                  </div>
-                ) : null}
-
-                {jet ? (
-                  <div className="mt-5">
-                    <p className="text-small font-semibold text-ink">Aircraft</p>
-                    <div className="mt-2 space-y-2" role="radiogroup" aria-label="Aircraft size">
-                      {AIRCRAFT.map((item) => {
-                        const tooSmall = item.seats < counts.adults;
-                        return (
-                          <button
-                            key={item.name}
-                            type="button"
-                            role="radio"
-                            aria-checked={aircraft === item.name}
-                            disabled={tooSmall}
-                            onClick={() => setAircraft(item.name)}
-                            className={`flex h-11 w-full items-center justify-between rounded-xl px-4 text-small font-semibold disabled:opacity-40 ${
-                              aircraft === item.name ? "bg-ink text-white" : "bg-shell text-ink"
-                            }`}
-                          >
-                            {item.name}
-                            <span className={aircraft === item.name ? "text-white/70" : "text-label"}>
-                              Up to {item.seats} seats
-                            </span>
-                          </button>
-                        );
-                      })}
                     </div>
                   </div>
                 ) : null}

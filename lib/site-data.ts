@@ -4,6 +4,7 @@ export const NAV_LINKS = [
   { href: "/", label: "Home" },
   { href: "/flights", label: "Flights" },
   { href: "/hotels", label: "Hotels" },
+  { href: "/private-jets", label: "Private jets" },
   { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ] as const;
@@ -186,7 +187,7 @@ export const FOOTER_LINKS = [
       { label: "Flights", href: "/flights" },
       { label: "Hotels", href: "/hotels" },
       { label: "Apartments", href: "/hotels" },
-      { label: "Private jets", href: "/contact?topic=private-jet" },
+      { label: "Private jets", href: "/private-jets" },
       { label: "Travel deals", href: "/flights" },
     ],
   },

@@ -11,6 +11,7 @@ const MENU_ICONS: Record<string, typeof House> = {
   "/": House,
   "/flights": Plane,
   "/hotels": BedDouble,
+  "/private-jets": Plane,
   "/about": Info,
   "/contact": Mail,
 };

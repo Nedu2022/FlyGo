@@ -26,3 +26,5 @@ no attribution required: https://www.pexels.com/license/). Resized to WebP.
 | stay-twin | https://www.pexels.com/photo/29702286/ |
 | stay-santorini | https://www.pexels.com/photo/15238528/ |
 | traveller-window | https://www.pexels.com/photo/12742855/ |
+| jet-hero | https://www.pexels.com/photo/14983522/ |
+| jet-fleet | https://www.pexels.com/photo/236070/ |
