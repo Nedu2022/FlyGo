@@ -36,7 +36,7 @@ export function BookingShell({
         </main>
       </div>
 
-      <SiteFooter />
+      <SiteFooter flush />
     </>
   );
 }

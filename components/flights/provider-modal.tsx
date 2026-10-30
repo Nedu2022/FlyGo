@@ -42,7 +42,7 @@ export function ProviderModal({
           type="button"
           onClick={onClose}
           aria-label="Close"
-          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full text-ink transition-colors duration-200 hover:bg-shell"
+          className="absolute right-4 top-4 z-10 flex h-8 w-8 items-center justify-center rounded-full text-ink transition-colors duration-200"
         >
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
             <path d="m6 6 12 12M18 6 6 18" />
@@ -62,7 +62,7 @@ export function ProviderModal({
 
           <button
             type="button"
-            className="group mt-5 flex items-center gap-2 text-copy text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="group mt-5 flex items-center gap-2 text-copy text-brand transition-colors duration-200"
           >
             View details
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -97,7 +97,7 @@ export function ProviderModal({
                   onClose();
                   router.push("/booking/details");
                 }}
-                className="h-[32px] shrink-0 rounded-md bg-brand px-4 text-small text-white transition-colors duration-200 hover:bg-brand-hover"
+                className="h-[32px] shrink-0 rounded-md bg-brand px-4 text-small text-white transition-colors duration-200"
               >
                 Select
               </button>

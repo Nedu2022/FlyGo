@@ -38,7 +38,7 @@ export default function SignUpPage() {
           }}
         >
           <Image
-            src="/images/hero/hotels-villa.svg"
+            src="/images/hero/hotels-villa.webp"
             alt=""
             fill
             priority

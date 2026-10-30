@@ -33,7 +33,7 @@ export function FareSummary({
 
         <Link
           href={action.href}
-          className="mt-5 flex h-[48px] w-full items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+          className="mt-5 flex h-[48px] w-full items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 active:translate-y-px"
         >
           {action.label}
         </Link>
@@ -41,7 +41,7 @@ export function FareSummary({
         {secondaryAction ? (
           <Link
             href={secondaryAction.href}
-            className="mt-3 block text-center text-small text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="mt-3 block text-center text-small text-brand transition-colors duration-200"
           >
             {secondaryAction.label}
           </Link>

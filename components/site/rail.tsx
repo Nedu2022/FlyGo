@@ -1,6 +1,11 @@
 "use client";
 
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+
+/** Width of one rail item: most of a phone, two up on tablets, four on desktop. */
+export const RAIL_ITEM =
+  "w-[68%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]";
 
 /**
  * Horizontal card rail driven by native scrolling with snap points, rather
@@ -52,27 +57,46 @@ export function Rail({
         ref={track}
         onScroll={measure}
         aria-label={label}
-        className="no-scrollbar flex snap-x snap-mandatory gap-6 overflow-x-auto scroll-smooth pb-1"
+        className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto scroll-smooth px-4 pb-1 sm:mx-0 sm:scroll-px-0 sm:gap-4 sm:px-0"
       >
         {children}
       </ul>
 
       {pages > 1 ? (
-        <div className="mt-6 flex items-center justify-center gap-2">
-          {Array.from({ length: pages }, (_, i) => (
-            <button
-              key={i}
-              type="button"
-              aria-label={`Go to ${label} page ${i + 1}`}
-              aria-current={i === page}
-              onClick={() => goTo(i)}
-              className={`h-2 rounded-full transition-[width,background-color] duration-300 ${
-                i === page ? "w-5 bg-brand" : "w-2 bg-line hover:bg-muted"
-              }`}
-            />
-          ))}
+        <div className="mt-5 hidden justify-end gap-2 sm:flex">
+          <ArrowButton label={`Previous ${label}`} disabled={page === 0} onClick={() => goTo(page - 1)} />
+          <ArrowButton
+            label={`Next ${label}`}
+            disabled={page >= pages - 1}
+            onClick={() => goTo(page + 1)}
+            next
+          />
         </div>
       ) : null}
     </div>
+  );
+}
+
+function ArrowButton({
+  label,
+  disabled,
+  onClick,
+  next = false,
+}: {
+  label: string;
+  disabled: boolean;
+  onClick: () => void;
+  next?: boolean;
+}) {
+  return (
+    <button
+      type="button"
+      aria-label={label}
+      disabled={disabled}
+      onClick={onClick}
+      className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink shadow-[0_1px_3px_rgba(16,24,40,0.18)] transition-colors duration-200 disabled:opacity-40"
+    >
+      {next ? <ChevronRight size={18} strokeWidth={2.4} aria-hidden="true" /> : <ChevronLeft size={18} strokeWidth={2.4} aria-hidden="true" />}
+    </button>
   );
 }

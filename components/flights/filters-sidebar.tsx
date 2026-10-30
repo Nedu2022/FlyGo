@@ -1,6 +1,7 @@
 "use client";
 
-import { useId, useState, type ReactNode } from "react";
+import { SlidersHorizontal, X } from "lucide-react";
+import { useEffect, useId, useState, type ReactNode } from "react";
 import {
   AIRLINE_FILTERS,
   PRICE_RANGE,
@@ -8,10 +9,127 @@ import {
   TIME_RANGE,
 } from "@/lib/flight-data";
 
-export function FiltersSidebar() {
+/**
+ * Desktop: a sticky column. Phones: a "Filters" button that opens the same
+ * groups in a bottom sheet, so results are the first thing on screen.
+ */
+export type StopsFilter = "any" | "direct" | "one";
+
+type FiltersProps = {
+  stops: StopsFilter;
+  onStopsChange: (value: StopsFilter) => void;
+  /** Cheapest fare under each stops option, shown beside it. */
+  stopPrices: Record<StopsFilter, string | null>;
+  resultCount: number;
+};
+
+export function FiltersSidebar(props: FiltersProps) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const onKey = (event: KeyboardEvent) => event.key === "Escape" && setOpen(false);
+    document.addEventListener("keydown", onKey);
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = "";
+    };
+  }, [open]);
+
   return (
-    <aside className="w-full lg:w-[260px] lg:shrink-0">
-      <h2 className="text-h4 font-bold text-ink">Filters</h2>
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        className="fixed bottom-[calc(84px+env(safe-area-inset-bottom))] left-1/2 z-30 flex h-12 -translate-x-1/2 items-center justify-center gap-2 rounded-full bg-ink px-6 text-small font-semibold text-white shadow-[0_14px_30px_-10px_rgba(16,24,40,0.55)] lg:hidden"
+      >
+        <SlidersHorizontal size={18} strokeWidth={2} aria-hidden="true" />
+        Filters
+      </button>
+
+      <aside className="hidden lg:block lg:w-[260px] lg:shrink-0">
+        <h2 className="text-h4 font-bold text-ink">Filters</h2>
+        <FilterGroups {...props} />
+      </aside>
+
+      {open ? (
+        <div className="fixed inset-0 z-[60] lg:hidden" role="dialog" aria-modal="true" aria-label="Filters">
+          <button
+            type="button"
+            aria-label="Close filters"
+            onClick={() => setOpen(false)}
+            className="animate-fade absolute inset-0 bg-ink/40"
+          />
+          <div className="animate-rise absolute inset-x-0 bottom-0 flex max-h-[85dvh] flex-col rounded-t-2xl bg-white">
+            <div className="flex items-center justify-between border-b border-line px-5 py-4">
+              <h2 className="text-h4 font-bold text-ink">Filters</h2>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Close filters"
+                className="flex h-9 w-9 items-center justify-center rounded-full text-ink"
+              >
+                <X size={18} strokeWidth={2.2} aria-hidden="true" />
+              </button>
+            </div>
+            <div className="overflow-y-auto px-5">
+              <FilterGroups {...props} />
+            </div>
+            <div className="border-t border-line p-4">
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                className="h-12 w-full rounded-lg bg-sky text-copy font-semibold text-white transition-colors duration-200"
+              >
+                Show {props.resultCount} results
+              </button>
+            </div>
+          </div>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+const STOP_OPTIONS: { value: StopsFilter; label: string }[] = [
+  { value: "any", label: "Any" },
+  { value: "direct", label: "Direct" },
+  { value: "one", label: "1 stop" },
+];
+
+function FilterGroups({ stops, onStopsChange, stopPrices }: FiltersProps) {
+  return (
+    <>
+      <FilterGroup heading="Stops">
+        <div className="space-y-1" role="radiogroup" aria-label="Stops">
+          {STOP_OPTIONS.map((option) => {
+            const on = stops === option.value;
+            const price = stopPrices[option.value];
+            return (
+              <button
+                key={option.value}
+                type="button"
+                role="radio"
+                aria-checked={on}
+                disabled={!price}
+                onClick={() => onStopsChange(option.value)}
+                className="flex w-full items-center gap-3 rounded-lg py-2 text-left text-copy text-ink disabled:opacity-40"
+              >
+                <span
+                  className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 transition-colors duration-200 ${
+                    on ? "border-brand" : "border-muted"
+                  }`}
+                >
+                  <span className={`h-2.5 w-2.5 rounded-full bg-brand transition-transform duration-200 ${on ? "scale-100" : "scale-0"}`} />
+                </span>
+                <span className="flex-1">{option.label}</span>
+                <span className="text-small text-label">{price ?? "—"}</span>
+              </button>
+            );
+          })}
+        </div>
+      </FilterGroup>
 
       <FilterGroup heading="Price">
         <DualRange minLabel={PRICE_RANGE.min} maxLabel={PRICE_RANGE.max} />
@@ -34,7 +152,7 @@ export function FiltersSidebar() {
           ))}
         </ul>
       </FilterGroup>
-    </aside>
+    </>
   );
 }
 
@@ -141,7 +259,7 @@ function RatingChips() {
             type="button"
             onClick={() => setActive(selected ? null : rating)}
             aria-pressed={selected}
-            className={`flex h-[42px] w-[42px] items-center justify-center rounded-full border text-small transition-colors duration-200 ${ selected ? "border-brand bg-brand text-white" : "border-brand text-body hover:bg-brand-soft" }`}
+            className={`flex h-[42px] w-[42px] items-center justify-center rounded-full border text-small transition-colors duration-200 ${ selected ? "border-brand bg-brand text-white" : "border-brand text-body" }`}
           >
             {rating}
           </button>

@@ -1,47 +1,49 @@
 "use client";
 
-import { useState } from "react";
-import { SORT_TABS } from "@/lib/flight-data";
+import type { SortMode } from "@/lib/flight-data";
 
-export function SortTabs() {
-  const [active, setActive] = useState(0);
+export type SortSummary = { mode: SortMode; label: string; price: string; duration: string };
 
+/** Best / Cheapest / Quickest, each showing what you'd get by picking it. */
+export function SortTabs({
+  tabs,
+  active,
+  onChange,
+}: {
+  tabs: SortSummary[];
+  active: SortMode;
+  onChange: (mode: SortMode) => void;
+}) {
   return (
-    <div className="flex overflow-x-auto rounded-xl bg-white shadow-[0_1px_3px_rgba(16,24,40,0.08)] no-scrollbar">
-      {SORT_TABS.map((tab, index) => (
-        <button
-          key={tab.label}
-          type="button"
-          onClick={() => setActive(index)}
-          aria-pressed={index === active}
-          className={`relative min-w-[150px] flex-1 border-r border-line px-5 py-4 text-left transition-colors duration-200 last:border-r-0 hover:bg-sky-tint`}
-        >
-          <span
-            className={`block text-lead ${ index === active ? "font-semibold text-ink" : "text-ink" }`}
-          >
-            {tab.label}
-          </span>
-          <span className="mt-1 block text-small text-label">
-            {tab.price} . {tab.duration}
-          </span>
-          <span
-            aria-hidden="true"
-            className={`absolute inset-x-0 bottom-0 h-[3px] origin-left rounded-full bg-sky transition-transform duration-300 ${
-              index === active ? "scale-x-100" : "scale-x-0"
+    <div className="grid grid-cols-3 gap-2" role="tablist" aria-label="Sort results">
+      {tabs.map((tab) => {
+        const on = tab.mode === active;
+        return (
+          <button
+            key={tab.mode}
+            type="button"
+            role="tab"
+            aria-selected={on}
+            onClick={() => onChange(tab.mode)}
+            className={`relative min-w-0 overflow-hidden rounded-xl px-3 py-3 text-left transition-colors duration-200 sm:px-5 sm:py-4 ${
+              on ? "bg-white shadow-[0_1px_2px_rgba(16,24,40,0.06)]" : "bg-white/60"
             }`}
-          />
-        </button>
-      ))}
-
-      <button
-        type="button"
-        className="flex min-w-[150px] flex-1 items-center justify-center gap-3 px-5 py-4 text-copy text-ink transition-colors duration-200 hover:bg-sky-tint"
-      >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
-          <path d="M4 7h16M4 12h11M4 17h7" />
-        </svg>
-        Other sort
-      </button>
+          >
+            <span className={`block text-small sm:text-copy ${on ? "font-bold text-ink" : "font-medium text-body"}`}>
+              {tab.label}
+            </span>
+            <span className="mt-0.5 block truncate text-tiny text-label sm:text-small">
+              <span className="font-semibold text-ink">{tab.price}</span> · {tab.duration}
+            </span>
+            <span
+              aria-hidden="true"
+              className={`absolute inset-x-0 bottom-0 h-[3px] bg-brand transition-transform duration-300 ${
+                on ? "scale-x-100" : "scale-x-0"
+              }`}
+            />
+          </button>
+        );
+      })}
     </div>
   );
 }

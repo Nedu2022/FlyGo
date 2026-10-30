@@ -8,39 +8,10 @@ export const NAV_LINKS = [
   { href: "/contact", label: "Contact" },
 ] as const;
 
-export type FlightDeal = {
-  from: string;
-  to: string;
-  price: string;
-  trip: string;
-  image: string;
-};
-
-export const FLIGHT_DEALS: FlightDeal[] = [
-  { from: "NewYork", to: "Portugal", price: "$799", trip: "Round trip", image: "/images/cards/porto-tram.svg" },
-  { from: "Lagos", to: "Miami", price: "$859", trip: "Round trip", image: "/images/cards/toronto.svg" },
-  { from: "London", to: "Paris", price: "$1199", trip: "Round trip", image: "/images/cards/paris.svg" },
-  { from: "London", to: "Paris", price: "$1199", trip: "Round trip", image: "/images/cards/porto-tram.svg" },
-];
-
-export type PopularDestination = {
-  region: string;
-  name: string;
-  price: string;
-  trip: string;
-  image: string;
-};
-
-export const POPULAR_DESTINATIONS: PopularDestination[] = [
-  { region: "United Kingdom", name: "London", price: "$799", trip: "One way", image: "/images/cards/london.svg" },
-  { region: "Ottawa", name: "Canada", price: "$799", trip: "Round trip", image: "/images/cards/vancouver.svg" },
-  { region: "Berlin", name: "Germany", price: "$799", trip: "Round trip", image: "/images/cards/berlin.svg" },
-];
-
 export const RESORT_COUNTRIES = [
-  { region: "Caribbean", name: "Jamaica", budget: "$2099", love: "5k people love this", image: "/images/cards/london.svg" },
-  { region: "Europe", name: "Spain", budget: "$1799", love: "1.5k people love this", image: "/images/cards/vancouver.svg" },
-  { region: "South Asia", name: "Maldives", budget: "$3599", love: "3.5k people love this", image: "/images/cards/berlin.svg" },
+  { region: "Caribbean", name: "Jamaica", budget: "$2099", love: "5k people love this", image: "/images/photos/hero-pool.webp" },
+  { region: "Europe", name: "Greece", budget: "$1799", love: "1.5k people love this", image: "/images/photos/stay-santorini.webp" },
+  { region: "South Asia", name: "Maldives", budget: "$3599", love: "3.5k people love this", image: "/images/photos/stay-overwater.webp" },
 ];
 
 export type Hotel = {
@@ -61,7 +32,7 @@ export const HOTELS: Hotel[] = [
     score: "9.6",
     reviews: "10125 reviews",
     price: "$799",
-    image: "/images/cards/london.svg",
+    image: "/images/photos/stay-suite.webp",
   },
   {
     name: "Sonder Kensington Gardens",
@@ -70,7 +41,7 @@ export const HOTELS: Hotel[] = [
     score: "9.4",
     reviews: "8420 reviews",
     price: "$650",
-    image: "/images/hero/hotels-villa.svg",
+    image: "/images/photos/stay-infinity.webp",
   },
   {
     name: "Aviator Hotel Hampshire",
@@ -79,7 +50,7 @@ export const HOTELS: Hotel[] = [
     score: "9.1",
     reviews: "6310 reviews",
     price: "$540",
-    image: "/images/cards/conservatory.svg",
+    image: "/images/photos/stay-room.webp",
   },
   {
     name: "Crowne Plaza Gerrards Cross",
@@ -88,7 +59,7 @@ export const HOTELS: Hotel[] = [
     score: "9.5",
     reviews: "7788 reviews",
     price: "$720",
-    image: "/images/cards/carousel.svg",
+    image: "/images/photos/stay-twin.webp",
   },
   {
     name: "Vancouver Harbour Suites",
@@ -97,7 +68,7 @@ export const HOTELS: Hotel[] = [
     score: "9.3",
     reviews: "5240 reviews",
     price: "$610",
-    image: "/images/cards/vancouver.svg",
+    image: "/images/photos/stay-overwater.webp",
   },
   {
     name: "Berlin Mitte Grand",
@@ -106,7 +77,7 @@ export const HOTELS: Hotel[] = [
     score: "9.0",
     reviews: "4180 reviews",
     price: "$430",
-    image: "/images/cards/berlin.svg",
+    image: "/images/photos/stay-santorini.webp",
   },
   {
     name: "Toronto Lakeside Residences",
@@ -115,7 +86,7 @@ export const HOTELS: Hotel[] = [
     score: "9.2",
     reviews: "6902 reviews",
     price: "$580",
-    image: "/images/cards/toronto.svg",
+    image: "/images/photos/stay-cliff.webp",
   },
   {
     name: "Porto Ribeira Boutique",
@@ -124,200 +95,118 @@ export const HOTELS: Hotel[] = [
     score: "9.4",
     reviews: "3990 reviews",
     price: "$395",
-    image: "/images/cards/porto-tram.svg",
+    image: "/images/photos/lisbon-tram.webp",
   },
 ];
 
-export const LOVED_DESTINATIONS = [
-  {
-    heading: "Family resorts",
-    items: ["Jean-Michel Cousteau Resort", "Hotel Del Coronado", "Aulani in Hawaii"],
-  },
-  {
-    heading: "Luxury Retreats",
-    items: ["Soneva Fushi", "Olympic Lagoon Resorts, Ayia Napa", "Delphin Imperial Hotel"],
-  },
-  {
-    heading: "Eco-Friendly Escapes",
-    items: [
-      "Four Seasons Resort Seychelles",
-      "Ayana Resort Bali",
-      "he Westin Dragonara Resort, Malta.",
-    ],
-  },
-  {
-    heading: "Romantic Hideaways",
-    items: ["Giraffe Manor", "Capella Ubud, Bali, Indonesia.", "Recanto Alvorada Eco Resort"],
-  },
-];
-
-export const WHY_CHOOSE_US = [
-  {
-    title: "Seamless Booking:",
-    body: "Effortlessly find and book the perfect flights and hotels with just a few clicks.",
-  },
-  {
-    title: "Unrivaled Selection:",
-    body: "Explore a vast range of destinations and accommodations to suit every budget and preference.",
-  },
-  {
-    title: "Unforgettable Experiences:",
-    body: "Unlock unique travel experiences and create lasting memories at top-rated hotels and resorts.",
-  },
-  {
-    title: "Peace of Mind:",
-    body: "Rest easy with secure payment options and expert customer support at your service.",
-  },
-  {
-    title: "Journey with Confidence:",
-    body: "Our commitment to safety ensures your travel plans are in reliable hands.",
-  },
-];
-
-export const JOURNALS = [
-  {
-    title: "Travelling Solo, a beginners guide",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur. Sed cras pharetra dictumst sed ultrices a. Quam purus tortor nibh viverra sed mattis mi elit sit.",
-    author: "Joshua Moris",
-    date: "15 June 2023.",
-  },
-  {
-    title: "Travelling Solo, a beginners guide",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur. Sed cras pharetra dictumst sed ultrices a. Quam purus tortor nibh viverra sed mattis mi elit sit.",
-    author: "Joshua Moris",
-    date: "15 June 2023.",
-  },
-  {
-    title: "Travelling Solo, a beginners guide",
-    excerpt:
-      "Lorem ipsum dolor sit amet consectetur. Sed cras pharetra dictumst sed ultrices a. Quam purus tortor nibh viverra sed mattis mi elit sit.",
-    author: "Joshua Moris",
-    date: "15 June 2023.",
-  },
-];
-
-export type Testimonial = {
-  name: string;
-  role: string;
-  quote: string;
-  /** Whole stars out of five. Mixed scores keep the wall of praise believable. */
-  rating: number;
+export type Faq = {
+  question: string;
+  /** Leads with the direct answer, then the detail. */
+  answer: string;
 };
 
-export const TESTIMONIALS: Testimonial[] = [
+export const FAQS: Faq[] = [
   {
-    name: "Jane Smith",
-    role: "Freelance Designer",
-    rating: 5,
-    quote:
-      "I've been using this web hosting service for over a year and I'm really impressed with the uptime and support. The website has never gone down and the customer service is always quick to help with any issues I have. Highly recommend!",
-  },
-  {
-    name: "Tom Williams",
-    role: "Software Developer",
-    rating: 3,
-    quote:
-      "I've been using this web hosting service for a few months now and overall it's been fine. The uptime has been good and I haven't had any major issues. The pricing is also reasonable. Nothing particularly stands out as exceptional, but it gets the job done.",
-  },
-  {
-    name: "Michael Brown",
-    role: "Online Entrepreneur",
-    rating: 1,
-    quote:
-      "I've been using this web hosting service for a few months and it's been nothing but problems. My website has gone down multiple times and the customer service has been unresponsive. I would not recommend this company.",
-  },
-  {
-    name: "Sarah Johnson",
-    role: "Blogger",
-    rating: 5,
-    quote:
-      "I was a little hesitant to switch to a new web hosting company, but I'm glad I took the plunge. The control panel is user-friendly and I love the one-click installation for popular apps. Everything has been smooth sailing since I made the switch.",
-  },
-  {
-    name: "Favour Dennis",
-    role: "UI/UX Designer",
-    rating: 5,
-    quote:
-      "Customer testimonials are more effective than paid marketing copy as they take the spotlight away from the seller to shine it on the customers.",
-  },
-  {
-    name: "Daniel Ibe",
-    role: "Photographer",
-    rating: 4,
-    quote:
-      "Booking took under two minutes and the trip ran exactly as planned. I have used Flygo for every trip since.",
-  },
-];
-
-export const FAQS = [
-  {
-    question: "Is there a free trial available?",
+    question: "Are there any booking fees?",
     answer:
-      "Yes, you can try us for free for 30 days. If you want, we'll provide you with a free, personalized 30-minute onboarding call to get you up and running as soon as possible.",
-  },
-  {
-    question: "Can I change my plan later?",
-    answer:
-      "Of course. You can upgrade, downgrade or cancel your plan at any time from your account settings, and changes take effect on your next billing cycle.",
+      "No. The price you see includes taxes and fees where the provider shares them, and we never add a charge of our own at checkout.",
   },
   {
     question: "What is your cancellation policy?",
     answer:
-      "Cancel any time. Bookings cancelled at least 48 hours before departure are refunded in full; later cancellations follow the operator's own policy.",
+      "It depends on the fare or room you choose. Free-cancellation options are labelled clearly, and most stays can be cancelled up to 48 hours before check-in.",
   },
   {
-    question: "Can other info be added to an invoice?",
+    question: "How long does a refund take?",
     answer:
-      "Yes. Add a company name, VAT number, purchase order reference or any custom note to an invoice before it is issued.",
+      "Usually 5 to 10 working days after the airline or hotel approves it. We email you at each step, and you can track it in your account.",
   },
   {
-    question: "How does billing work?",
+    question: "How does FLYGO find such low prices?",
     answer:
-      "You are charged once per booking, and subscriptions bill monthly on the date you signed up. Every charge appears in your billing history.",
+      "We search hundreds of airlines, hotels and travel sites at once. You see every price side by side, so you can pick the best deal without opening twenty tabs.",
   },
   {
-    question: "How do I change my account email?",
+    question: "Which payment methods can I use?",
     answer:
-      "Open your profile settings, enter the new address and confirm it with the six-digit code we send there.",
+      "Debit and credit cards, Paystack and Flutterwave. Every payment is encrypted, and you're only charged once your booking is confirmed.",
   },
+  {
+    question: "Can I change the name or dates on my booking?",
+    answer:
+      "Dates can often be changed for a fare difference. Name changes depend on the airline, so contact us with your booking reference and we'll check for you.",
+  },
+  {
+    question: "Can I book flights and hotels together?",
+    answer:
+      "Yes. Search a flight, then add a stay from the same trip page. Everything lands in one itinerary in your account.",
+  },
+  {
+    question: "How do price alerts work?",
+    answer:
+      "Save a route or a hotel and we watch it for you. When the price drops, we email you so you can book at the right moment.",
+  },
+  {
+    question: "Which currency will I be charged in?",
+    answer:
+      "The currency shown at checkout. You can switch currency before you pay, and the total is locked in once you confirm.",
+  },
+  {
+    question: "How do I contact support about a booking?",
+    answer:
+      "By chat, phone or email, 24/7. Have your booking reference ready and we'll sort it quickly.",
+  },
+];
+
+export type Deal = {
+  city: string;
+  country: string;
+  duration: string;
+  out: string;
+  back: string;
+  price: string;
+  image: string;
+};
+
+/** Cheapest return fares from Lagos this week, for the deals rail. */
+export const DEALS: Deal[] = [
+  { city: "London", country: "United Kingdom", duration: "6h 25m, direct", out: "Tue 17/11", back: "Sun 22/11", price: "$433", image: "/images/photos/london.webp" },
+  { city: "Dubai", country: "United Arab Emirates", duration: "7h 05m, direct", out: "Thu 19/11", back: "Mon 23/11", price: "$389", image: "/images/photos/dubai.webp" },
+  { city: "Paris", country: "France", duration: "6h 40m, direct", out: "Wed 25/11", back: "Sun 29/11", price: "$471", image: "/images/photos/paris.webp" },
+  { city: "Santorini", country: "Greece", duration: "9h 50m, 1 stop", out: "Fri 20/11", back: "Fri 27/11", price: "$612", image: "/images/photos/santorini.webp" },
+  { city: "New York", country: "United States", duration: "11h 30m, direct", out: "Sat 21/11", back: "Sun 29/11", price: "$698", image: "/images/photos/new-york.webp" },
+  { city: "Cape Town", country: "South Africa", duration: "6h 15m, direct", out: "Mon 23/11", back: "Mon 30/11", price: "$455", image: "/images/photos/cape-town.webp" },
+  { city: "Lisbon", country: "Portugal", duration: "8h 10m, 1 stop", out: "Tue 24/11", back: "Sun 29/11", price: "$498", image: "/images/photos/lisbon.webp" },
 ];
 
 export const FOOTER_LINKS = [
   {
-    heading: "Quick Links",
+    heading: "Links",
     links: [
-      { label: "Flights", href: "/" },
+      { label: "Flights", href: "/flights" },
       { label: "Hotels", href: "/hotels" },
-      { label: "About us", href: "/about" },
-      { label: "Blog", href: "/about" },
-      { label: "Cotact us", href: "/contact" },
+      { label: "Apartments", href: "/hotels" },
+      { label: "Travel deals", href: "/flights" },
     ],
   },
   {
-    heading: "Customer Support",
+    heading: "Support",
     links: [
-      { label: "FAQ", href: "/about" },
-      { label: "Help Center", href: "/contact" },
-      { label: "Terms & Conditions", href: "/about" },
-      { label: "Privacy Policy", href: "/about" },
-      { label: "Refund Policy", href: "/about" },
+      { label: "About Us", href: "/about" },
+      { label: "Contact Us", href: "/contact" },
+      { label: "Help Centre", href: "/contact" },
     ],
   },
   {
     heading: "Legal",
     links: [
-      { label: "Terms and Condition", href: "/about" },
+      { label: "Terms & Conditions", href: "/about" },
       { label: "Privacy Policy", href: "/about" },
-      { label: "Cookies Policy", href: "/about" },
-      { label: "Developers", href: "/about" },
     ],
   },
-];
+]
 
-export const FOOTER_BLURB =
-  "Travel is not just about where you go, but the memories you make and the experiences that shape you. Let us help you make the most of every journey.";
+export const FOOTER_BLURB = "Compare flights and stays from hundreds of sites. Book in minutes.";
 
 export const FOOTER_CONTACT = {
   email: "advhghj@gmail.com",
@@ -328,11 +217,9 @@ export const FOOTER_CONTACT = {
 /** Socials in the dark footer. Each key maps to an icon in <SocialIcon />. */
 export const FOOTER_SOCIALS = [
   { name: "facebook", label: "Facebook", href: "#" },
-  { name: "twitter", label: "Twitter", href: "#" },
-  { name: "linkedin", label: "LinkedIn", href: "#" },
-  { name: "youtube", label: "YouTube", href: "#" },
   { name: "instagram", label: "Instagram", href: "#" },
   { name: "tiktok", label: "TikTok", href: "#" },
+  { name: "x", label: "X", href: "#" },
 ] as const;
 
 /* --------------------------------------------------------------------------
@@ -340,10 +227,10 @@ export const FOOTER_SOCIALS = [
    -------------------------------------------------------------------------- */
 
 export const ABOUT_MISSION =
-  "Our mission is to transform the way you travel by providing a comprehensive, user-friendly platform that seamlessly connects you to the best flight options and ideal accommodations. We strive to eliminate the stress of trip planning, ensuring a smooth, secure, and enjoyable booking experience that caters to your unique travel needs\u2014whether for business, leisure, or adventure.";
+  "One search for flights and stays, clear prices, and help from real people when plans change. We want booking a trip to take minutes, not evenings.";
 
 export const ABOUT_VISION =
-  "Our vision is to become the world's most trusted and innovative travel companion, redefining how people explore the globe. We aspire to make travel more accessible, enjoyable, and personalized by leveraging cutting-edge technology and a customer-first approach. Our goal is to empower travelers with seamless experiences\u2014from booking flights to finding perfect accommodations\u2014while fostering a global community united by adventure, connection, and unforgettable memories.";
+  "To be the first place travellers in Africa and beyond turn to when they plan a trip, because we are fast, honest about price and there when it matters.";
 
 export type CoreValue = {
   title: string;
@@ -355,23 +242,23 @@ export type CoreValue = {
 export const CORE_VALUES: CoreValue[] = [
   {
     icon: "customer",
-    title: "Customer-Centric",
-    body: "Our customers are at the heart of everything we do. We are dedicated to providing personalized experiences, seamless support, and services that prioritize your comfort and convenience throughout your journey.",
+    title: "Travellers first",
+    body: "Every decision starts with what makes the trip easier for you.",
   },
   {
     icon: "innovation",
-    title: "Innovation",
-    body: "We embrace the power of technology to transform travel experiences. From AI-powered recommendations to intuitive booking flows, we are constantly improving to make your trips smarter, faster, and more enjoyable.",
+    title: "Built to be fast",
+    body: "Fast search, smart alerts and tools that save you time.",
   },
   {
     icon: "transparency",
-    title: "Transparency",
-    body: "We believe trust is built through honesty and clarity. That's why we ensure upfront pricing, reliable services, and clear policies, empowering you to make informed travel decisions with confidence.",
+    title: "Honest pricing",
+    body: "The price you see is the price you pay. No surprises.",
   },
   {
     icon: "sustainability",
-    title: "Sustainability",
-    body: "We care about our planet and promote responsible travel practices. From eco-friendly stays to reducing our carbon footprint, we are committed to making travel better for you and for future generations.",
+    title: "Travel responsibly",
+    body: "We highlight greener options and travel more responsibly.",
   },
 ];
 
@@ -379,22 +266,3 @@ export const CORE_VALUES: CoreValue[] = [
    Contact page
    -------------------------------------------------------------------------- */
 
-export const CONTACT_INFO = [
-  {
-    heading: "Customer Support:",
-    lines: [
-      "Phone:\n+123-456-7890",
-      "Email: support@yourwebsite.com",
-      "Live Chat: Available 24/7",
-    ],
-  },
-  {
-    heading: "Business Inquiries:",
-    lines: [
-      "Email:\npartnerships@yourwebsite.com",
-      "Assistance hours:\nMonday - Friday 6 am to 8 pm EST",
-    ],
-  },
-];
-
-export const CONTACT_SOCIAL_LINKS = ["Instagram", "Twitter", "Facebook", "LinkedIn"];

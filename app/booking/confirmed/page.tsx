@@ -49,7 +49,7 @@ export default function BookingConfirmedPage() {
         </div>
       </main>
 
-      <SiteFooter />
+      <SiteFooter flush />
     </>
   );
 }

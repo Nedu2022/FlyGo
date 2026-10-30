@@ -96,7 +96,7 @@ export function Calendar({
                   onClose?.();
                 }}
                 aria-current={selected ? "date" : undefined}
-                className={`mx-auto flex h-9 w-9 items-center justify-center rounded text-copy transition-colors duration-150 ${ selected ? "bg-sky font-medium text-white" : outside ? "text-muted hover:bg-shell" : "text-ink hover:bg-sky-tint" }`}
+                className={`mx-auto flex h-9 w-9 items-center justify-center rounded text-copy transition-colors duration-150 ${ selected ? "bg-sky font-medium text-white" : outside ? "text-muted" : "text-ink" }`}
               >
                 {date.getDate()}
               </button>
@@ -118,7 +118,7 @@ export function Calendar({
                     setPickingMonth(false);
                   }}
                   aria-current={on}
-                  className={`w-full px-6 py-3 text-left text-lead transition-colors duration-150 ${ on ? "bg-sky text-white" : "text-ink hover:bg-shell" }`}
+                  className={`w-full px-6 py-3 text-left text-lead transition-colors duration-150 ${ on ? "bg-sky text-white" : "text-ink" }`}
                 >
                   {month}
                 </button>
@@ -137,7 +137,7 @@ function Arrow({ direction, onClick }: { direction: "prev" | "next"; onClick: ()
       type="button"
       onClick={onClick}
       aria-label={direction === "prev" ? "Previous month" : "Next month"}
-      className="flex h-8 w-8 items-center justify-center rounded-full text-sky transition-colors duration-200 hover:bg-sky-tint"
+      className="flex h-8 w-8 items-center justify-center rounded-full text-sky transition-colors duration-200"
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d={direction === "prev" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"} />
@@ -152,6 +152,20 @@ const FORMAT = new Intl.DateTimeFormat("en-US", {
   year: "numeric",
 });
 
+/** Compact "Tue 15/12" form for the one-row search bar. */
+const SHORT = new Intl.DateTimeFormat("en-GB", {
+  weekday: "short",
+  day: "2-digit",
+  month: "2-digit",
+});
+
+/** "15 Dec 2026" for fields that already draw their own box. */
+const MEDIUM = new Intl.DateTimeFormat("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+
 /** Field that opens the calendar in a popover and shows the chosen date. */
 export function DateField({
   label,
@@ -160,6 +174,8 @@ export function DateField({
   disabled = false,
   icon,
   toggle,
+  tone = "glass",
+  placeholder,
 }: {
   label: string;
   value: Date;
@@ -167,6 +183,13 @@ export function DateField({
   disabled?: boolean;
   icon?: React.ReactNode;
   toggle?: React.ReactNode;
+  /**
+   * "glass" sits on a dark card; "inline" is padded text in the white search
+   * bar; "plain" is bare text for a field that already draws its own box.
+   */
+  tone?: "glass" | "inline" | "plain";
+  /** Shown instead of the date while the field is disabled. */
+  placeholder?: string;
 }) {
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
@@ -213,6 +236,64 @@ export function DateField({
     };
   }, [open]);
 
+  const popup =
+    open && !disabled && coords
+      ? createPortal(
+          <div
+            ref={popover}
+            style={{ position: "absolute", top: coords.top, left: coords.left, zIndex: 100 }}
+          >
+            <Calendar value={value} onSelect={onChange} onClose={() => setOpen(false)} />
+          </div>,
+          document.body,
+        )
+      : null;
+
+  if (tone === "plain") {
+    return (
+      <div className="relative min-w-0 flex-1">
+        <button
+          ref={trigger}
+          type="button"
+          disabled={disabled}
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-label={label}
+          className={`flex w-full min-w-0 items-center gap-2 text-left text-copy outline-none focus-visible:underline focus-visible:underline-offset-4 ${
+            disabled ? "text-muted" : "text-ink"
+          } ${open ? "text-sky" : ""}`}
+        >
+          {icon ? <span className="shrink-0 text-label">{icon}</span> : null}
+          <span className="truncate">
+            {disabled && placeholder ? placeholder : MEDIUM.format(value)}
+          </span>
+        </button>
+        {popup}
+      </div>
+    );
+  }
+
+  if (tone === "inline") {
+    return (
+      <div className="relative min-w-0">
+        <button
+          ref={trigger}
+          type="button"
+          disabled={disabled}
+          onClick={() => setOpen((v) => !v)}
+          aria-expanded={open}
+          aria-label={label}
+          className={`h-12 w-full truncate rounded-lg px-3 text-left text-lead outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-sky ${
+            disabled ? "text-muted" : "text-ink"
+          } ${open ? "bg-shell" : ""}`}
+        >
+          {disabled && placeholder ? placeholder : SHORT.format(value).replace(",", "")}
+        </button>
+        {popup}
+      </div>
+    );
+  }
+
   return (
     <div className="relative min-w-0">
       {/* Matches the ticket-stub cells in the search card: micro label, then
@@ -221,7 +302,7 @@ export function DateField({
         className={`rounded-lg px-3 py-2 ring-1 ring-inset transition-colors duration-200 ${
           disabled
             ? "bg-white/6 ring-white/5"
-            : "bg-white/10 ring-white/10 hover:bg-white/15 hover:ring-white/20"
+            : "bg-white/10 ring-white/10"
         }`}
       >
         <span className="flex items-center gap-1.5 text-micro font-semibold uppercase tracking-[0.16em] text-white/55">
@@ -246,17 +327,7 @@ export function DateField({
         </button>
       </div>
 
-      {open && !disabled && coords
-        ? createPortal(
-            <div
-              ref={popover}
-              style={{ position: "absolute", top: coords.top, left: coords.left, zIndex: 100 }}
-            >
-              <Calendar value={value} onSelect={onChange} onClose={() => setOpen(false)} />
-            </div>,
-            document.body,
-          )
-        : null}
+      {popup}
     </div>
   );
 }
