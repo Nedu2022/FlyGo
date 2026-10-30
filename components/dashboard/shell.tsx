@@ -46,7 +46,7 @@ export function DashPage({
             type="button"
             onClick={openNav}
             aria-label="Open navigation"
-            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line text-body transition-colors hover:border-sky hover:text-sky lg:hidden"
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line text-body transition-colors lg:hidden"
           >
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
               <path d="M4 7h16M4 12h16M4 17h16" />
@@ -106,7 +106,7 @@ export function BarAction({
     <button
       type="button"
       onClick={onClick}
-      className={`flex shrink-0 items-center gap-2 text-copy font-medium transition-colors duration-200 ${ tone === "sky" ? "text-sky hover:text-sky-hover" : "text-brand hover:text-brand-hover" }`}
+      className={`flex shrink-0 items-center gap-2 text-copy font-medium transition-colors duration-200 ${ tone === "sky" ? "text-sky" : "text-brand" }`}
     >
       {icon ? <DashIcon name="plus" size={18} strokeWidth={2.2} /> : null}
       {label}
@@ -119,7 +119,7 @@ export function FilterButton() {
   return (
     <button
       type="button"
-      className="flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line bg-white px-4 text-small text-body transition-colors duration-200 hover:border-sky hover:text-sky"
+      className="flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line bg-white px-4 text-small text-body transition-colors duration-200"
     >
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
         <path d="M3 7h13M18 7h3M3 17h3M8 17h13" />
@@ -133,7 +133,7 @@ export function FilterButton() {
 
 function LanguagePicker() {
   return (
-    <label className="hidden items-center gap-2 rounded-lg px-2 py-1.5 text-copy text-ink transition-colors hover:bg-shell sm:flex">
+    <label className="hidden items-center gap-2 rounded-lg px-2 py-1.5 text-copy text-ink transition-colors sm:flex">
       <span className="sr-only">Language</span>
       <svg width="26" height="18" viewBox="0 0 22 15" aria-hidden="true" className="rounded-[2px]">
         <rect width="22" height="15" fill="#ffffff" />

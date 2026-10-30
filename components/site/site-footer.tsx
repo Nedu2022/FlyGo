@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BottomNav } from "@/components/site/bottom-nav";
+import { AiAssistant } from "@/components/site/ai-assistant";
 import { FOOTER_BLURB, FOOTER_LINKS, FOOTER_SOCIALS } from "@/lib/site-data";
 
 /**
@@ -91,6 +92,7 @@ export function SiteFooter({ flush = false }: { flush?: boolean }) {
         <div className="h-6 lg:h-10" />
       </footer>
       <BottomNav />
+      <AiAssistant />
     </>
   );
 }

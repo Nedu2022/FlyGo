@@ -68,7 +68,7 @@ export default function ResetPasswordPage() {
 
         <Link
           href="/signin"
-          className="text-center text-copy font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+          className="text-center text-copy font-medium text-brand transition-colors duration-200"
         >
           Back to Login
         </Link>

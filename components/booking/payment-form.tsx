@@ -35,7 +35,7 @@ export function PaymentForm() {
               type="button"
               onClick={() => setMethod(option.id)}
               aria-pressed={active}
-              className={`relative flex h-[64px] min-w-[180px] flex-1 items-center gap-3 rounded-lg border px-5 text-copy transition-colors duration-200 ${ active ? "border-sky bg-sky-tint text-sky" : "border-line bg-white text-label hover:border-muted" }`}
+              className={`relative flex h-[64px] min-w-[180px] flex-1 items-center gap-3 rounded-lg border px-5 text-copy transition-colors duration-200 ${ active ? "border-sky bg-sky-tint text-sky" : "border-line bg-white text-label" }`}
             >
               <MethodMark id={option.id} />
               {option.label}
@@ -68,7 +68,7 @@ export function PaymentForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-9 h-[52px] w-full max-w-[760px] rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px disabled:opacity-70"
+        className="mt-9 h-[52px] w-full max-w-[760px] rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 active:translate-y-px disabled:opacity-70"
       >
         {pending ? "Processing…" : "Continue"}
       </button>

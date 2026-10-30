@@ -35,14 +35,14 @@ export default function BookingConfirmedPage() {
 
           <Link
             href="#"
-            className="animate-rise mt-10 flex h-[56px] w-full max-w-[460px] items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px sm:mx-auto"
+            className="animate-rise mt-10 flex h-[56px] w-full max-w-[460px] items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 active:translate-y-px sm:mx-auto"
           >
             Download E-Ticket &amp; Boarding Pass
           </Link>
 
           <Link
             href="/hotels"
-            className="mt-5 inline-block text-copy text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="mt-5 inline-block text-copy text-brand transition-colors duration-200"
           >
             Book a Hotel for Your Trip
           </Link>
@@ -114,7 +114,7 @@ function BoardingPass() {
           <p className="text-lead font-semibold text-ink">{BOOKED_TRIP.price}</p>
           <Link
             href="#"
-            className="flex h-[36px] items-center gap-2 rounded-md bg-brand px-4 text-small font-medium text-white transition-colors duration-200 hover:bg-brand-hover"
+            className="flex h-[36px] items-center gap-2 rounded-md bg-brand px-4 text-small font-medium text-white transition-colors duration-200"
           >
             View
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">

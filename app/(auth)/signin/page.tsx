@@ -57,7 +57,7 @@ export default function SignInPage() {
             <Checkbox label="Remember me" checked={remember} onChange={setRemember} />
             <Link
               href="/forgot-password"
-              className="text-copy text-brand transition-colors duration-200 hover:text-brand-hover"
+              className="text-copy text-brand transition-colors duration-200"
             >
               Forgot password?
             </Link>
@@ -77,7 +77,7 @@ export default function SignInPage() {
           Don&apos;t have an account?{" "}
           <Link
             href="/signup"
-            className="font-semibold text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="font-semibold text-brand transition-colors duration-200"
           >
             Sign up
           </Link>

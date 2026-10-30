@@ -1,6 +1,20 @@
 "use client";
 
-import { BedDouble, ChevronRight, Headset, House, Info, Mail, Menu, Plane, X } from "lucide-react";
+import {
+  BedDouble,
+  ChevronRight,
+  CircleUserRound,
+  Headset,
+  Heart,
+  House,
+  Info,
+  Mail,
+  Menu,
+  Plane,
+  Sparkles,
+  X,
+} from "lucide-react";
+import { openAssistant } from "@/components/site/ai-assistant";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -15,7 +29,6 @@ const MENU_ICONS: Record<string, typeof House> = {
   "/about": Info,
   "/contact": Mail,
 };
-import { PAGE } from "@/components/site/container";
 
 /**
  * "overlay" floats transparent above a hero image and turns solid on scroll.
@@ -65,22 +78,39 @@ export function SiteHeader({
             }`
       }
     >
-      <div className={`${PAGE} flex h-[66px] items-center justify-between gap-4 sm:h-[84px]`}>
-        <Logo />
+      {/* Kayak-style bar: menu, logo and Ask AI on the left; saved and account on the right. */}
+      <div className="mx-auto flex h-[64px] w-full max-w-[1600px] items-center gap-2 px-3 sm:h-[76px] sm:gap-4 sm:px-6">
+        <button
+          type="button"
+          onClick={() => setOpenAt(open ? null : pathname)}
+          aria-expanded={open}
+          aria-controls="mobile-nav"
+          aria-label={open ? "Close menu" : "Open menu"}
+          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink"
+        >
+          <Menu size={24} strokeWidth={2} aria-hidden="true" />
+        </button>
+        <Logo imgClass="h-[34px] sm:h-[40px]" />
 
-        <nav className="hidden items-center gap-9 lg:flex">
-          {NAV_LINKS.map((item) => {
-            // "Flight" stays lit through the search and booking flow.
+        <button
+          type="button"
+          onClick={() => openAssistant()}
+          className="ml-2 hidden h-11 items-center gap-2 rounded-full px-3 text-copy font-semibold text-ink md:flex"
+        >
+          <Sparkles size={20} strokeWidth={2} aria-hidden="true" className="text-brand" />
+          Ask AI
+        </button>
+
+        <nav aria-label="Main" className="ml-6 hidden items-center gap-1 xl:flex">
+          {NAV_LINKS.filter((item) => item.href !== "/").map((item) => {
             const active =
-              item.href === "/"
-                ? pathname === "/"
-                : pathname.startsWith(item.href) ||
-                  (item.href === "/flights" && pathname.startsWith("/booking"));
+              pathname.startsWith(item.href) || (item.href === "/flights" && pathname.startsWith("/booking"));
             return (
               <Link
                 key={item.label}
                 href={item.href}
-                className={`relative py-2 text-copy font-medium transition-colors duration-200 ${ active ? "text-sky" : "text-body" }`}
+                aria-current={active ? "page" : undefined}
+                className={`rounded-full px-3.5 py-2 text-copy font-medium ${active ? "bg-shell text-ink" : "text-body"}`}
               >
                 {item.label}
               </Link>
@@ -88,35 +118,34 @@ export function SiteHeader({
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 md:ml-auto md:flex lg:ml-0">
+        <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            onClick={() => openAssistant()}
+            aria-label="Ask AI"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] md:hidden"
+          >
+            <Sparkles size={22} strokeWidth={2} aria-hidden="true" />
+          </button>
           <Link
             href="/signin"
-            className="flex h-[42px] w-[104px] items-center justify-center rounded-lg border border-sky text-copy font-medium text-sky transition-all duration-200 active:translate-y-px"
+            aria-label="Saved trips"
+            className="hidden h-12 w-12 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:flex"
           >
-            Sign in
+            <Heart size={22} strokeWidth={2} aria-hidden="true" />
           </Link>
           <Link
-            href="/signup"
-            className="flex h-[42px] w-[104px] items-center justify-center rounded-lg bg-sky text-copy font-medium text-white shadow-[0_2px_8px_rgba(86,172,233,0.35)] transition-colors duration-200 active:translate-y-px"
+            href="/signin"
+            aria-label="Sign in or create an account"
+            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)]"
           >
-            Sign up
+            <CircleUserRound size={24} strokeWidth={1.9} aria-hidden="true" />
           </Link>
         </div>
-
-        <button
-          type="button"
-          onClick={() => setOpenAt(open ? null : pathname)}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? "Close menu" : "Open menu"}
-          className={`-mr-1 flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors duration-200 lg:hidden ${open ? "bg-shell" : ""}`}
-        >
-          {open ? <X size={24} strokeWidth={2} aria-hidden="true" /> : <Menu size={24} strokeWidth={2} aria-hidden="true" />}
-        </button>
       </div>
 
-      {/* Mobile menu: a panel sliding in from the right over a dimmed page. */}
-      <div className={`fixed inset-0 z-[60] lg:hidden ${open ? "" : "pointer-events-none"}`} aria-hidden={!open} inert={!open}>
+      {/* Menu: a panel sliding in from the left over a dimmed page, on every screen size. */}
+      <div className={`fixed inset-0 z-[60] ${open ? "" : "pointer-events-none"}`} aria-hidden={!open} inert={!open}>
         <button
           type="button"
           aria-label="Close menu"
@@ -129,8 +158,8 @@ export function SiteHeader({
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className={`absolute inset-y-0 right-0 flex w-[86%] max-w-[380px] flex-col bg-white shadow-[-24px_0_48px_-24px_rgba(16,24,40,0.35)] transition-transform duration-300 ease-out ${
-            open ? "translate-x-0" : "translate-x-full"
+          className={`absolute inset-y-0 left-0 flex w-[86%] max-w-[380px] flex-col bg-white shadow-[24px_0_48px_-24px_rgba(16,24,40,0.35)] transition-transform duration-300 ease-out ${
+            open ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <div className="flex h-[66px] items-center justify-between px-5">

@@ -43,7 +43,7 @@ export default function ForgotPasswordPage() {
           Remembered your password?{" "}
           <Link
             href="/signin"
-            className="font-semibold text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="font-semibold text-brand transition-colors duration-200"
           >
             Sign in
           </Link>

@@ -27,7 +27,7 @@ export default function BookingDetailsPage() {
             </p>
             <Link
               href="/booking/details"
-              className="mt-2 inline-block text-copy text-brand transition-colors duration-200 hover:text-brand-hover"
+              className="mt-2 inline-block text-copy text-brand transition-colors duration-200"
             >
               Add another passenger
             </Link>

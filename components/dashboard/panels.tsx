@@ -64,7 +64,7 @@ export function MonthSummary() {
         action={
           <button
             type="button"
-            className="flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line px-4 text-small font-medium text-body transition-colors duration-200 hover:border-sky hover:text-sky"
+            className="flex h-10 shrink-0 items-center gap-2 rounded-lg border border-line px-4 text-small font-medium text-body transition-colors duration-200"
           >
             <DashIcon name="export" size={17} />
             Export
@@ -89,7 +89,7 @@ export function MonthSummary() {
               <p className="mt-2 text-small text-body">{tile.label}</p>
               <Link
                 href={tile.href}
-                className="mt-2 inline-block text-small font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+                className="mt-2 inline-block text-small font-medium text-brand transition-colors duration-200"
               >
                 {tile.action}
               </Link>
@@ -112,7 +112,7 @@ export function QuickLinks() {
           <li key={link.label}>
             <Link
               href={link.href}
-              className="group flex items-center gap-3 rounded-xl px-3 py-3 text-small text-body transition-colors duration-200 hover:bg-sky-tint hover:text-sky"
+              className="group flex items-center gap-3 rounded-xl px-3 py-3 text-small text-body transition-colors duration-200"
             >
               <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-sky-soft text-sky">
                 <DashIcon name={link.icon} size={18} />
@@ -145,7 +145,7 @@ export function RevenueChart({
           action ?? (
             <Link
               href="/dashboard/insights"
-              className="shrink-0 text-small font-medium text-sky transition-colors duration-200 hover:text-sky-hover"
+              className="shrink-0 text-small font-medium text-sky transition-colors duration-200"
             >
               View Insights
             </Link>
@@ -167,7 +167,7 @@ export function Notifications() {
         action={
           <Link
             href="/dashboard/messages"
-            className="shrink-0 text-small font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="shrink-0 text-small font-medium text-brand transition-colors duration-200"
           >
             View
           </Link>
@@ -206,7 +206,7 @@ export function TopProperties() {
         action={
           <Link
             href="/dashboard/properties"
-            className="shrink-0 text-small font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+            className="shrink-0 text-small font-medium text-brand transition-colors duration-200"
           >
             View&nbsp; Summary
           </Link>

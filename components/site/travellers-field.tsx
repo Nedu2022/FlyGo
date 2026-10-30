@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import { ChevronDown, Minus, Plus } from "lucide-react";
+import { ChevronDown, Minus, Plus, User } from "lucide-react";
 
 const CABINS = ["Economy", "Premium", "Business", "First"] as const;
 
@@ -34,11 +34,14 @@ export function TravellersField({
   kind = "flight",
   initial,
   className = "",
+  compact = false,
 }: {
   kind?: "flight" | "stay" | "jet";
   initial?: Partial<Counts>;
   /** Classes for the trigger's text, so it matches the surrounding field. */
   className?: string;
+  /** Short "👤 1 Economy" summary, for the one-row desktop bar. */
+  compact?: boolean;
 }) {
   const [counts, setCounts] = useState<Counts>({ adults: 1, children: 0, infants: 0, rooms: 1, ...initial });
   const [cabin, setCabin] = useState<(typeof CABINS)[number]>("Economy");
@@ -57,6 +60,11 @@ export function TravellersField({
     : flight
       ? `${plural(people, "traveller")}, ${cabin}`
       : `${plural(counts.adults + counts.children, "guest")}, ${plural(counts.rooms, "room")}`;
+  const short = jet
+    ? `${counts.adults}`
+    : flight
+      ? `${people} ${cabin}`
+      : `${counts.adults + counts.children} · ${plural(counts.rooms, "room")}`;
   const title = jet ? "Passengers" : flight ? "Travellers" : "Guests";
   const rows = jet
     ? [{ key: "adults" as const, label: "Passengers", note: "Adults and children", min: 1, max: 16 }]
@@ -110,7 +118,14 @@ export function TravellersField({
         aria-label={`${title}: ${summary}`}
         className={`flex w-full min-w-0 items-center justify-between gap-2 text-left text-ink outline-none ${className}`}
       >
-        <span className="truncate">{summary}</span>
+        {compact ? (
+          <span className="flex min-w-0 items-center gap-2">
+            <User size={18} strokeWidth={0} fill="currentColor" aria-hidden="true" className="shrink-0" />
+            <span className="truncate">{short}</span>
+          </span>
+        ) : (
+          <span className="truncate">{summary}</span>
+        )}
         <ChevronDown
           size={18}
           strokeWidth={2}

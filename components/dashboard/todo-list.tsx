@@ -73,7 +73,7 @@ export function TodoList() {
               type="button"
               onClick={() => remove(todo.id)}
               aria-label={`Remove "${todo.label}"`}
-              className="shrink-0 rounded p-1 text-muted transition-colors duration-200 hover:text-red-500"
+              className="shrink-0 rounded p-1 text-muted transition-colors duration-200"
             >
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
                 <path d="m6 6 12 12M18 6 6 18" />
@@ -100,7 +100,7 @@ export function TodoList() {
             />
             <button
               type="submit"
-              className="h-11 shrink-0 rounded-xl bg-sky px-4 text-small font-medium text-white transition-colors duration-200 hover:bg-sky-hover"
+              className="h-11 shrink-0 rounded-xl bg-sky px-4 text-small font-medium text-white transition-colors duration-200"
             >
               Add
             </button>
@@ -109,7 +109,7 @@ export function TodoList() {
           <button
             type="button"
             onClick={() => setAdding(true)}
-            className="group flex items-center gap-2.5 text-small text-body transition-colors duration-200 hover:text-[#5b5bd6]"
+            className="group flex items-center gap-2.5 text-small text-body transition-colors duration-200"
           >
             <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#5b5bd6] text-white">
               <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.6" strokeLinecap="round" aria-hidden="true">

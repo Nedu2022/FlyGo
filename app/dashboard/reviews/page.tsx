@@ -46,7 +46,7 @@ export default function ReviewsPage() {
                 <div className="mt-4 flex flex-wrap justify-end gap-3">
                   <button
                     type="button"
-                    className="h-[38px] rounded-md border border-line px-5 text-small text-body transition-colors duration-200 hover:border-sky hover:text-sky"
+                    className="h-[38px] rounded-md border border-line px-5 text-small text-body transition-colors duration-200"
                   >
                     Reply
                   </button>
@@ -58,7 +58,7 @@ export default function ReviewsPage() {
                       )
                     }
                     aria-pressed={done}
-                    className={`h-[38px] rounded-md border px-5 text-small transition-colors duration-200 ${ done ? "border-[#4ade80] bg-[#4ade80] text-white" : "border-line text-body hover:border-sky hover:text-sky" }`}
+                    className={`h-[38px] rounded-md border px-5 text-small transition-colors duration-200 ${ done ? "border-[#4ade80] bg-[#4ade80] text-white" : "border-line text-body" }`}
                   >
                     {done ? "Resolved" : "Mark as Resolved"}
                   </button>

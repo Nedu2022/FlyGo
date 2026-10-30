@@ -87,7 +87,7 @@ export default function BookingsPage() {
               {MANAGED_BOOKINGS.map((booking, index) => (
                 <tr
                   key={index}
-                  className="border-b border-line transition-colors duration-200 hover:bg-sky-tint"
+                  className="border-b border-line transition-colors duration-200"
                 >
                   <td className="py-4 pl-5 pr-3 text-small text-ink">
                     <span className="flex items-center gap-4">
@@ -122,7 +122,7 @@ export default function BookingsPage() {
                       aria-label={`Actions for ${booking.guest}`}
                       aria-expanded={menu === index}
                       onClick={() => setMenu(menu === index ? null : index)}
-                      className="rounded p-1.5 text-ink transition-colors duration-200 hover:bg-shell"
+                      className="rounded p-1.5 text-ink transition-colors duration-200"
                     >
                       <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                         <circle cx="5" cy="12" r="1.8" />
@@ -138,7 +138,7 @@ export default function BookingsPage() {
                             <button
                               type="button"
                               onClick={() => setMenu(null)}
-                              className={`w-full px-4 py-2.5 text-left text-small transition-colors hover:bg-shell ${ item === "Cancel booking" ? "text-red-500" : "text-ink" }`}
+                              className={`w-full px-4 py-2.5 text-left text-small transition-colors ${ item === "Cancel booking" ? "text-red-500" : "text-ink" }`}
                             >
                               {item}
                             </button>

@@ -79,7 +79,7 @@ function ListingCard({ listing }: { listing: Listing }) {
           <div className="flex items-center gap-3 text-label">
             <IconButton label={`Edit ${listing.name}`} path="m5 19 .8-3.6L16.3 4.9a2 2 0 0 1 2.8 2.8L8.6 18.2 5 19Z" />
             <IconButton label={`Preview ${listing.name}`} path="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z" extra={<circle cx="12" cy="12" r="3" />} />
-            <IconButton label={`Delete ${listing.name}`} path="M5 7h14M10 7V5h4v2M6.5 7l.8 12h9.4l.8-12" danger />
+            <IconButton label={`Delete ${listing.name}`} path="M5 7h14M10 7V5h4v2M6.5 7l.8 12h9.4l.8-12" />
           </div>
         </div>
       </div>
@@ -91,18 +91,16 @@ function IconButton({
   label,
   path,
   extra,
-  danger = false,
 }: {
   label: string;
   path: string;
   extra?: React.ReactNode;
-  danger?: boolean;
 }) {
   return (
     <button
       type="button"
       aria-label={label}
-      className={`transition-colors duration-200 ${danger ? "hover:text-red-500" : "hover:text-sky"}`}
+      className="transition-colors duration-200"
     >
       <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d={path} />

@@ -54,7 +54,7 @@ export default function SignUpPage() {
           <li key={type.title}>
             <Link
               href={type.href}
-              className="group flex items-center gap-5 rounded-xl border border-line bg-white px-6 py-5 transition-colors duration-200 hover:border-sky hover:bg-sky-tint focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
+              className="group flex items-center gap-5 rounded-xl border border-line bg-white px-6 py-5 transition-colors duration-200 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
             >
               <TypeIcon name={type.icon} />
               <span className="min-w-0 flex-1">

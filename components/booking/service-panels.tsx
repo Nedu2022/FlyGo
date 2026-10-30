@@ -105,13 +105,13 @@ export function ServicePanels() {
       <div className="flex justify-center gap-4">
         <Link
           href="/booking/details"
-          className="flex h-[48px] w-[112px] items-center justify-center rounded-lg border border-line bg-white text-copy text-body transition-colors duration-200 hover:border-muted"
+          className="flex h-[48px] w-[112px] items-center justify-center rounded-lg border border-line bg-white text-copy text-body transition-colors duration-200"
         >
           Back
         </Link>
         <Link
           href="/booking/payment"
-          className="flex h-[48px] w-[112px] items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+          className="flex h-[48px] w-[112px] items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 active:translate-y-px"
         >
           Continue
         </Link>
@@ -134,7 +134,7 @@ function AddButton({ on, onClick }: { on: boolean; onClick: () => void }) {
       type="button"
       onClick={onClick}
       aria-pressed={on}
-      className={`mt-6 h-[44px] w-[110px] rounded-lg text-copy font-medium transition-all duration-200 active:translate-y-px ${ on ? "bg-sky-soft text-sky ring-1 ring-inset ring-sky" : "bg-sky text-white hover:bg-sky-hover" }`}
+      className={`mt-6 h-[44px] w-[110px] rounded-lg text-copy font-medium transition-all duration-200 active:translate-y-px ${ on ? "bg-sky-soft text-sky ring-1 ring-inset ring-sky" : "bg-sky text-white" }`}
     >
       {on ? "Added" : "Add"}
     </button>

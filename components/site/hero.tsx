@@ -3,19 +3,6 @@ import type { ReactNode } from "react";
 import { SearchBar } from "@/components/site/search-bar";
 import { HeroSlides, type Slide } from "@/components/site/hero-slides";
 
-const FLIGHT_SLIDES: Slide[] = [
-  { src: "/images/photos/hero-sky.webp", position: "70% center" },
-  { src: "/images/photos/stay-santorini.webp" },
-  { src: "/images/photos/dubai-night.webp" },
-  { src: "/images/photos/new-york-wide.webp" },
-];
-
-const STAY_SLIDES: Slide[] = [
-  { src: "/images/photos/hero-pool.webp" },
-  { src: "/images/photos/stay-overwater.webp" },
-  { src: "/images/photos/stay-infinity.webp" },
-];
-
 /**
  * Full-bleed photo hero: the image settles from a slight zoom behind a dark
  * wash, the headline sits in white over it, and whatever `children` the page
@@ -76,30 +63,72 @@ export function CinematicHero({
   );
 }
 
+const COLLAGE: [string, string][][] = [
+  [
+    ["/images/photos/hero-sky.webp", "70% center"],
+    ["/images/photos/traveller-window.webp", "center"],
+    ["/images/photos/stay-santorini.webp", "center"],
+  ],
+  [
+    ["/images/photos/dubai.webp", "center 70%"],
+    ["/images/photos/jet-hero.webp", "35% center"],
+    ["/images/photos/stay-overwater.webp", "center"],
+  ],
+];
+
+const STAY_COLLAGE: [string, string][][] = [
+  [
+    ["/images/photos/hero-pool.webp", "center"],
+    ["/images/photos/stay-suite.webp", "center"],
+    ["/images/photos/lisbon-tram.webp", "center"],
+  ],
+  [
+    ["/images/photos/stay-overwater.webp", "center"],
+    ["/images/photos/stay-santorini.webp", "center"],
+    ["/images/photos/stay-infinity.webp", "center"],
+  ],
+];
+
 /**
- * Home and Hotels hero, kept short in the Kayak spirit: one headline, the
- * product tiles and the boarding-pass search on a soft grey panel. On desktop
- * the destination photos rotate in a rounded frame beside the headline.
+ * Home and Hotels hero, after Kayak: a soft grey panel with one bold line,
+ * the service tiles and the search on the left, and a two-column staggered
+ * photo collage bleeding off the top and bottom on the right (desktop only).
  */
 export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
   const flight = variant === "flight";
+  const columns = flight ? COLLAGE : STAY_COLLAGE;
   return (
-    <section className="px-2 sm:px-4">
-      <div className="mx-auto max-w-[1600px] rounded-[28px] bg-shell px-4 pb-5 pt-7 sm:px-8 sm:pb-8 sm:pt-10 lg:px-14 lg:pb-12">
-        <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
-          <div>
-            <h1 className="text-display font-semibold tracking-tight text-ink">
-              {flight ? "Fly anywhere for less" : "Stays you\u2019ll love"}
-              <span className="text-brand">.</span>
-            </h1>
-          </div>
-          <div className="relative isolate hidden h-[180px] overflow-hidden rounded-3xl bg-steel lg:block">
-            <HeroSlides slides={flight ? FLIGHT_SLIDES : STAY_SLIDES} />
+    <section className="px-0 sm:px-4">
+      <div className="relative mx-auto max-w-[1600px] overflow-hidden bg-shell sm:rounded-[28px]">
+        <div className="relative z-10 px-4 pb-6 pt-6 sm:px-10 sm:pb-12 sm:pt-12 lg:w-[70%] lg:px-14 lg:pb-16 lg:pt-16 xl:w-[76%] 2xl:w-[72%]">
+          <h1 className="hidden text-display font-bold tracking-tight text-ink sm:block">
+            {flight ? "Your next trip starts here" : "Stays you\u2019ll love"}
+            <span className="text-brand">.</span>
+          </h1>
+          <div className="sm:mt-8">
+            <SearchBar defaultTab={flight ? "Flight" : "Hotel"} />
           </div>
         </div>
 
-        <div className="mt-6 sm:mt-8">
-          <SearchBar defaultTab={flight ? "Flight" : "Hotel"} />
+        <div aria-hidden="true" className="absolute inset-y-0 right-5 hidden w-[26%] gap-4 lg:flex xl:w-[20%] 2xl:w-[24%]">
+          {columns.map((column, c) => (
+            <div key={c} className={`flex flex-1 flex-col gap-4 ${c === 0 ? "-mt-24" : "-mt-6"}`}>
+              {column.map(([src, position]) => (
+                <div key={src} className="relative aspect-[4/5] shrink-0 overflow-hidden rounded-[32px] bg-steel">
+                  <Image
+                    src={src}
+                    alt=""
+                    fill
+                    sizes="(max-width: 1280px) 15vw, 220px"
+                    quality={70}
+                    priority={c === 0}
+                    className="object-cover"
+                    style={{ objectPosition: position }}
+                  />
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     </section>

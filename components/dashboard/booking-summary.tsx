@@ -40,7 +40,7 @@ export function BookingSummary() {
         </h2>
         <Link
           href="/dashboard/bookings"
-          className="text-small font-medium text-brand transition-colors duration-200 hover:text-brand-hover"
+          className="text-small font-medium text-brand transition-colors duration-200"
         >
           View Full Bookings
         </Link>
@@ -77,7 +77,7 @@ export function BookingSummary() {
             {BOOKINGS.map((booking, index) => (
               <tr
                 key={`${booking.guest}-${index}`}
-                className="border-b border-line transition-colors duration-200 hover:bg-sky-tint"
+                className="border-b border-line transition-colors duration-200"
               >
                 <td className="py-4 pl-5 pr-3 text-small text-ink">
                   <span className="flex items-center gap-4">

@@ -111,7 +111,7 @@ export default function AvailabilityPage() {
                 return (
                   <div
                     key={i}
-                    className={`relative flex h-[80px] items-start justify-between border-b border-r border-line px-4 py-3 transition-colors duration-150 last:border-r-0 hover:bg-sky-tint ${
+                    className={`relative flex h-[80px] items-start justify-between border-b border-r border-line px-4 py-3 transition-colors duration-150 last:border-r-0 ${
                       outside ? "bg-shell/60" : "bg-white"
                     }`}
                   >
@@ -142,7 +142,7 @@ export default function AvailabilityPage() {
         </ul>
         <button
           type="button"
-          className="h-[44px] rounded-lg bg-sky px-6 text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+          className="h-[44px] rounded-lg bg-sky px-6 text-copy font-medium text-white transition-all duration-200 active:translate-y-px"
         >
           Link Calendar
         </button>
@@ -174,7 +174,7 @@ function Stepper({
       type="button"
       onClick={onClick}
       aria-label={label}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-body transition-colors duration-200 hover:bg-shell hover:text-sky"
+      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full text-body transition-colors duration-200"
     >
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <path d={direction === "prev" ? "m15 18-6-6 6-6" : "m9 18 6-6-6-6"} />
@@ -199,12 +199,12 @@ function Spinner({
     <span className="flex items-center gap-2">
       <span className="text-h4 text-ink">{value}</span>
       <span className="flex flex-col gap-1">
-        <button type="button" onClick={onUp} aria-label={`Next ${label}`} className="text-muted transition-colors hover:text-sky">
+        <button type="button" onClick={onUp} aria-label={`Next ${label}`} className="text-muted transition-colors">
           <svg width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M1 6.5 6 1.5l5 5" />
           </svg>
         </button>
-        <button type="button" onClick={onDown} aria-label={`Previous ${label}`} className="text-muted transition-colors hover:text-sky">
+        <button type="button" onClick={onDown} aria-label={`Previous ${label}`} className="text-muted transition-colors">
           <svg width="11" height="7" viewBox="0 0 12 8" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <path d="M1 1.5 6 6.5l5-5" />
           </svg>

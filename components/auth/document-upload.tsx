@@ -114,7 +114,7 @@ export function DocumentUpload() {
           <button
             type="button"
             onClick={async () => { await logout(); router.replace("/login"); }}
-            className="mt-8 text-small font-semibold text-sky transition-colors hover:text-sky-hover"
+            className="mt-8 text-small font-semibold text-sky transition-colors"
           >
             Sign out {user ? `of ${user.email}` : ""}
           </button>

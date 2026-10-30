@@ -54,7 +54,7 @@ export default function SettingsPage() {
               <button
                 type="button"
                 disabled={!editing}
-                className="text-small text-sky transition-colors duration-200 hover:text-sky-hover disabled:cursor-not-allowed disabled:text-muted"
+                className="text-small text-sky transition-colors duration-200 disabled:cursor-not-allowed disabled:text-muted"
               >
                 Change photo
               </button>
@@ -88,7 +88,7 @@ export default function SettingsPage() {
                   <button
                     type="button"
                     onClick={() => setEditing(false)}
-                    className="h-[42px] rounded-lg border border-line px-6 text-copy text-body transition-colors hover:border-muted"
+                    className="h-[42px] rounded-lg border border-line px-6 text-copy text-body transition-colors"
                   >
                     Cancel
                   </button>
@@ -96,7 +96,7 @@ export default function SettingsPage() {
                 <button
                   type={editing ? "submit" : "button"}
                   onClick={editing ? undefined : () => setEditing(true)}
-                  className="h-[42px] rounded-lg bg-sky px-8 text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+                  className="h-[42px] rounded-lg bg-sky px-8 text-copy font-medium text-white transition-all duration-200 active:translate-y-px"
                 >
                   {editing ? "Save" : "Edit"}
                 </button>
@@ -140,19 +140,19 @@ export default function SettingsPage() {
           <div className="mt-4 flex flex-wrap gap-3">
             <button
               type="button"
-              className="h-[42px] rounded-lg border border-line px-5 text-copy text-body transition-colors duration-200 hover:border-sky hover:text-sky"
+              className="h-[42px] rounded-lg border border-line px-5 text-copy text-body transition-colors duration-200"
             >
               Change password
             </button>
             <button
               type="button"
-              className="h-[42px] rounded-lg border border-line px-5 text-copy text-body transition-colors duration-200 hover:border-sky hover:text-sky"
+              className="h-[42px] rounded-lg border border-line px-5 text-copy text-body transition-colors duration-200"
             >
               Two-factor authentication
             </button>
             <button
               type="button"
-              className="h-[42px] rounded-lg border border-red-200 px-5 text-copy text-red-500 transition-colors duration-200 hover:bg-red-50"
+              className="h-[42px] rounded-lg border border-red-200 px-5 text-copy text-red-500 transition-colors duration-200"
             >
               Delete account
             </button>

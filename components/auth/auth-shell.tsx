@@ -44,7 +44,7 @@ export function AuthShell({
         {backHref ? (
           <Link
             href={backHref}
-            className="group absolute left-5 top-0 inline-flex items-center gap-2 text-copy text-body transition-colors duration-200 hover:text-sky sm:left-10 lg:left-14"
+            className="group absolute left-5 top-0 inline-flex items-center gap-2 text-copy text-body transition-colors duration-200 sm:left-10 lg:left-14"
           >
             <svg
               width="20"
@@ -147,7 +147,7 @@ export function AccountPrompt({
       {text}{" "}
       <Link
         href={href}
-        className="font-medium text-sky transition-colors duration-200 hover:text-sky-hover"
+        className="font-medium text-sky transition-colors duration-200"
       >
         {linkLabel}
       </Link>

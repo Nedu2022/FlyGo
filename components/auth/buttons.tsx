@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ButtonHTMLAttributes, ReactNode } from "react";
 
 const primaryBase =
-  "relative flex h-[56px] w-full items-center justify-center rounded-[10px] bg-sky text-lead font-medium text-white transition-colors duration-200 hover:bg-sky-hover active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky disabled:cursor-not-allowed disabled:opacity-70";
+  "relative flex h-[56px] w-full items-center justify-center rounded-[10px] bg-sky text-lead font-medium text-white transition-colors duration-200 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky disabled:cursor-not-allowed disabled:opacity-70";
 
 type PrimaryButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   pending?: boolean;
@@ -69,7 +69,7 @@ export function GoogleButton({ label = "Register with Google" }: { label?: strin
   return (
     <button
       type="button"
-      className="group flex h-[60px] w-full items-center justify-center gap-4 rounded-[10px] border border-line bg-white text-lead font-semibold text-ink transition-colors duration-200 hover:border-muted active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
+      className="group flex h-[60px] w-full items-center justify-center gap-4 rounded-[10px] border border-line bg-white text-lead font-semibold text-ink transition-colors duration-200 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
     >
       <GoogleMark />
       {label}

@@ -94,7 +94,7 @@ export function TravelersForm() {
       <button
         type="submit"
         disabled={pending}
-        className="mt-9 h-[52px] w-full max-w-[680px] rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px disabled:opacity-70"
+        className="mt-9 h-[52px] w-full max-w-[680px] rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 active:translate-y-px disabled:opacity-70"
       >
         {pending ? "Saving…" : "Continue"}
       </button>

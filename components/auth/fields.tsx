@@ -4,7 +4,7 @@ import { useId, useState, type InputHTMLAttributes, type ReactNode } from "react
 
 /** Tall, softly-bordered input; focus lifts a faint blue halo rather than a ring. */
 const inputBase =
-  "h-[56px] w-full rounded-[10px] border border-line bg-white px-5 text-copy text-ink outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-muted hover:border-muted focus:border-sky focus:shadow-[0_0_0_4px_var(--color-sky-soft)]";
+  "h-[56px] w-full rounded-[10px] border border-line bg-white px-5 text-copy text-ink outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-muted focus:border-sky focus:shadow-[0_0_0_4px_var(--color-sky-soft)]";
 
 export const fieldLabel = "mb-2 block text-copy text-label";
 
@@ -67,7 +67,7 @@ export function PasswordField({ label, starred, className = "", ...props }: Fiel
           onClick={() => setVisible((v) => !v)}
           aria-pressed={visible}
           aria-controls={id}
-          className="absolute right-4 top-1/2 -translate-y-1/2 rounded px-1 text-copy font-semibold text-ink transition-colors duration-200 hover:text-sky"
+          className="absolute right-4 top-1/2 -translate-y-1/2 rounded px-1 text-copy font-semibold text-ink transition-colors duration-200"
         >
           {visible ? "Hide" : "Show"}
         </button>
@@ -107,7 +107,7 @@ export function PhoneOrEmailField({
       <Label htmlFor={id} starred={starred}>
         {label}
       </Label>
-      <div className="flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)] hover:border-muted">
+      <div className="flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
         {isPhone ? (
           <div className="relative flex h-full shrink-0 items-center gap-2 pl-5 pr-3">
             <span aria-hidden="true" className="flex">
@@ -248,7 +248,7 @@ export function PhoneField({ label, starred, className = "", ...props }: FieldPr
       <Label htmlFor={id} starred={starred}>
         {label}
       </Label>
-      <div className="flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)] hover:border-muted">
+      <div className="flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
         <div className="relative flex h-full shrink-0 items-center gap-2 pl-5 pr-3">
           <span aria-hidden="true" className="flex">
             {selected.flag}
@@ -306,7 +306,7 @@ export function CountrySelect({
       <label htmlFor={id} className={fieldLabel}>
         {label}
       </label>
-      <div className="relative flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)] hover:border-muted">
+      <div className="relative flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
         <span className="pointer-events-none flex items-center gap-2.5 pl-5 text-copy text-ink">
           {selected.code}
           <span aria-hidden="true" className="flex">

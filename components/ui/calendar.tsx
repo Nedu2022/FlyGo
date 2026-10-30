@@ -192,6 +192,12 @@ export function DateField({
   placeholder?: string;
 }) {
   const [open, setOpen] = useState(false);
+  // Phones get a full-width bottom sheet; wider screens a popover under the field.
+  const [sheet, setSheet] = useState(false);
+  const openPicker = () => {
+    setSheet(window.innerWidth < 640);
+    setOpen((v) => !v);
+  };
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const popover = useRef<HTMLDivElement>(null);
@@ -239,12 +245,21 @@ export function DateField({
   const popup =
     open && !disabled && coords
       ? createPortal(
-          <div
-            ref={popover}
-            style={{ position: "absolute", top: coords.top, left: coords.left, zIndex: 100 }}
-          >
-            <Calendar value={value} onSelect={onChange} onClose={() => setOpen(false)} />
-          </div>,
+          sheet ? (
+            <>
+              <div aria-hidden="true" className="animate-fade fixed inset-0 z-[99] bg-ink/40" />
+              <div
+                ref={popover}
+                className="animate-rise fixed inset-x-0 bottom-0 z-[100] flex justify-center rounded-t-3xl bg-white pb-[env(safe-area-inset-bottom)] [&>div>div]:w-full [&>div>div]:shadow-none [&>div]:w-full"
+              >
+                <Calendar value={value} onSelect={onChange} onClose={() => setOpen(false)} />
+              </div>
+            </>
+          ) : (
+            <div ref={popover} style={{ position: "absolute", top: coords.top, left: coords.left, zIndex: 100 }}>
+              <Calendar value={value} onSelect={onChange} onClose={() => setOpen(false)} />
+            </div>
+          ),
           document.body,
         )
       : null;
@@ -256,7 +271,7 @@ export function DateField({
           ref={trigger}
           type="button"
           disabled={disabled}
-          onClick={() => setOpen((v) => !v)}
+          onClick={openPicker}
           aria-expanded={open}
           aria-label={label}
           className={`flex w-full min-w-0 items-center gap-2 text-left text-copy outline-none focus-visible:underline focus-visible:underline-offset-4 ${
@@ -280,7 +295,7 @@ export function DateField({
           ref={trigger}
           type="button"
           disabled={disabled}
-          onClick={() => setOpen((v) => !v)}
+          onClick={openPicker}
           aria-expanded={open}
           aria-label={label}
           className={`h-12 w-full truncate rounded-lg px-3 text-left text-lead outline-none transition-colors duration-200 focus-visible:ring-2 focus-visible:ring-sky ${
@@ -314,7 +329,7 @@ export function DateField({
           ref={trigger}
           type="button"
           disabled={disabled}
-          onClick={() => setOpen((v) => !v)}
+          onClick={openPicker}
           aria-expanded={open}
           className="mt-0.5 flex w-full items-center gap-1.5 text-left outline-none focus-visible:underline focus-visible:decoration-white/70 focus-visible:underline-offset-4"
         >

@@ -50,7 +50,7 @@ export default function MessagesPage() {
             </h2>
             <button
               type="button"
-              className="flex items-center gap-2 text-small text-body transition-colors hover:text-sky"
+              className="flex items-center gap-2 text-small text-body transition-colors"
             >
               Agents
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -83,7 +83,7 @@ export default function MessagesPage() {
                     onClick={() => setActiveId(thread.id)}
                     aria-current={on}
                     className={`flex w-full items-center gap-3 rounded-lg px-3 py-3 text-left transition-colors duration-200 ${
-                      on ? "bg-sky-tint" : "hover:bg-shell"
+                      on ? "bg-sky-tint" : ""
                     }`}
                   >
                     <Avatar name={thread.name} size={40} />
@@ -165,7 +165,7 @@ export default function MessagesPage() {
             <button
               type="button"
               aria-label="Add attachment"
-              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-label transition-colors hover:bg-shell hover:text-sky"
+              className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg text-label transition-colors"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
                 <rect x="3" y="3" width="7" height="7" rx="1.5" />
@@ -183,7 +183,7 @@ export default function MessagesPage() {
                 placeholder="Type your message"
                 className="w-full bg-transparent text-small text-ink outline-none placeholder:text-muted"
               />
-              <button type="button" aria-label="Add emoji" className="shrink-0 text-muted transition-colors hover:text-sky">
+              <button type="button" aria-label="Add emoji" className="shrink-0 text-muted transition-colors">
                 <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" aria-hidden="true">
                   <circle cx="12" cy="12" r="9" />
                   <path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01" strokeLinecap="round" />

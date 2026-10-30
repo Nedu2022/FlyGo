@@ -69,13 +69,13 @@ export default function VerifyPage() {
             type="button"
             onClick={() => setCooldown(RESEND_SECONDS)}
             disabled={cooldown > 0}
-            className="font-medium text-brand transition-colors duration-200 hover:text-brand-hover disabled:cursor-not-allowed disabled:text-muted"
+            className="font-medium text-brand transition-colors duration-200 disabled:cursor-not-allowed disabled:text-muted"
           >
             {cooldown > 0 ? `Resend Code in ${cooldown}s` : "Resend Code"}
           </button>
           <Link
             href="/forgot-password"
-            className="text-ink transition-colors duration-200 hover:text-sky"
+            className="text-ink transition-colors duration-200"
           >
             Change Email/Phone
           </Link>

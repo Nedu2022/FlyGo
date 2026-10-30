@@ -59,7 +59,7 @@ export default function VerificationPage() {
           <button
             type="button"
             onClick={() => input.current?.click()}
-            className="mt-5 h-[46px] rounded-md bg-sky px-8 text-copy font-medium text-white transition-all duration-200 hover:bg-sky-hover active:translate-y-px"
+            className="mt-5 h-[46px] rounded-md bg-sky px-8 text-copy font-medium text-white transition-all duration-200 active:translate-y-px"
           >
             Browse
           </button>
@@ -95,7 +95,7 @@ export default function VerificationPage() {
                     type="button"
                     aria-label={`Remove ${file.name}`}
                     onClick={() => setFiles((list) => list.filter((f) => f !== file))}
-                    className="shrink-0 rounded p-1 text-muted transition-colors hover:text-red-500"
+                    className="shrink-0 rounded p-1 text-muted transition-colors"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" aria-hidden="true">
                       <path d="m6 6 12 12M18 6 6 18" />
