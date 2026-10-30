@@ -15,19 +15,45 @@ import {
   Search,
   Users,
 } from "lucide-react";
+import type { LucideProps } from "lucide-react";
 import { DateField } from "@/components/ui/calendar";
 import { PlaceInput } from "@/components/site/place-input";
 import { TravellersField } from "@/components/site/travellers-field";
+
+/** Business jet in Lucide's line style; Lucide only ships airliners. */
+function PrivateJet({ size = 24, strokeWidth = 1.9, ...props }: LucideProps) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="1.5 3 21 18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={strokeWidth}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...props}
+    >
+      <path d="M2.5 13.2c0-1.3 1.5-2.2 3.6-2.2h10.1l2.9-4h1.6l-1 4.3c1.7.4 1.8 2.6.1 2.9L6.4 15.6c-2.2.3-3.9-.8-3.9-2.4Z" />
+      <path d="M9.5 14.6 12.4 19h2.1l-1-4.4" />
+      <path d="M14.6 10.8 15.2 8.6h3" />
+      <path d="M5.5 12.6h.01M7.8 12.6h.01M10.1 12.6h.01" />
+    </svg>
+  );
+}
 
 const TABS = [
   { label: "Flights", value: "Flight", icon: Plane },
   { label: "Hotels", value: "Hotel", icon: BedDouble },
   { label: "Apartments", value: "Apartment", icon: Building2 },
+  { label: "Private jet", value: "Jet", icon: PrivateJet },
 ] as const;
 
 export type SearchTab = (typeof TABS)[number]["value"];
 
 const TRIP_KINDS = ["Return", "One-way", "Multi-city"] as const;
+/** Charters are quoted point to point, so no multi-city. */
+const JET_TRIP_KINDS = ["One-way", "Return"] as const;
 
 const SEARCH_BUTTON =
   "bg-linear-to-br from-brand to-brand-hover font-semibold text-white active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky focus-visible:ring-offset-2";
@@ -48,7 +74,11 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
   const [to, setTo] = useState("");
   const [where, setWhere] = useState("");
 
-  const flight = tab === "Flight";
+  const jet = tab === "Jet";
+  /** Flights and jets share the route fields; stays have a destination. */
+  const flight = tab === "Flight" || jet;
+  const kinds = jet ? JET_TRIP_KINDS : TRIP_KINDS;
+  const people = jet ? "jet" : flight ? "flight" : "stay";
   const oneWay = kind !== "Return";
   const swap = () => {
     setFrom(to);
@@ -74,7 +104,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        router.push(flight ? "/flights" : "/hotels");
+        router.push(jet ? "/contact?topic=private-jet" : flight ? "/flights" : "/hotels");
       }}
     >
       {/* Product tiles */}
@@ -87,8 +117,11 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               type="button"
               role="tab"
               aria-selected={on}
-              onClick={() => setTab(value)}
-              className="flex w-[76px] flex-col items-center gap-2 sm:w-[88px]"
+              onClick={() => {
+                setTab(value);
+                if (value === "Jet" && kind === "Multi-city") setKind("Return");
+              }}
+              className="flex w-[72px] flex-col items-center gap-2 sm:w-[88px]"
             >
               <span
                 className={`flex h-[60px] w-[60px] items-center justify-center rounded-2xl transition-colors duration-200 sm:h-16 sm:w-16 ${
@@ -99,7 +132,11 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               >
                 <Icon size={26} strokeWidth={1.9} aria-hidden="true" />
               </span>
-              <span className={`text-small sm:text-copy ${on ? "font-semibold text-ink" : "text-body"}`}>{label}</span>
+              <span
+                className={`whitespace-nowrap text-small sm:text-copy ${on ? "font-semibold text-ink" : "text-body"}`}
+              >
+                {label}
+              </span>
             </button>
           );
         })}
@@ -112,7 +149,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
       >
         {flight ? (
           <div className="flex gap-6 px-4 pt-1 sm:px-6" role="radiogroup" aria-label="Trip type">
-            {TRIP_KINDS.map((item) => (
+            {kinds.map((item) => (
               <button
                 key={item}
                 type="button"
@@ -187,7 +224,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
           <Row icon={<Users size={20} strokeWidth={1.8} aria-hidden="true" />} divided>
             <TravellersField
               key={tab}
-              kind={flight ? "flight" : "stay"}
+              kind={people}
               initial={flight ? undefined : stayInitial}
               className="h-14 text-copy font-medium"
             />
@@ -199,7 +236,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               className={`flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-lead ${SEARCH_BUTTON}`}
             >
               <Search size={20} strokeWidth={2.4} aria-hidden="true" />
-              Search
+              {jet ? "Request quote" : "Search"}
             </button>
           </div>
         </div>
@@ -262,7 +299,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
             <Cell icon={<Users size={20} strokeWidth={1.8} aria-hidden="true" />} grow={1.45}>
               <TravellersField
                 key={tab}
-                kind={flight ? "flight" : "stay"}
+                kind={people}
                 initial={flight ? undefined : stayInitial}
                 className="h-12 text-lead"
               />
@@ -281,7 +318,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               className={`flex h-14 items-center gap-2 rounded-2xl px-8 text-lead ${SEARCH_BUTTON}`}
             >
               <Search size={20} strokeWidth={2.4} aria-hidden="true" />
-              Search
+              {jet ? "Request quote" : "Search"}
             </button>
           </div>
         </div>

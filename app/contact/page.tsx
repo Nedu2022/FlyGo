@@ -39,7 +39,12 @@ const CHANNELS = [
   },
 ];
 
-export default function ContactPage() {
+/** Search links can pre-pick a topic, e.g. /contact?topic=private-jet. */
+const TOPIC_PARAMS: Record<string, string> = { "private-jet": "Private jet charter" };
+
+export default async function ContactPage({ searchParams }: PageProps<"/contact">) {
+  const { topic } = await searchParams;
+  const preset = typeof topic === "string" ? TOPIC_PARAMS[topic] : undefined;
   return (
     <>
       <SiteHeader variant="solid" />
@@ -95,7 +100,7 @@ export default function ContactPage() {
           </div>
 
           <div className="bg-white">
-            <ContactForm />
+            <ContactForm topic={preset} />
           </div>
         </div>
 

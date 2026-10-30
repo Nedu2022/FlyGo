@@ -5,6 +5,7 @@ import { useId, useState, type FormEvent } from "react";
 
 const TOPICS = [
   "An existing booking",
+  "Private jet charter",
   "Changes and refunds",
   "Payments",
   "Partnerships",
@@ -12,7 +13,7 @@ const TOPICS = [
 ];
 
 /** Contact form card: labelled fields, a topic dropdown and one clear action. */
-export function ContactForm() {
+export function ContactForm({ topic }: { topic?: string }) {
   const [pending, setPending] = useState(false);
   const [sent, setSent] = useState(false);
 
@@ -44,7 +45,7 @@ export function ContactForm() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
             <Field label="Full name" name="name" autoComplete="name" required />
             <Field label="Email address" name="email" type="email" autoComplete="email" required />
-            <SelectField label="Topic" name="topic" options={TOPICS} />
+            <SelectField label="Topic" name="topic" options={TOPICS} defaultValue={topic} />
             <Field label="Booking reference (optional)" name="reference" placeholder="FG-48213" />
           </div>
           <div className="mt-4">
@@ -95,7 +96,17 @@ function Field({
   );
 }
 
-function SelectField({ label, name, options }: { label: string; name: string; options: string[] }) {
+function SelectField({
+  label,
+  name,
+  options,
+  defaultValue,
+}: {
+  label: string;
+  name: string;
+  options: string[];
+  defaultValue?: string;
+}) {
   const id = useId();
   return (
     <div>
@@ -106,6 +117,7 @@ function SelectField({ label, name, options }: { label: string; name: string; op
         <select
           id={id}
           name={name}
+          defaultValue={defaultValue}
           className="h-[48px] w-full cursor-pointer appearance-none rounded-lg border border-line bg-white px-4 pr-10 text-copy text-ink outline-none transition-colors duration-200 focus:border-sky focus:ring-2 focus:ring-sky/20"
         >
           {options.map((option) => (

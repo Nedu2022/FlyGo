@@ -6,6 +6,13 @@ import { ChevronDown, Minus, Plus } from "lucide-react";
 
 const CABINS = ["Economy", "Premium", "Business", "First"] as const;
 
+/** Private jet sizes, with the most passengers each one seats. */
+const AIRCRAFT = [
+  { name: "Light jet", seats: 7 },
+  { name: "Midsize jet", seats: 9 },
+  { name: "Heavy jet", seats: 16 },
+] as const;
+
 type Counts = { adults: number; children: number; infants: number; rooms: number };
 
 const ROWS: {
@@ -35,13 +42,14 @@ export function TravellersField({
   initial,
   className = "",
 }: {
-  kind?: "flight" | "stay";
+  kind?: "flight" | "stay" | "jet";
   initial?: Partial<Counts>;
   /** Classes for the trigger's text, so it matches the surrounding field. */
   className?: string;
 }) {
   const [counts, setCounts] = useState<Counts>({ adults: 1, children: 0, infants: 0, rooms: 1, ...initial });
   const [cabin, setCabin] = useState<(typeof CABINS)[number]>("Economy");
+  const [aircraft, setAircraft] = useState<(typeof AIRCRAFT)[number]["name"]>("Light jet");
   const [open, setOpen] = useState(false);
   const [coords, setCoords] = useState<{ top: number; left: number } | null>(null);
   // Phones get a bottom sheet; wider screens a panel anchored under the field.
@@ -50,10 +58,17 @@ export function TravellersField({
   const panel = useRef<HTMLDivElement>(null);
 
   const flight = kind === "flight";
+  const jet = kind === "jet";
   const people = counts.adults + counts.children + counts.infants;
-  const summary = flight
-    ? `${plural(people, "traveller")}, ${cabin}`
-    : `${plural(counts.adults + counts.children, "guest")}, ${plural(counts.rooms, "room")}`;
+  const summary = jet
+    ? `${plural(counts.adults, "passenger")}, ${aircraft}`
+    : flight
+      ? `${plural(people, "traveller")}, ${cabin}`
+      : `${plural(counts.adults + counts.children, "guest")}, ${plural(counts.rooms, "room")}`;
+  const title = jet ? "Passengers & aircraft" : flight ? "Travellers" : "Guests";
+  const rows = jet
+    ? [{ key: "adults" as const, label: "Passengers", note: "Adults and children", min: 1, max: 16 }]
+    : ROWS.filter((row) => (flight ? !row.stay : !row.flight));
 
   useEffect(() => {
     if (!open) return;
@@ -82,13 +97,17 @@ export function TravellersField({
     };
   }, [open]);
 
-  const step = (key: keyof Counts, delta: number, min: number, max: number) =>
-    setCounts((c) => {
-      const next = { ...c, [key]: Math.min(max, Math.max(min, c[key] + delta)) };
-      // One infant per adult, as airlines require.
-      if (next.infants > next.adults) next.infants = next.adults;
-      return next;
-    });
+  const step = (key: keyof Counts, delta: number, min: number, max: number) => {
+    const next = { ...counts, [key]: Math.min(max, Math.max(min, counts[key] + delta)) };
+    // One infant per adult, as airlines require.
+    if (next.infants > next.adults) next.infants = next.adults;
+    setCounts(next);
+    // Move up to a jet that seats everyone.
+    const size = AIRCRAFT.find((a) => a.name === aircraft);
+    if (jet && size && size.seats < next.adults) {
+      setAircraft(AIRCRAFT.find((a) => a.seats >= next.adults)?.name ?? "Heavy jet");
+    }
+  };
 
   return (
     <>
@@ -101,7 +120,7 @@ export function TravellersField({
         }}
         aria-expanded={open}
         aria-haspopup="dialog"
-        aria-label={`${flight ? "Travellers and cabin" : "Guests and rooms"}: ${summary}`}
+        aria-label={`${title}: ${summary}`}
         className={`flex w-full min-w-0 items-center justify-between gap-2 text-left text-ink outline-none ${className}`}
       >
         <span className="truncate">{summary}</span>
@@ -126,7 +145,7 @@ export function TravellersField({
               <div
                 ref={panel}
                 role="dialog"
-                aria-label={flight ? "Travellers and cabin" : "Guests and rooms"}
+                aria-label={title}
                 style={sheet ? undefined : { position: "absolute", top: coords.top, left: coords.left, zIndex: 100 }}
                 className={
                   sheet
@@ -134,9 +153,9 @@ export function TravellersField({
                     : "animate-fade w-[min(340px,calc(100vw-1rem))] rounded-2xl bg-white p-5 shadow-[0_24px_48px_-16px_rgba(16,24,40,0.35)] ring-1 ring-black/5"
                 }
               >
-                {sheet ? <p className="mb-5 text-h4 font-bold text-ink">{flight ? "Travellers" : "Guests"}</p> : null}
+                {sheet ? <p className="mb-5 text-h4 font-bold text-ink">{title}</p> : null}
                 <ul className="space-y-4">
-                  {ROWS.filter((row) => (flight ? !row.stay : !row.flight)).map((row) => (
+                  {rows.map((row) => (
                     <li key={row.key} className="flex items-center justify-between gap-4">
                       <span>
                         <span className="block text-copy font-semibold text-ink">{row.label}</span>
@@ -185,6 +204,35 @@ export function TravellersField({
                           {item}
                         </button>
                       ))}
+                    </div>
+                  </div>
+                ) : null}
+
+                {jet ? (
+                  <div className="mt-5">
+                    <p className="text-small font-semibold text-ink">Aircraft</p>
+                    <div className="mt-2 space-y-2" role="radiogroup" aria-label="Aircraft size">
+                      {AIRCRAFT.map((item) => {
+                        const tooSmall = item.seats < counts.adults;
+                        return (
+                          <button
+                            key={item.name}
+                            type="button"
+                            role="radio"
+                            aria-checked={aircraft === item.name}
+                            disabled={tooSmall}
+                            onClick={() => setAircraft(item.name)}
+                            className={`flex h-11 w-full items-center justify-between rounded-xl px-4 text-small font-semibold disabled:opacity-40 ${
+                              aircraft === item.name ? "bg-ink text-white" : "bg-shell text-ink"
+                            }`}
+                          >
+                            {item.name}
+                            <span className={aircraft === item.name ? "text-white/70" : "text-label"}>
+                              Up to {item.seats} seats
+                            </span>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
                 ) : null}
