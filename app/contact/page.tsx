@@ -58,13 +58,13 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
     <>
       <SiteHeader variant="solid" />
 
-      {/* 1. Every way to reach us, as ticket strips on the grey panel. */}
+      {/* 1. Every way to reach us, as ticket strips on the golden-hour sky. */}
       <section className="px-0 sm:px-4">
-        <div className="mx-auto max-w-[1600px] bg-shell px-4 pb-8 pt-8 sm:rounded-[28px] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14 lg:pb-14 lg:pt-14">
-          <h1 className="text-display font-bold tracking-tight text-ink">
-            Get in touch<span className="text-brand">.</span>
+        <div className="sky-golden mx-auto max-w-[1600px] px-4 pb-8 pt-8 sm:rounded-[32px] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14 lg:pb-14 lg:pt-14">
+          <h1 className="text-[clamp(2.5rem,1.6rem+3.6vw,4.5rem)] font-bold leading-[0.98] tracking-tight text-white">
+            We&apos;re here, <span className="font-serif text-[1.12em] font-normal italic">day or night.</span>
           </h1>
-          <p className="mt-3 max-w-[480px] text-lead text-body">Real people, ready to help with any booking.</p>
+          <p className="mt-4 max-w-[480px] text-lead text-white/90">Real people, ready to help with any booking.</p>
 
           <ul className="mt-8 grid gap-3 md:grid-cols-3 md:gap-4">
             {CHANNELS.map((channel) => (
@@ -87,8 +87,6 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
                   </span>
                   <span aria-hidden="true" className="relative w-px self-stretch">
                     <span className="absolute inset-y-3 left-0 border-l-2 border-dashed border-line" />
-                    <span className="absolute -top-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
-                    <span className="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
                   </span>
                   <span className="flex w-[72px] shrink-0 items-center justify-center text-small font-medium text-brand">
                     {channel.action}

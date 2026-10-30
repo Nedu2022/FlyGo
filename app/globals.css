@@ -9,6 +9,7 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-jakarta), Arial, Helvetica, sans-serif;
+  --font-serif: var(--font-instrument), Georgia, serif;
   /* Plus Jakarta is set tighter than TT Hoves, so headings need less pull. */
   --tracking-tight: -0.012em;
 
@@ -343,3 +344,19 @@ body {
   }
 }
 
+
+/* The route map's planes fly by SVG animation, which reduced-motion settings
+   don't reach, so hide them instead. */
+@media (prefers-reduced-motion: reduce) {
+  .route-plane {
+    display: none;
+  }
+}
+
+/* Golden hour: FLYGO orange warming into peach, cooling into sky blue. */
+.sky-golden {
+  background:
+    radial-gradient(120% 90% at 85% 110%, rgba(86, 172, 233, 0.95) 0%, rgba(86, 172, 233, 0) 60%),
+    radial-gradient(90% 80% at 10% 0%, rgba(245, 134, 52, 0.95) 0%, rgba(245, 134, 52, 0) 65%),
+    linear-gradient(160deg, #f58634 0%, #f7a05c 30%, #f9c49a 52%, #a9d2f1 78%, #56ace9 100%);
+}

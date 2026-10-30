@@ -18,7 +18,7 @@ export function openAssistant(prompt?: string) {
   window.dispatchEvent(new CustomEvent(OPEN_EVENT, { detail: { prompt } }));
 }
 
-export const SUGGESTIONS = [
+const SUGGESTIONS = [
   "Flights to London next weekend",
   "Nonstop flights to Dubai",
   "Hotels in Lisbon under $200",
@@ -271,28 +271,5 @@ export function AiAssistant() {
         </form>
       </section>
     </div>
-  );
-}
-
-/** Kayak-style floating prompt on the home page; cycles through example questions. */
-export function AskAiPill() {
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    const timer = window.setInterval(() => setI((n) => (n + 1) % SUGGESTIONS.length), 3500);
-    return () => window.clearInterval(timer);
-  }, []);
-  return (
-    <button
-      type="button"
-      onClick={() => openAssistant()}
-      className="fixed bottom-[calc(84px+env(safe-area-inset-bottom))] left-4 right-4 z-30 rounded-full bg-[linear-gradient(90deg,#f58634,#f472b6,#56ace9)] p-[1.5px] shadow-[0_14px_34px_-14px_rgba(16,24,40,0.45)] sm:right-auto sm:w-[400px] lg:bottom-6 lg:left-6"
-    >
-      <span className="flex h-14 items-center gap-3 rounded-full bg-white px-5 text-left">
-        <Sparkles size={22} strokeWidth={2} aria-hidden="true" className="shrink-0 text-ink" />
-        <span key={i} className="animate-fade truncate text-copy font-medium text-body">
-          {SUGGESTIONS[i]}
-        </span>
-      </span>
-    </button>
   );
 }

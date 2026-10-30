@@ -5,7 +5,6 @@ import {
   ChevronRight,
   CircleUserRound,
   Headset,
-  Heart,
   House,
   Info,
   Mail,
@@ -78,74 +77,66 @@ export function SiteHeader({
             }`
       }
     >
-      {/* Kayak-style bar: menu, logo and Ask AI on the left; saved and account on the right. */}
-      <div className="mx-auto flex h-[64px] w-full max-w-[1600px] items-center gap-2 px-3 sm:h-[76px] sm:gap-4 sm:px-6">
-        <button
-          type="button"
-          onClick={() => setOpenAt(open ? null : pathname)}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          aria-label={open ? "Close menu" : "Open menu"}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink"
-        >
-          <Menu size={24} strokeWidth={2} aria-hidden="true" />
-        </button>
+      {/* Logo left, pages in the middle, Ask AI and account on the right. */}
+      <div className="mx-auto flex h-[64px] w-full max-w-[1600px] items-center gap-3 px-4 sm:h-[76px] sm:px-8">
         <Logo imgClass="h-[34px] sm:h-[40px]" />
 
-        <button
-          type="button"
-          onClick={() => openAssistant()}
-          className="ml-2 hidden h-11 items-center gap-2 rounded-full px-3 text-copy font-medium text-ink md:flex"
-        >
-          <Sparkles size={20} strokeWidth={2} aria-hidden="true" className="text-brand" />
-          Ask AI
-        </button>
-
-        <nav aria-label="Main" className="ml-6 hidden items-center gap-1 xl:flex">
-          {NAV_LINKS.filter((item) => item.href !== "/").map((item) => {
+        <nav aria-label="Main" className="mx-auto hidden items-center gap-1 lg:flex">
+          {NAV_LINKS.map((item) => {
             const active =
-              pathname.startsWith(item.href) || (item.href === "/flights" && pathname.startsWith("/booking"));
+              item.href === "/"
+                ? pathname === "/"
+                : pathname.startsWith(item.href) || (item.href === "/flights" && pathname.startsWith("/booking"));
             return (
               <Link
                 key={item.label}
                 href={item.href}
                 aria-current={active ? "page" : undefined}
-                className={`rounded-full px-3.5 py-2 text-copy font-medium ${active ? "bg-shell text-ink" : "text-body"}`}
+                className={`relative px-3.5 py-2 text-copy ${active ? "font-medium text-ink" : "text-body"}`}
               >
                 {item.label}
+                {active ? (
+                  <span aria-hidden="true" className="absolute inset-x-3.5 -bottom-0.5 h-[3px] rounded-full bg-brand" />
+                ) : null}
               </Link>
             );
           })}
         </nav>
 
-        <div className="ml-auto flex items-center gap-2 sm:gap-3">
+        <div className="ml-auto flex items-center gap-2 lg:ml-0">
           <button
             type="button"
             onClick={() => openAssistant()}
-            aria-label="Ask AI"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] md:hidden"
+            className="rounded-full bg-[linear-gradient(90deg,#f58634,#f9c49a,#56ace9)] p-[1.5px]"
           >
-            <Sparkles size={22} strokeWidth={2} aria-hidden="true" />
+            <span className="flex h-10 items-center gap-2 rounded-full bg-white px-3 text-small font-medium text-ink sm:px-4">
+              <Sparkles size={18} strokeWidth={2} aria-hidden="true" className="text-brand" />
+              Ask AI
+            </span>
           </button>
           <Link
             href="/signin"
-            aria-label="Saved trips"
-            className="hidden h-12 w-12 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:flex"
-          >
-            <Heart size={22} strokeWidth={2} aria-hidden="true" />
-          </Link>
-          <Link
-            href="/signin"
             aria-label="Sign in or create an account"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)]"
+            className="hidden h-10 items-center gap-2 rounded-full bg-ink px-4 text-small font-medium text-white sm:flex"
           >
-            <CircleUserRound size={24} strokeWidth={1.9} aria-hidden="true" />
+            <CircleUserRound size={18} strokeWidth={2} aria-hidden="true" />
+            Sign in
           </Link>
+          <button
+            type="button"
+            onClick={() => setOpenAt(open ? null : pathname)}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? "Close menu" : "Open menu"}
+            className="-mr-1 flex h-11 w-11 items-center justify-center rounded-full text-ink lg:hidden"
+          >
+            <Menu size={24} strokeWidth={2} aria-hidden="true" />
+          </button>
         </div>
       </div>
 
-      {/* Menu: a panel sliding in from the left over a dimmed page, on every screen size. */}
-      <div className={`fixed inset-0 z-[60] ${open ? "" : "pointer-events-none"}`} aria-hidden={!open} inert={!open}>
+      {/* Menu: a panel sliding in from the right over a dimmed page, below lg. */}
+      <div className={`fixed inset-0 z-[60] lg:hidden ${open ? "" : "pointer-events-none"}`} aria-hidden={!open} inert={!open}>
         <button
           type="button"
           aria-label="Close menu"
@@ -158,8 +149,8 @@ export function SiteHeader({
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className={`absolute inset-y-0 left-0 flex w-[86%] max-w-[380px] flex-col bg-white shadow-[24px_0_48px_-24px_rgba(16,24,40,0.35)] transition-transform duration-300 ease-out ${
-            open ? "translate-x-0" : "-translate-x-full"
+          className={`absolute inset-y-0 right-0 flex w-[86%] max-w-[380px] flex-col bg-white shadow-[-24px_0_48px_-24px_rgba(16,24,40,0.35)] transition-transform duration-300 ease-out ${
+            open ? "translate-x-0" : "translate-x-full"
           }`}
         >
           <div className="flex h-[66px] items-center justify-between px-5">

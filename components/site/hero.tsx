@@ -2,6 +2,7 @@ import Image from "next/image";
 import type { ReactNode } from "react";
 import { SearchBar } from "@/components/site/search-bar";
 import { HeroSlides, type Slide } from "@/components/site/hero-slides";
+import { RouteLabels, RouteMap } from "@/components/site/route-map";
 
 /**
  * Full-bleed photo hero: the image settles from a slight zoom behind a dark
@@ -48,7 +49,7 @@ export function CinematicHero({
         ) : null}
         <div
           aria-hidden="true"
-          className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,22,36,0.55)_0%,rgba(6,22,36,0.1)_38%,rgba(6,22,36,0.35)_62%,rgba(6,22,36,0.82)_100%)]"
+          className="absolute inset-0 -z-10 bg-[linear-gradient(160deg,rgba(245,134,52,0.72)_0%,rgba(249,196,154,0.25)_45%,rgba(86,172,233,0.55)_100%),linear-gradient(180deg,rgba(6,22,36,0)_40%,rgba(6,22,36,0.55)_100%)]"
         />
 
         <div className="stagger px-4 pb-4 pt-20 sm:px-8 sm:pb-8 lg:px-14 lg:pb-10">
@@ -63,72 +64,55 @@ export function CinematicHero({
   );
 }
 
-const COLLAGE: [string, string][][] = [
-  [
-    ["/images/photos/hero-sky.webp", "70% center"],
-    ["/images/photos/traveller-window.webp", "center"],
-    ["/images/photos/stay-santorini.webp", "center"],
-  ],
-  [
-    ["/images/photos/dubai.webp", "center 70%"],
-    ["/images/photos/jet-hero.webp", "35% center"],
-    ["/images/photos/stay-overwater.webp", "center"],
-  ],
-];
-
-const STAY_COLLAGE: [string, string][][] = [
-  [
-    ["/images/photos/hero-pool.webp", "center"],
-    ["/images/photos/stay-suite.webp", "center"],
-    ["/images/photos/lisbon-tram.webp", "center"],
-  ],
-  [
-    ["/images/photos/stay-overwater.webp", "center"],
-    ["/images/photos/stay-santorini.webp", "center"],
-    ["/images/photos/stay-infinity.webp", "center"],
-  ],
-];
-
 /**
- * Home and Hotels hero, after Kayak: a soft grey panel with one bold line,
- * the service tiles and the search on the left, and a two-column staggered
- * photo collage bleeding off the top and bottom on the right (desktop only).
+ * FLYGO's golden-hour hero: a sunset sky with the headline, routes flying
+ * out of Lagos on desktop, and the search card resting on the horizon.
+ * Hotels uses the same sky with its own line and no map.
  */
 export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
   const flight = variant === "flight";
-  const columns = flight ? COLLAGE : STAY_COLLAGE;
   return (
     <section className="px-0 sm:px-4">
-      <div className="relative mx-auto max-w-[1600px] overflow-hidden bg-shell sm:rounded-[28px]">
-        <div className="relative z-10 px-4 pb-6 pt-6 sm:px-10 sm:pb-12 sm:pt-12 lg:w-[70%] lg:px-14 lg:pb-16 lg:pt-16 xl:w-[76%] 2xl:w-[72%]">
-          <h1 className="hidden text-display font-bold tracking-tight text-ink sm:block">
-            {flight ? "Your next trip starts here" : "Stays you\u2019ll love"}
-            <span className="text-brand">.</span>
-          </h1>
-          <div className="sm:mt-8">
-            <SearchBar defaultTab={flight ? "Flight" : "Hotel"} />
+      <div className="sky-golden relative mx-auto max-w-[1600px] overflow-hidden sm:rounded-[32px]">
+        <div className="relative grid gap-6 px-4 pb-6 pt-8 sm:px-10 sm:pb-10 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-4 lg:px-14 lg:pt-16">
+          <div>
+            <p className="text-small font-medium text-white/85">
+              {flight ? "Flights · Hotels · Apartments · Private jets" : "Hotels · Apartments · Resorts"}
+            </p>
+            <h1 className="mt-3 text-[clamp(2.5rem,1.6rem+3.6vw,5rem)] font-bold leading-[0.98] tracking-tight text-white">
+              {flight ? (
+                <>
+                  The world,
+                  <br />
+                  <span className="font-serif text-[1.12em] font-normal italic">from Lagos.</span>
+                </>
+              ) : (
+                <>
+                  Stay somewhere
+                  <br />
+                  <span className="font-serif text-[1.12em] font-normal italic">golden.</span>
+                </>
+              )}
+            </h1>
+            <p className="mt-4 max-w-[420px] text-lead text-white/90">
+              {flight
+                ? "Every airline, every stay and private jets, compared in one search."
+                : "Handpicked hotels and apartments with free cancellation on most rooms."}
+            </p>
           </div>
+
+          {flight ? (
+            <div className="relative hidden lg:block">
+              <RouteMap className="h-auto w-full" />
+              <RouteLabels />
+            </div>
+          ) : null}
         </div>
 
-        <div aria-hidden="true" className="absolute inset-y-0 right-5 hidden w-[26%] gap-4 lg:flex xl:w-[20%] 2xl:w-[24%]">
-          {columns.map((column, c) => (
-            <div key={c} className={`flex flex-1 flex-col gap-4 ${c === 0 ? "-mt-24" : "-mt-6"}`}>
-              {column.map(([src, position]) => (
-                <div key={src} className="relative aspect-[4/5] shrink-0 overflow-hidden rounded-[32px] bg-steel">
-                  <Image
-                    src={src}
-                    alt=""
-                    fill
-                    sizes="(max-width: 1280px) 15vw, 220px"
-                    quality={70}
-                    priority={c === 0}
-                    className="object-cover"
-                    style={{ objectPosition: position }}
-                  />
-                </div>
-              ))}
-            </div>
-          ))}
+        <div className="relative px-2 pb-2 sm:px-6 sm:pb-6 lg:px-10 lg:pb-10">
+          <div className="rounded-[28px] bg-shell p-3 shadow-[0_30px_70px_-30px_rgba(16,24,40,0.55)] sm:p-5">
+            <SearchBar defaultTab={flight ? "Flight" : "Hotel"} />
+          </div>
         </div>
       </div>
     </section>

@@ -102,8 +102,12 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
         );
       }}
     >
-      {/* Product tiles */}
-      <div role="tablist" aria-label="What are you booking?" className="flex gap-3 sm:gap-5">
+      {/* Service pills */}
+      <div
+        role="tablist"
+        aria-label="What are you booking?"
+        className="no-scrollbar -mx-1 flex gap-2 overflow-x-auto px-1 pb-1"
+      >
         {TABS.map(({ label, value, icon: Icon }) => {
           const on = tab === value;
           return (
@@ -116,22 +120,14 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 setTab(value);
                 if (value === "Jet" && kind === "Multi-city") setKind("Return");
               }}
-              className="flex w-[72px] flex-col items-center gap-2 sm:w-[88px]"
+              className={`flex h-11 shrink-0 items-center gap-2 rounded-full px-4 text-copy transition-colors duration-200 ${
+                on
+                  ? "bg-ink font-medium text-white"
+                  : "bg-white text-ink shadow-[0_1px_2px_rgba(16,24,40,0.06)]"
+              }`}
             >
-              <span
-                className={`flex h-[60px] w-[60px] items-center justify-center rounded-2xl transition-colors duration-200 sm:h-16 sm:w-16 ${
-                  on
-                    ? "bg-linear-to-br from-brand to-brand-hover text-white shadow-[0_8px_18px_-8px_rgba(224,117,42,0.75)]"
-                    : "bg-white text-ink shadow-[0_1px_2px_rgba(16,24,40,0.06),0_4px_12px_-6px_rgba(16,24,40,0.2)]"
-                }`}
-              >
-                <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
-              </span>
-              <span
-                className={`whitespace-nowrap text-small sm:text-copy ${on ? "font-semibold text-ink" : "text-body"}`}
-              >
-                {label}
-              </span>
+              <Icon size={18} strokeWidth={1.9} aria-hidden="true" className={on ? "text-brand" : "text-body"} />
+              {label}
             </button>
           );
         })}
@@ -139,7 +135,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
 
       {/* Desktop: trip type and bags as plain dropdowns above the bar. */}
       {flight ? (
-        <div className="mt-7 hidden h-9 items-center gap-6 xl:flex">
+        <div className="mt-5 hidden h-9 items-center gap-6 px-1 xl:flex">
           <InlineSelect label="Trip type" value={kind} options={kinds} onChange={(v) => setKind(v as typeof kind)} />
           {!jet ? <InlineSelect label="Bags" value={bags} options={BAGS} onChange={setBags} /> : null}
         </div>
@@ -147,8 +143,8 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
 
       <div
         key={tab}
-        className={`animate-fade relative mt-5 rounded-2xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.06),0_12px_32px_-18px_rgba(16,24,40,0.3)] ${
-          flight ? "sm:mt-6 xl:mt-3" : "sm:mt-8"
+        className={`animate-fade relative mt-3 rounded-2xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.06),0_12px_32px_-18px_rgba(16,24,40,0.3)] ${
+          flight ? "sm:mt-4 xl:mt-2" : "sm:mt-4"
         }`}
       >
         {/* Phones, tablets and small laptops: plain rows with hairlines. */}
