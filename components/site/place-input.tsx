@@ -188,7 +188,7 @@ export function PlaceInput({
                       className={`flex w-full items-center gap-3 px-4 py-2.5 text-left ${index === active ? "bg-shell" : ""}`}
                     >
                       <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shell text-ink">
-                        <Icon size={17} strokeWidth={1.9} aria-hidden="true" />
+                        <Icon size={18} strokeWidth={1.9} aria-hidden="true" />
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-copy font-semibold text-ink">

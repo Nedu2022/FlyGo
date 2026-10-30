@@ -20,17 +20,15 @@ export default function SignUpAddressPage() {
   return (
     <AuthShell
       backHref="/signup/details"
-      topRight={<StepMarker step={2} label="House Info" />}
-      title="Register Individual Account!"
-      subtitle="For the purpose of industry regulation, your details are required."
-      seal="Your Info is safely secured"
+      topRight={<StepMarker step={2} label="Contact" />}
+      title="Contact details"
     >
       <form onSubmit={handleSubmit} className="stagger flex flex-col gap-5">
         <PhoneField label="Phone number" name="phone" placeholder="090912345567" required />
         <TextField
           label="Address"
           name="address"
-          placeholder="Enter the house/Apartment/home/ hotel address"
+          placeholder="Street, city"
           required
         />
         <CountrySelect label="Country" name="country" />

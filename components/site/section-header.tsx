@@ -19,7 +19,7 @@ export function SectionHeader({
   return (
     <div>
       <div className="flex items-end justify-between gap-4">
-        <h2 className="min-w-0 text-[1.375rem] font-bold leading-tight tracking-tight text-ink sm:text-h1">{title}</h2>
+        <h2 className="min-w-0 text-h2 font-bold tracking-tight text-ink">{title}</h2>
         {href ? (
           <Link
             href={href}

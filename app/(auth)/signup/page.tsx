@@ -6,13 +6,13 @@ const ACCOUNT_TYPES = [
   {
     href: "/signup/details",
     title: "Individual",
-    body: "Personal account to manage all you activities.",
+    body: "For personal travel",
     icon: "individual" as const,
   },
   {
     href: "/signup/details?type=business",
     title: "Business",
-    body: "Own or belong to a company, this is for you.",
+    body: "For companies and teams",
     icon: "business" as const,
   },
 ];
@@ -47,8 +47,7 @@ export default function SignUpPage() {
           />
         </div>
       }
-      title="Join Us!"
-      subtitle="To begin this journey, tell us what type of account you'd be opening."
+      title="Create an account"
     >
       <ul className="stagger flex flex-col gap-5">
         {ACCOUNT_TYPES.map((type) => (

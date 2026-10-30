@@ -65,7 +65,7 @@ export function CinematicHero({
         />
 
         <div className="stagger px-4 pb-4 pt-20 sm:px-8 sm:pb-8 lg:px-14 lg:pb-10">
-          <h1 className="max-w-[820px] text-[clamp(2rem,1.2rem+3vw,3.75rem)] font-bold leading-[1.04] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.25)]">
+          <h1 className="max-w-[820px] text-display font-bold tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.25)]">
             {title}
           </h1>
           {subtitle ? <p className="mt-4 max-w-[560px] text-lead leading-relaxed text-white/85">{subtitle}</p> : null}
@@ -88,7 +88,7 @@ export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
       <div className="mx-auto max-w-[1600px] rounded-[28px] bg-shell px-4 pb-5 pt-7 sm:px-8 sm:pb-8 sm:pt-10 lg:px-14 lg:pb-12">
         <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
           <div>
-            <h1 className="text-[clamp(2rem,1.3rem+2.6vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-ink">
+            <h1 className="text-display font-semibold tracking-tight text-ink">
               {flight ? "Fly anywhere for less" : "Stays you\u2019ll love"}
               <span className="text-brand">.</span>
             </h1>

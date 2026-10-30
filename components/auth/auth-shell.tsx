@@ -143,7 +143,7 @@ export function AccountPrompt({
   href: string;
 }) {
   return (
-    <p className="text-lead leading-tight text-label">
+    <p className="text-small leading-tight text-label sm:text-lead">
       {text}{" "}
       <Link
         href={href}

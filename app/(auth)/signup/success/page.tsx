@@ -17,11 +17,11 @@ export default function SignUpSuccessPage() {
           className="h-[160px] w-[160px] sm:h-[190px] sm:w-[190px]"
         />
       }
-      title="Account created successfully!"
-      subtitle="Welcome aboard! Start your success journey with Flygo!"
+      title="You're all set"
+      subtitle="Your FLYGO account is ready."
     >
       <div className="pt-6">
-        <PrimaryLink href="/dashboard">Dashboard</PrimaryLink>
+        <PrimaryLink href="/dashboard">Go to dashboard</PrimaryLink>
       </div>
     </AuthShell>
   );

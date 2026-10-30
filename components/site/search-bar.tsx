@@ -130,7 +130,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                     : "bg-white text-ink shadow-[0_1px_2px_rgba(16,24,40,0.06),0_4px_12px_-6px_rgba(16,24,40,0.2)]"
                 }`}
               >
-                <Icon size={26} strokeWidth={1.9} aria-hidden="true" />
+                <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
               </span>
               <span
                 className={`whitespace-nowrap text-small sm:text-copy ${on ? "font-semibold text-ink" : "text-body"}`}
@@ -166,8 +166,9 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
           </div>
         ) : null}
 
-        {/* Phones and tablets: list rows, torn in two. */}
-        <div className="lg:hidden">
+        {/* Phones, tablets and small laptops: list rows, torn in two. The one-row
+            layout needs xl width to fit every field without truncating. */}
+        <div className="xl:hidden">
           {flight ? (
             <div className="relative border-t border-line">
               <Row icon={<PlaneTakeoff size={20} strokeWidth={1.8} aria-hidden="true" />}>
@@ -242,7 +243,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
         </div>
 
         {/* Desktop: one row, with Search on a perforated stub. */}
-        <div className={`hidden items-stretch lg:flex ${flight ? "border-t border-line" : ""}`}>
+        <div className={`hidden items-stretch xl:flex ${flight ? "border-t border-line" : ""}`}>
           <div className="flex min-w-0 flex-1 items-center gap-1 py-2 pl-4">
             {flight ? (
               <>

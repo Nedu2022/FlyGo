@@ -16,7 +16,7 @@ export function Faq({ limit = 5 }: { limit?: number }) {
   return (
     <section className={`reveal ${PAGE} pt-16 lg:pt-24`}>
       <div className="mx-auto max-w-[760px]">
-        <h2 className="text-[1.375rem] font-bold leading-tight tracking-tight text-ink sm:text-center sm:text-h1">Frequently asked questions</h2>
+        <h2 className="text-h2 font-bold tracking-tight text-ink sm:text-center">Frequently asked questions</h2>
 
         <div className="mt-8 sm:mt-10">
           <FaqAccordion items={items} />

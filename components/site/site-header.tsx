@@ -87,7 +87,7 @@ export function SiteHeader({
           })}
         </nav>
 
-        <div className="hidden items-center gap-3 md:flex">
+        <div className="hidden items-center gap-3 md:ml-auto md:flex lg:ml-0">
           <Link
             href="/signin"
             className="flex h-[42px] w-[104px] items-center justify-center rounded-lg border border-sky text-copy font-medium text-sky transition-all duration-200 active:translate-y-px"
@@ -110,7 +110,7 @@ export function SiteHeader({
           aria-label={open ? "Close menu" : "Open menu"}
           className={`-mr-1 flex h-11 w-11 items-center justify-center rounded-full text-ink transition-colors duration-200 lg:hidden ${open ? "bg-shell" : ""}`}
         >
-          {open ? <X size={22} strokeWidth={2} aria-hidden="true" /> : <Menu size={22} strokeWidth={2} aria-hidden="true" />}
+          {open ? <X size={24} strokeWidth={2} aria-hidden="true" /> : <Menu size={24} strokeWidth={2} aria-hidden="true" />}
         </button>
       </div>
 
@@ -174,7 +174,7 @@ export function SiteHeader({
             </ul>
 
             <a href={`tel:${FOOTER_CONTACT.phone}`} className="mt-6 flex items-center gap-3 rounded-2xl bg-shell px-4 py-4">
-              <Headset size={22} strokeWidth={1.9} aria-hidden="true" className="shrink-0 text-brand" />
+              <Headset size={24} strokeWidth={1.9} aria-hidden="true" className="shrink-0 text-brand" />
               <span>
                 <span className="block text-small font-semibold text-ink">Need help? We&apos;re here 24/7</span>
                 <span className="block text-small text-body">{FOOTER_CONTACT.phone}</span>

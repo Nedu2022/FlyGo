@@ -35,17 +35,16 @@ export default function SignUpDetailsPage() {
   return (
     <AuthShell
       backHref="/signup"
-      topRight={<StepMarker step={1} label="Personal Info." />}
-      title="Register Individual Account!"
-      subtitle="For the purpose of industry regulation, your details are required."
+      topRight={<StepMarker step={1} label="Details" />}
+      title="Your details"
     >
       <form onSubmit={handleSubmit} className="stagger flex flex-col gap-5">
         <TextField
-          label="Your fullname"
+          label="Full name"
           starred
           name="fullName"
           autoComplete="name"
-          placeholder="Enter your full name"
+          placeholder="Ada Okafor"
           required
         />
         <TextField
@@ -54,15 +53,15 @@ export default function SignUpDetailsPage() {
           name="email"
           type="email"
           autoComplete="email"
-          placeholder="Enter email address"
+          placeholder="you@example.com"
           required
         />
         <PasswordField
-          label="Create password"
+          label="Password"
           starred
           name="password"
           autoComplete="new-password"
-          placeholder="Enter password"
+          placeholder="At least 8 characters"
           minLength={8}
           required
         />

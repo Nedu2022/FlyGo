@@ -35,9 +35,9 @@ export default function VerificationPage() {
   return (
     <AuthShell
       backHref="/signup/address"
-      topRight={<StepMarker step={3} label="House Info" />}
+      topRight={<StepMarker step={3} label="Verify" />}
       title="Verification"
-      subtitle="Upload ID documents or business license."
+      subtitle="Upload a photo ID or business licence."
       width="wide"
     >
       <form onSubmit={handleSubmit} className="mx-auto max-w-[1000px]">
@@ -54,7 +54,7 @@ export default function VerificationPage() {
         >
           <CloudUpload />
 
-          <p className="mt-5 text-lead text-ink">png, pdf, jpg, docx accepted</p>
+          <p className="mt-5 text-lead text-ink">PNG, JPG, PDF or DOCX</p>
 
           <button
             type="button"
@@ -64,7 +64,7 @@ export default function VerificationPage() {
             Browse
           </button>
 
-          <p className="mt-5 text-lead text-ink">select your file or drag and drop</p>
+          <p className="mt-5 text-lead text-ink">Choose a file or drag it here</p>
 
           <input
             ref={input}

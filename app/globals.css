@@ -48,8 +48,8 @@
      Body steps are fixed rather than fluid: 16px copy, 14px small and 13px
      tiny are the floors for comfortable reading on a phone.
      -------------------------------------------------------------------- */
-  --text-display: clamp(1.75rem, 1.496rem + 1.129vw, 2.625rem);
-  --text-display--line-height: 1.16;
+  --text-display: clamp(2rem, 1.597rem + 1.613vw, 3.5rem);
+  --text-display--line-height: 1.08;
   --text-h1: clamp(1.5625rem, 1.363rem + 0.887vw, 2.25rem);
   --text-h1--line-height: 1.2;
   --text-h2: clamp(1.4375rem, 1.293rem + 0.645vw, 1.9375rem);

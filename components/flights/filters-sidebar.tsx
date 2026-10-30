@@ -2,11 +2,8 @@
 
 import { SlidersHorizontal, Star, X } from "lucide-react";
 import { useEffect, useId, useState, type ReactNode } from "react";
-import {
-  AIRLINE_FILTERS,
-  PRICE_RANGE,
-  TIME_RANGE,
-} from "@/lib/flight-data";
+import { createPortal } from "react-dom";
+import { AIRLINE_FILTERS, PRICE_RANGE, TIME_RANGE } from "@/lib/flight-data";
 
 /**
  * Desktop: a sticky column. Phones: a "Filters" button that opens the same
@@ -52,41 +49,51 @@ export function FiltersSidebar(props: FiltersProps) {
         <FilterGroups {...props} />
       </aside>
 
-      {open ? (
-        <div className="fixed inset-0 z-[60] lg:hidden" role="dialog" aria-modal="true" aria-label="Filters">
-          <button
-            type="button"
-            aria-label="Close filters"
-            onClick={() => setOpen(false)}
-            className="animate-fade absolute inset-0 bg-ink/40"
-          />
-          <div className="animate-rise absolute inset-x-0 bottom-0 flex max-h-[85dvh] flex-col rounded-t-2xl bg-white">
-            <div className="flex items-center justify-between border-b border-line px-5 py-4">
-              <h2 className="text-h4 font-bold text-ink">Filters</h2>
+      {/* Portaled to <body>: a transformed ancestor would otherwise become the
+          fixed containing block. Stops above the bottom tab bar, which stays visible. */}
+      {open
+        ? createPortal(
+            <div
+              className="fixed inset-x-0 top-0 bottom-[calc(68px+env(safe-area-inset-bottom))] z-[45] lg:hidden"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Filters"
+            >
               <button
                 type="button"
-                onClick={() => setOpen(false)}
                 aria-label="Close filters"
-                className="flex h-9 w-9 items-center justify-center rounded-full text-ink"
-              >
-                <X size={18} strokeWidth={2.2} aria-hidden="true" />
-              </button>
-            </div>
-            <div className="overflow-y-auto px-5">
-              <FilterGroups {...props} />
-            </div>
-            <div className="border-t border-line p-4">
-              <button
-                type="button"
                 onClick={() => setOpen(false)}
-                className="h-12 w-full rounded-lg bg-sky text-copy font-semibold text-white transition-colors duration-200"
-              >
-                Show {props.resultCount} results
-              </button>
-            </div>
-          </div>
-        </div>
-      ) : null}
+                className="animate-fade absolute inset-0 bg-ink/40"
+              />
+              <div className="animate-rise absolute inset-x-0 bottom-0 flex max-h-[calc(100%-4rem)] flex-col rounded-t-3xl bg-white shadow-[0_-12px_32px_-16px_rgba(16,24,40,0.35)]">
+                <div className="flex items-center justify-between border-b border-line px-5 py-4">
+                  <h2 className="text-h4 font-bold text-ink">Filters</h2>
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    aria-label="Close filters"
+                    className="flex h-9 w-9 items-center justify-center rounded-full text-ink"
+                  >
+                    <X size={18} strokeWidth={2.2} aria-hidden="true" />
+                  </button>
+                </div>
+                <div className="overflow-y-auto px-5">
+                  <FilterGroups {...props} />
+                </div>
+                <div className="border-t border-line p-4">
+                  <button
+                    type="button"
+                    onClick={() => setOpen(false)}
+                    className="h-12 w-full rounded-lg bg-sky text-copy font-semibold text-white transition-colors duration-200"
+                  >
+                    Show {props.resultCount} results
+                  </button>
+                </div>
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </>
   );
 }
@@ -120,7 +127,9 @@ function FilterGroups({ stops, onStopsChange, stopPrices }: FiltersProps) {
                     on ? "border-brand" : "border-muted"
                   }`}
                 >
-                  <span className={`h-2.5 w-2.5 rounded-full bg-brand transition-transform duration-200 ${on ? "scale-100" : "scale-0"}`} />
+                  <span
+                    className={`h-2.5 w-2.5 rounded-full bg-brand transition-transform duration-200 ${on ? "scale-100" : "scale-0"}`}
+                  />
                 </span>
                 <span className="flex-1">{option.label}</span>
                 <span className="text-small text-label">{price ?? "—"}</span>
@@ -155,15 +164,7 @@ function FilterGroups({ stops, onStopsChange, stopPrices }: FiltersProps) {
   );
 }
 
-function FilterGroup({
-  heading,
-  children,
-  last = false,
-}: {
-  heading: string;
-  children: ReactNode;
-  last?: boolean;
-}) {
+function FilterGroup({ heading, children, last = false }: { heading: string; children: ReactNode; last?: boolean }) {
   const [open, setOpen] = useState(true);
 
   return (
@@ -186,9 +187,7 @@ function FilterGroup({
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
-            className={`shrink-0 text-ink transition-transform duration-300 ${
-              open ? "" : "rotate-180"
-            }`}
+            className={`shrink-0 text-ink transition-transform duration-300 ${open ? "" : "rotate-180"}`}
           >
             <path d="m18 15-6-6-6 6" />
           </svg>
@@ -265,7 +264,7 @@ function RatingChips() {
               className="flex h-10 w-10 items-center justify-center rounded-xl"
             >
               <Star
-                size={26}
+                size={24}
                 strokeWidth={1.6}
                 aria-hidden="true"
                 className={`transition-colors duration-200 ${on ? "fill-star text-star" : "fill-transparent text-muted"}`}

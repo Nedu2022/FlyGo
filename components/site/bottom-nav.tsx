@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BedDouble, CircleUserRound, Headset, House, Plane } from "lucide-react";
 
-const ICON = { size: 22, strokeWidth: 1.9, "aria-hidden": true } as const;
+const ICON = { size: 24, strokeWidth: 1.8, "aria-hidden": true } as const;
 
 const TABS = [
   { href: "/", label: "Home", icon: <House {...ICON} /> },
@@ -39,7 +39,7 @@ export function BottomNav() {
                 <Link
                   href={tab.href}
                   aria-current={active ? "page" : undefined}
-                  className={`flex h-full flex-col items-center justify-center gap-1 text-[0.6875rem] font-semibold ${
+                  className={`flex h-full flex-col items-center justify-center gap-1 text-micro font-semibold ${
                     active ? "text-ink" : "text-label"
                   }`}
                 >
