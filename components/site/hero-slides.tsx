@@ -9,9 +9,8 @@ const INTERVAL = 6000;
 
 /**
  * Background photos for the hero that crossfade every few seconds. Only the
- * first photo is loaded
- * eagerly; the rest load lazily, and nothing rotates for visitors who prefer
- * reduced motion.
+ * first photo is loaded eagerly; the rest load lazily, and nothing rotates for
+ * visitors who prefer reduced motion.
  */
 export function HeroSlides({ slides }: { slides: Slide[] }) {
   const [index, setIndex] = useState(0);
@@ -40,7 +39,6 @@ export function HeroSlides({ slides }: { slides: Slide[] }) {
           style={{ objectPosition: slide.position ?? "center" }}
         />
       ))}
-
     </>
   );
 }
