@@ -1,11 +1,10 @@
 "use client";
 
-import { SlidersHorizontal, X } from "lucide-react";
+import { SlidersHorizontal, Star, X } from "lucide-react";
 import { useEffect, useId, useState, type ReactNode } from "react";
 import {
   AIRLINE_FILTERS,
   PRICE_RANGE,
-  RATING_FILTERS,
   TIME_RANGE,
 } from "@/lib/flight-data";
 
@@ -246,25 +245,45 @@ function DualRange({ minLabel, maxLabel }: { minLabel: string; maxLabel: string 
   );
 }
 
+/** Minimum-rating picker: tap a star to require at least that many. */
 function RatingChips() {
-  const [active, setActive] = useState<string | null>(null);
+  const [min, setMin] = useState(0);
 
   return (
-    <div className="flex flex-wrap gap-3">
-      {RATING_FILTERS.map((rating) => {
-        const selected = active === rating;
-        return (
-          <button
-            key={rating}
-            type="button"
-            onClick={() => setActive(selected ? null : rating)}
-            aria-pressed={selected}
-            className={`flex h-[42px] w-[42px] items-center justify-center rounded-full border text-small transition-colors duration-200 ${ selected ? "border-brand bg-brand text-white" : "border-brand text-body" }`}
-          >
-            {rating}
+    <div>
+      <div className="flex items-center gap-1" role="radiogroup" aria-label="Minimum rating">
+        {[1, 2, 3, 4, 5].map((n) => {
+          const on = n <= min;
+          return (
+            <button
+              key={n}
+              type="button"
+              role="radio"
+              aria-checked={min === n}
+              aria-label={`${n} star${n > 1 ? "s" : ""} and up`}
+              onClick={() => setMin(min === n ? 0 : n)}
+              className="flex h-10 w-10 items-center justify-center rounded-xl"
+            >
+              <Star
+                size={26}
+                strokeWidth={1.6}
+                aria-hidden="true"
+                className={`transition-colors duration-200 ${on ? "fill-star text-star" : "fill-transparent text-muted"}`}
+              />
+            </button>
+          );
+        })}
+      </div>
+      <div className="mt-2 flex items-center justify-between">
+        <p className="text-small font-medium text-ink">
+          {min ? `${min} star${min > 1 ? "s" : ""}${min < 5 ? " & up" : ""}` : "Any rating"}
+        </p>
+        {min ? (
+          <button type="button" onClick={() => setMin(0)} className="text-small font-semibold text-blue">
+            Clear
           </button>
-        );
-      })}
+        ) : null}
+      </div>
     </div>
   );
 }

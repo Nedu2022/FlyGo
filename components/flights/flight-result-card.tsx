@@ -5,9 +5,6 @@ import Image from "next/image";
 import { useState } from "react";
 import { stopLabel, type FlightLeg, type FlightResult } from "@/lib/flight-data";
 
-/** Barcode bar widths, fixed so server and client render the same stub. */
-const BARS = [2, 1, 3, 1, 1, 2, 1, 3, 2, 1, 1, 3, 1, 2, 1, 1, 3, 1, 2, 2, 1, 3, 1, 1, 2, 1, 2, 3, 1, 1, 2, 1];
-
 /**
  * One itinerary as a boarding pass: airline and both legs on the ticket, a
  * perforated tear line with punched notches, and the fare on the stub. The
@@ -70,30 +67,23 @@ export function FlightResultCard({
           </div>
         </div>
 
-        <div className="flex shrink-0 items-center gap-2 md:flex-col md:items-stretch">
-          <div className="flex items-center gap-2">
-            <button
-              type="button"
-              aria-pressed={saved}
-              aria-label={saved ? "Remove from saved" : "Save this flight"}
-              onClick={() => setSaved((v) => !v)}
-              className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-shell ${saved ? "text-brand" : "text-ink"}`}
-            >
-              <Heart size={18} strokeWidth={1.9} fill={saved ? "currentColor" : "none"} aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              onClick={onView}
-              className="h-11 flex-1 rounded-xl bg-brand px-5 text-small font-semibold text-white active:translate-y-px"
-            >
-              View deal
-            </button>
-          </div>
-          <div aria-hidden="true" className="hidden h-8 items-stretch justify-end gap-[2px] opacity-70 md:flex">
-            {BARS.map((w, i) => (
-              <span key={i} className="bg-ink" style={{ width: w }} />
-            ))}
-          </div>
+        <div className="flex shrink-0 items-center gap-2">
+          <button
+            type="button"
+            aria-pressed={saved}
+            aria-label={saved ? "Remove from saved" : "Save this flight"}
+            onClick={() => setSaved((v) => !v)}
+            className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-shell ${saved ? "text-brand" : "text-ink"}`}
+          >
+            <Heart size={18} strokeWidth={1.9} fill={saved ? "currentColor" : "none"} aria-hidden="true" />
+          </button>
+          <button
+            type="button"
+            onClick={onView}
+            className="h-11 flex-1 rounded-xl bg-brand px-5 text-small font-semibold text-white active:translate-y-px"
+          >
+            View deal
+          </button>
         </div>
       </div>
     </article>
@@ -107,7 +97,9 @@ function Tags({ result, badge }: { result: FlightResult; badge?: string }) {
         <span className="rounded-full bg-brand-soft px-2.5 py-1 text-tiny font-semibold text-brand-hover">{badge}</span>
       ) : null}
       {result.freeCancellation ? (
-        <span className="rounded-full bg-sky-soft px-2.5 py-1 text-tiny font-semibold text-blue">Free cancellation</span>
+        <span className="rounded-full bg-sky-soft px-2.5 py-1 text-tiny font-semibold text-blue">
+          Free cancellation
+        </span>
       ) : null}
       {result.seatsLeft ? (
         <span className="rounded-full bg-shell px-2.5 py-1 text-tiny font-semibold text-body">
@@ -161,15 +153,7 @@ function Leg({ leg, label }: { leg: FlightLeg; label: string }) {
 }
 
 /** The airline's logo when we have one, otherwise its IATA code on a badge. */
-export function AirlineMark({
-  airline,
-  code,
-  logo,
-}: {
-  airline: string;
-  code: string;
-  logo: string | null;
-}) {
+export function AirlineMark({ airline, code, logo }: { airline: string; code: string; logo: string | null }) {
   return (
     <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-shell sm:h-11 sm:w-11">
       {logo ? (
@@ -185,7 +169,10 @@ export function AirlineMark({
 
 function Bags({ bags }: { bags: FlightResult["bags"] }) {
   return (
-    <span className="flex items-center gap-1.5 text-label" aria-label={`Cabin bag ${bags.cabin ? "included" : "not included"}, checked bag ${bags.checked ? "included" : "not included"}`}>
+    <span
+      className="flex items-center gap-1.5 text-label"
+      aria-label={`Cabin bag ${bags.cabin ? "included" : "not included"}, checked bag ${bags.checked ? "included" : "not included"}`}
+    >
       <Briefcase size={16} strokeWidth={1.8} aria-hidden="true" className={bags.cabin ? "text-ink" : "opacity-40"} />
       <Luggage size={18} strokeWidth={1.8} aria-hidden="true" className={bags.checked ? "text-ink" : "opacity-40"} />
     </span>

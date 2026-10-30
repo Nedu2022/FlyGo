@@ -199,8 +199,6 @@ export const PROVIDERS = [
   { name: "wego", logo: "/images/providers/wego.svg", price: "N2,800,000" },
 ];
 
-export const RATING_FILTERS = ["0+", "1+", "2+", "3+", "4+"];
-
 export const AIRLINE_FILTERS = ["Emirates", "flydubai", "Air India", "IndiGo", "Qatar Airways", "Etihad", "SpiceJet"];
 
 export const PRICE_RANGE = { min: "$249", max: "$438" };
