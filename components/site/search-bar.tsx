@@ -8,14 +8,12 @@ import {
   BedDouble,
   Building2,
   CalendarDays,
-  ChevronDown,
   MapPin,
   Plane,
   PlaneLanding,
   PlaneTakeoff,
   Search,
   Users,
-  X,
 } from "lucide-react";
 import { DateField } from "@/components/ui/calendar";
 import { PlaceInput } from "@/components/site/place-input";
@@ -31,20 +29,14 @@ export type SearchTab = (typeof TABS)[number]["value"];
 
 const TRIP_KINDS = ["Return", "One-way", "Multi-city"] as const;
 
-/** One-tap destinations under the bar, so most people never have to type. */
-const POPULAR = {
-  Flight: ["London (LHR)", "Dubai (DXB)", "Accra (ACC)", "New York (JFK)", "Paris (CDG)"],
-  stay: ["London", "Dubai", "Lisbon", "Cape Town", "Santorini"],
-} as const;
-const BAGS = ["0 bags", "1 bag", "2 bags", "3 bags"] as const;
-
 const SEARCH_BUTTON =
-  "bg-linear-to-br from-brand to-brand-hover font-semibold text-white shadow-[0_6px_16px_-6px_rgba(224,117,42,0.7)] transition-[filter,transform] duration-200 active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky focus-visible:ring-offset-2";
+  "bg-linear-to-br from-brand to-brand-hover font-semibold text-white active:translate-y-px focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky focus-visible:ring-offset-2";
 
 /**
- * Product pills over one search bar, built to sit inside the hero's white
- * card. From `lg` the fields sit in a single row split by hairlines; below
- * that they stack with the trip type as tabs, like a native form.
+ * FLYGO's search: Kayak-style product tiles over a search card cut like a
+ * boarding pass. On phones the fields are simple list rows with a perforated
+ * tear line between the route and the trip details; on desktop they sit in
+ * one row with the Search button on a perforated stub.
  */
 export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab }) {
   const router = useRouter();
@@ -54,9 +46,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
   const [returnDate, setReturnDate] = useState(() => new Date(2027, 0, 9));
   const [from, setFrom] = useState("Lagos (LOS)");
   const [to, setTo] = useState("");
-  const [where, setWhere] = useState(
-    defaultTab === "Apartment" ? "Lisbon, Portugal" : "London, United Kingdom",
-  );
+  const [where, setWhere] = useState("");
 
   const flight = tab === "Flight";
   const oneWay = kind !== "Return";
@@ -64,25 +54,20 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
     setFrom(to);
     setTo(from);
   };
+  const stayInitial = tab === "Hotel" ? { adults: 2 } : { adults: 4, rooms: 2 };
 
-  const dates = (
-    <>
-      <DateField
-        tone="inline"
-        label={flight ? "Departure" : "Check in"}
-        value={departure}
-        onChange={setDeparture}
-      />
-      <span aria-hidden="true" className="text-lead text-ink">–</span>
-      <DateField
-        tone="inline"
-        label={flight ? "Return" : "Check out"}
-        value={returnDate}
-        onChange={setReturnDate}
-        disabled={flight && oneWay}
-        placeholder="No return"
-      />
-    </>
+  const departField = (
+    <DateField tone="inline" label={flight ? "Departure" : "Check in"} value={departure} onChange={setDeparture} />
+  );
+  const returnField = (
+    <DateField
+      tone="inline"
+      label={flight ? "Return" : "Check out"}
+      value={returnDate}
+      onChange={setReturnDate}
+      disabled={flight && oneWay}
+      placeholder="One-way"
+    />
   );
 
   return (
@@ -92,88 +77,41 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
         router.push(flight ? "/flights" : "/hotels");
       }}
     >
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div
-          role="tablist"
-          aria-label="What are you booking?"
-          className="relative grid w-full grid-cols-3 rounded-full bg-shell p-1 sm:w-[420px]"
-        >
-          <span
-            aria-hidden="true"
-            className="absolute inset-y-1 left-1 w-[calc((100%-0.5rem)/3)] rounded-full bg-white shadow-[0_1px_2px_rgba(16,24,40,0.08),0_4px_12px_-4px_rgba(16,24,40,0.18)] transition-transform duration-300 ease-out"
-            style={{ transform: `translateX(${TABS.findIndex((t) => t.value === tab) * 100}%)` }}
-          />
-          {TABS.map(({ label, value, icon: Icon }) => {
-            const on = tab === value;
-            return (
-              <button
-                key={value}
-                type="button"
-                role="tab"
-                aria-selected={on}
-                onClick={() => setTab(value)}
-                className={`relative z-10 flex h-11 min-w-0 items-center justify-center gap-2 rounded-full text-small font-semibold transition-colors duration-200 sm:text-copy ${
-                  on ? "text-ink" : "text-body"
+      {/* Product tiles */}
+      <div role="tablist" aria-label="What are you booking?" className="flex gap-3 sm:gap-5">
+        {TABS.map(({ label, value, icon: Icon }) => {
+          const on = tab === value;
+          return (
+            <button
+              key={value}
+              type="button"
+              role="tab"
+              aria-selected={on}
+              onClick={() => setTab(value)}
+              className="flex w-[76px] flex-col items-center gap-2 sm:w-[88px]"
+            >
+              <span
+                className={`flex h-[60px] w-[60px] items-center justify-center rounded-2xl transition-colors duration-200 sm:h-16 sm:w-16 ${
+                  on
+                    ? "bg-linear-to-br from-brand to-brand-hover text-white shadow-[0_8px_18px_-8px_rgba(224,117,42,0.75)]"
+                    : "bg-white text-ink shadow-[0_1px_2px_rgba(16,24,40,0.06),0_4px_12px_-6px_rgba(16,24,40,0.2)]"
                 }`}
               >
-                <Icon size={18} strokeWidth={2} aria-hidden="true" className={`hidden min-[400px]:block ${on ? "text-brand" : ""}`} />
-                {label}
-              </button>
-            );
-          })}
-        </div>
-
-        <div className={`hidden h-11 items-center gap-6 pr-2 ${flight ? "lg:flex" : ""}`}>
-          <Dropdown label="Trip type" value={kind} options={TRIP_KINDS} onChange={(v) => setKind(v as typeof kind)} />
-          <Dropdown label="Bags" value="0 bags" options={BAGS} />
-        </div>
+                <Icon size={26} strokeWidth={1.9} aria-hidden="true" />
+              </span>
+              <span className={`text-small sm:text-copy ${on ? "font-semibold text-ink" : "text-body"}`}>{label}</span>
+            </button>
+          );
+        })}
       </div>
 
-      {/* Desktop: options as dropdowns, then a single-row bar. */}
-      <div className="hidden lg:block">
-        <div className="mt-4 flex items-center gap-2 rounded-2xl bg-shell p-1.5">
-          {flight ? (
-            <div className="flex min-w-0 flex-[2.2] items-center">
-              <Place value={from} onChange={setFrom} placeholder="From" />
-              <button
-                type="button"
-                aria-label="Swap origin and destination"
-                onClick={swap}
-                className="mx-2 flex h-11 w-11 shrink-0 items-center justify-center rounded-lg text-ink transition-colors duration-200"
-              >
-                <ArrowLeftRight size={20} strokeWidth={2} aria-hidden="true" />
-              </button>
-              <Place value={to} onChange={setTo} placeholder="To" />
-            </div>
-          ) : (
-            <div className="flex min-w-0 flex-[2.2] items-center">
-              <Place value={where} onChange={setWhere} placeholder="Going to" kind="stay" />
-            </div>
-          )}
-
-          <Divider />
-          <div className="flex min-w-0 flex-[1.4] items-center gap-1">{dates}</div>
-          <Divider />
-
-          <div className="flex min-w-0 flex-1 px-3">
-            <TravellersField
-              key={tab}
-              kind={flight ? "flight" : "stay"}
-              initial={flight ? undefined : tab === "Hotel" ? { adults: 2 } : { adults: 4, rooms: 2 }}
-              className="h-12 text-lead"
-            />
-          </div>
-
-          <button type="submit" className={`h-14 shrink-0 rounded-xl px-8 text-lead ${SEARCH_BUTTON}`}>
-            Search
-          </button>
-        </div>
-      </div>
-
-      {/* Phone and tablet: native-app field tiles, each with its own label. */}
-      <div key={`m-${tab}`} className="animate-fade mt-3 space-y-2 lg:hidden">
+      {/* The boarding pass */}
+      <div
+        key={tab}
+        className="animate-fade relative mt-6 rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05),0_18px_40px_-24px_rgba(16,24,40,0.35)] sm:mt-8"
+      >
         {flight ? (
-          <div className="grid grid-cols-3 rounded-xl bg-shell p-1" role="radiogroup" aria-label="Trip type">
+          <div className="flex gap-6 px-4 pt-1 sm:px-6" role="radiogroup" aria-label="Trip type">
             {TRIP_KINDS.map((item) => (
               <button
                 key={item}
@@ -181,8 +119,8 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 role="radio"
                 aria-checked={kind === item}
                 onClick={() => setKind(item)}
-                className={`h-10 rounded-lg text-small font-semibold transition-colors duration-200 ${
-                  kind === item ? "bg-white text-ink shadow-[0_1px_3px_rgba(16,24,40,0.12)]" : "text-body"
+                className={`border-b-[3px] py-3.5 text-small font-semibold transition-colors duration-200 sm:text-copy ${
+                  kind === item ? "border-ink text-ink" : "border-transparent text-label"
                 }`}
               >
                 {item}
@@ -191,206 +129,198 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
           </div>
         ) : null}
 
-        {flight ? (
-          <div className="relative rounded-2xl bg-shell">
-            <Tile label="From" icon={<PlaneTakeoff size={20} strokeWidth={1.8} aria-hidden="true" />}>
-              <PlaceInput value={from} onChange={setFrom} label="From" placeholderPrefix="e.g." className="mx-3 block w-[calc(100%-4.5rem)] text-copy font-semibold" />
-            </Tile>
-            <div className="mx-4 h-px bg-line" />
-            <Tile label="To" icon={<PlaneLanding size={20} strokeWidth={1.8} aria-hidden="true" />}>
-              <PlaceInput value={to} onChange={setTo} label="To" placeholderPrefix="e.g." className="mx-3 block w-[calc(100%-4.5rem)] text-copy font-semibold" />
-            </Tile>
-            <button
-              type="button"
-              aria-label="Swap origin and destination"
-              onClick={swap}
-              className="absolute right-4 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_8px_rgba(16,24,40,0.14)]"
-            >
-              <ArrowUpDown size={18} strokeWidth={2} aria-hidden="true" />
-            </button>
-          </div>
-        ) : (
-          <div className="rounded-2xl bg-shell">
-            <Tile
-              label={tab === "Hotel" ? "Destination" : "Where"}
-              icon={<MapPin size={20} strokeWidth={1.8} aria-hidden="true" />}
-            >
-              <PlaceInput value={where} onChange={setWhere} label="Destination" kind="stay" placeholderPrefix="e.g." className="mx-3 block w-[calc(100%-1.5rem)] text-copy font-semibold" />
-            </Tile>
-          </div>
-        )}
-
-        <div className="grid grid-cols-2 gap-2">
-          <div className="rounded-2xl bg-shell">
-            <Tile label={flight ? "Depart" : "Check in"} icon={<CalendarDays size={20} strokeWidth={1.8} aria-hidden="true" />} compact>
-              <DateField tone="inline" label={flight ? "Departure" : "Check in"} value={departure} onChange={setDeparture} />
-            </Tile>
-          </div>
-          <div className="rounded-2xl bg-shell">
-            <Tile label={flight ? "Return" : "Check out"} icon={<CalendarDays size={20} strokeWidth={1.8} aria-hidden="true" />} compact>
-              <DateField
-                tone="inline"
-                label={flight ? "Return" : "Check out"}
-                value={returnDate}
-                onChange={setReturnDate}
-                disabled={flight && oneWay}
-                placeholder="No return"
+        {/* Phones and tablets: list rows, torn in two. */}
+        <div className="lg:hidden">
+          {flight ? (
+            <div className="relative border-t border-line">
+              <Row icon={<PlaneTakeoff size={20} strokeWidth={1.8} aria-hidden="true" />}>
+                <PlaceInput
+                  value={from}
+                  onChange={setFrom}
+                  label="From"
+                  placeholderPrefix="From, e.g."
+                  className="h-14 pr-14 text-copy font-medium"
+                />
+              </Row>
+              <Row icon={<PlaneLanding size={20} strokeWidth={1.8} aria-hidden="true" />} divided>
+                <PlaceInput
+                  value={to}
+                  onChange={setTo}
+                  label="To"
+                  placeholderPrefix="To, e.g."
+                  className="h-14 pr-14 text-copy font-medium"
+                />
+              </Row>
+              <button
+                type="button"
+                aria-label="Swap origin and destination"
+                onClick={swap}
+                className="absolute right-4 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-xl bg-white text-ink shadow-[0_2px_8px_rgba(16,24,40,0.14)]"
+              >
+                <ArrowUpDown size={18} strokeWidth={2} aria-hidden="true" />
+              </button>
+            </div>
+          ) : (
+            <Row icon={<MapPin size={20} strokeWidth={1.8} aria-hidden="true" />}>
+              <PlaceInput
+                value={where}
+                onChange={setWhere}
+                label="Destination"
+                kind="stay"
+                placeholderPrefix="Going to, e.g."
+                className="h-14 text-copy font-medium"
               />
-            </Tile>
+            </Row>
+          )}
+
+          <Perforation />
+
+          <Row icon={<CalendarDays size={20} strokeWidth={1.8} aria-hidden="true" />}>
+            <div className="-mx-3 flex min-w-0 flex-1 items-center [&_button]:h-14 [&_button]:text-copy [&_button]:font-medium">
+              {departField}
+              <span aria-hidden="true" className="text-label">
+                –
+              </span>
+              {returnField}
+            </div>
+          </Row>
+          <Row icon={<Users size={20} strokeWidth={1.8} aria-hidden="true" />} divided>
+            <TravellersField
+              key={tab}
+              kind={flight ? "flight" : "stay"}
+              initial={flight ? undefined : stayInitial}
+              className="h-14 text-copy font-medium"
+            />
+          </Row>
+
+          <div className="p-3 pt-1">
+            <button
+              type="submit"
+              className={`flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-lead ${SEARCH_BUTTON}`}
+            >
+              <Search size={20} strokeWidth={2.4} aria-hidden="true" />
+              Search
+            </button>
           </div>
         </div>
 
-        <div className="rounded-2xl bg-shell">
-          <Tile
-            label={flight ? "Travellers" : "Guests"}
-            icon={<Users size={20} strokeWidth={1.8} aria-hidden="true" />}
-          >
-            <div className="mx-3">
+        {/* Desktop: one row, with Search on a perforated stub. */}
+        <div className={`hidden items-stretch lg:flex ${flight ? "border-t border-line" : ""}`}>
+          <div className="flex min-w-0 flex-1 items-center gap-1 py-2 pl-4">
+            {flight ? (
+              <>
+                <Cell icon={<PlaneTakeoff size={20} strokeWidth={1.8} aria-hidden="true" />} grow={1}>
+                  <PlaceInput
+                    value={from}
+                    onChange={setFrom}
+                    label="From"
+                    placeholderPrefix="From, e.g."
+                    className="h-12 text-lead"
+                  />
+                </Cell>
+                <button
+                  type="button"
+                  aria-label="Swap origin and destination"
+                  onClick={swap}
+                  className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-shell text-ink"
+                >
+                  <ArrowLeftRight size={18} strokeWidth={2} aria-hidden="true" />
+                </button>
+                <Cell icon={<PlaneLanding size={20} strokeWidth={1.8} aria-hidden="true" />} grow={1}>
+                  <PlaceInput
+                    value={to}
+                    onChange={setTo}
+                    label="To"
+                    placeholderPrefix="To, e.g."
+                    className="h-12 text-lead"
+                  />
+                </Cell>
+              </>
+            ) : (
+              <Cell icon={<MapPin size={20} strokeWidth={1.8} aria-hidden="true" />} grow={2}>
+                <PlaceInput
+                  value={where}
+                  onChange={setWhere}
+                  label="Destination"
+                  kind="stay"
+                  placeholderPrefix="Going to, e.g."
+                  className="h-12 text-lead"
+                />
+              </Cell>
+            )}
+            <Rule />
+            <Cell icon={<CalendarDays size={20} strokeWidth={1.8} aria-hidden="true" />} grow={1.3}>
+              <div className="-mx-3 flex min-w-0 items-center">
+                {departField}
+                <span aria-hidden="true" className="text-label">
+                  –
+                </span>
+                {returnField}
+              </div>
+            </Cell>
+            <Rule />
+            <Cell icon={<Users size={20} strokeWidth={1.8} aria-hidden="true" />} grow={1.45}>
               <TravellersField
                 key={tab}
                 kind={flight ? "flight" : "stay"}
-                initial={flight ? undefined : tab === "Hotel" ? { adults: 2 } : { adults: 4, rooms: 2 }}
-                className="h-7 text-copy font-semibold"
+                initial={flight ? undefined : stayInitial}
+                className="h-12 text-lead"
               />
-            </div>
-          </Tile>
-        </div>
+            </Cell>
+          </div>
 
-        <button type="submit" className={`flex h-14 w-full items-center justify-center gap-2 rounded-2xl text-lead ${SEARCH_BUTTON}`}>
-          <Search size={20} strokeWidth={2.4} aria-hidden="true" />
-          {flight ? "Search flights" : "Search stays"}
-        </button>
-      </div>
+          <div aria-hidden="true" className="relative w-px self-stretch">
+            <span className="absolute inset-y-3 left-0 border-l-2 border-dashed border-line" />
+            <span className="absolute -top-[11px] left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
+            <span className="absolute -bottom-[11px] left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-shell" />
+          </div>
 
-      <div className="mt-3 flex items-center gap-2 overflow-x-auto no-scrollbar">
-        <span className="shrink-0 text-small text-body">Popular:</span>
-        {(flight ? POPULAR.Flight : POPULAR.stay).map((place) => {
-          const on = flight ? to === place : where === place;
-          return (
+          <div className="flex shrink-0 items-center p-3">
             <button
-              key={place}
-              type="button"
-              onClick={() => (flight ? setTo(place) : setWhere(place))}
-              aria-pressed={on}
-              className={`h-9 shrink-0 rounded-full px-3.5 text-small font-medium transition-colors duration-200 ${
-                on ? "bg-ink text-white" : "bg-shell text-ink"
-              }`}
+              type="submit"
+              className={`flex h-14 items-center gap-2 rounded-2xl px-8 text-lead ${SEARCH_BUTTON}`}
             >
-              {place.replace(/ \(.*\)$/, "")}
+              <Search size={20} strokeWidth={2.4} aria-hidden="true" />
+              Search
             </button>
-          );
-        })}
+          </div>
+        </div>
       </div>
     </form>
   );
 }
 
-/** A chosen place shows as a removable chip; clearing it reveals the input. */
-/** A chosen place shows as a removable chip; clearing it brings back the live input. */
-function Place({
-  value,
-  onChange,
-  placeholder,
-  kind = "airport",
-}: {
-  value: string;
-  onChange: (value: string) => void;
-  placeholder: string;
-  kind?: "airport" | "stay";
-}) {
-  const [draft, setDraft] = useState("");
-  const commit = () => {
-    if (draft.trim()) onChange(draft.trim());
-    setDraft("");
-  };
-
+/** A full-width list row on phones, with an optional hairline above. */
+function Row({ icon, children, divided = false }: { icon: ReactNode; children: ReactNode; divided?: boolean }) {
   return (
-    <div className="flex h-12 min-w-0 flex-1 items-center px-2">
-      {value ? (
-        <span className="inline-flex h-10 min-w-0 items-center gap-2 rounded-lg bg-white pl-3 pr-1.5 text-lead text-ink">
-          <span className="truncate">{value}</span>
-          <button
-            type="button"
-            aria-label={`Clear ${value}`}
-            onClick={() => onChange("")}
-            className="flex h-7 w-7 shrink-0 items-center justify-center rounded text-ink"
-          >
-            <X size={16} strokeWidth={2.2} aria-hidden="true" />
-          </button>
-        </span>
-      ) : (
-        <PlaceInput
-          value={draft}
-          onChange={setDraft}
-          onSelect={(label) => {
-            onChange(label);
-            setDraft("");
-          }}
-          onBlur={commit}
-          label={placeholder}
-          kind={kind}
-          placeholderPrefix={placeholder}
-          className="h-12 px-1 text-lead"
-        />
-      )}
-    </div>
-  );
-}
-
-function Divider() {
-  return <span aria-hidden="true" className="h-9 w-px shrink-0 bg-line" />;
-}
-
-/** One labelled field tile in the phone form. */
-function Tile({
-  label,
-  icon,
-  children,
-  compact = false,
-}: {
-  label: string;
-  icon: ReactNode;
-  children: ReactNode;
-  compact?: boolean;
-}) {
-  return (
-    <div className={`flex min-h-[64px] items-center gap-3 ${compact ? "pl-3.5 pr-1" : "px-4"}`}>
+    <div className={`flex min-h-14 items-center gap-3 px-4 ${divided ? "border-t border-line" : ""}`}>
       <span className="shrink-0 text-label">{icon}</span>
-      <div className="min-w-0 flex-1 py-2">
-        <span className="block text-tiny font-medium text-label">{label}</span>
-        <div className="-mx-3 [&_button]:h-7 [&_button]:text-copy [&_button]:font-semibold">{children}</div>
-      </div>
+      <div className="min-w-0 flex-1">{children}</div>
     </div>
   );
 }
 
-
-function Dropdown({
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  label: string;
-  value: string;
-  options: readonly string[];
-  onChange?: (value: string) => void;
-}) {
+/** One field of the desktop row. */
+function Cell({ icon, children, grow }: { icon: ReactNode; children: ReactNode; grow: number }) {
   return (
-    <label className="relative inline-flex items-center text-lead text-ink">
-      <select
-        aria-label={label}
-        value={onChange ? value : undefined}
-        defaultValue={onChange ? undefined : value}
-        onChange={onChange ? (event) => onChange(event.target.value) : undefined}
-        className="cursor-pointer appearance-none bg-transparent pr-7 outline-none"
-      >
-        {options.map((option) => (
-          <option key={option}>{option}</option>
-        ))}
-      </select>
-      <ChevronDown size={18} strokeWidth={2.2} aria-hidden="true" className="pointer-events-none absolute right-0" />
-    </label>
+    <div className="flex min-w-0 items-center gap-2.5 px-2" style={{ flex: `${grow} 1 0%` }}>
+      <span className="shrink-0 text-label">{icon}</span>
+      <div className="min-w-0 flex-1">{children}</div>
+    </div>
   );
 }
 
+function Rule() {
+  return <span aria-hidden="true" className="h-8 w-px shrink-0 bg-line" />;
+}
+
+/** The tear line across a phone ticket: dashes between two punched notches. */
+function Perforation() {
+  return (
+    <div aria-hidden="true" className="relative h-5">
+      <span className="absolute inset-x-5 top-1/2 border-t-2 border-dashed border-line" />
+      <span className="absolute -left-2.5 top-0 h-5 w-5 rounded-full bg-shell" />
+      <span className="absolute -right-2.5 top-0 h-5 w-5 rounded-full bg-shell" />
+    </div>
+  );
+}

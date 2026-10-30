@@ -1,18 +1,14 @@
 import type { Metadata } from "next";
-import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 
 /**
- * Kayak sets its UI in TT Hoves, a commercial font. Plus Jakarta Sans is the
- * closest free match in width and letter shapes. If FLYGO licenses TT Hoves,
- * swap this for next/font/local and keep the same CSS variable.
+ * General Sans (Indian Type Foundry), served by Fontshare under the ITF Free
+ * Font License. The licence forbids putting the font files in a public
+ * repository, so they're loaded from Fontshare's API, which it permits,
+ * rather than self-hosted from this repo.
  */
-const sans = Plus_Jakarta_Sans({
-  variable: "--font-jakarta",
-  subsets: ["latin"],
-  display: "swap",
-});
+const FONT_CSS = "https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap";
 
 export const metadata: Metadata = {
   title: "FLYGO Bookings",
@@ -23,8 +19,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${sans.variable} h-full antialiased`}
+      className="h-full antialiased"
     >
+      <head>
+        <link rel="preconnect" href="https://api.fontshare.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://cdn.fontshare.com" crossOrigin="anonymous" />
+        <link rel="stylesheet" href={FONT_CSS} />
+      </head>
       <body className="min-h-full flex flex-col">
         <Providers>{children}</Providers>
       </body>

@@ -3,8 +3,7 @@ import Link from "next/link";
 import { PAGE } from "@/components/site/container";
 import { Rail, RAIL_ITEM } from "@/components/site/rail";
 import { SectionHeader } from "@/components/site/section-header";
-import { HotelCard } from "@/components/site/cards";
-import { DEALS, HOTELS, type Deal } from "@/lib/site-data";
+import { DEALS, type Deal } from "@/lib/site-data";
 
 /** "$1,299" -> 1299, for ordering cheapest first. */
 const price = (value: string) => Number(value.replace(/[^0-9.]/g, ""));
@@ -45,21 +44,5 @@ export function DealCard({ deal }: { deal: Deal }) {
       </div>
       <p className="px-1 text-small text-body">{deal.duration}</p>
     </Link>
-  );
-}
-
-/** Hotel rail for the home page. */
-export function StaysRail() {
-  return (
-    <section className={`reveal ${PAGE} pt-16 lg:pt-24`}>
-      <SectionHeader title="Stays you'll love" href="/hotels" />
-      <Rail label="stays" className="mt-6">
-        {[...HOTELS].sort((a, b) => Number(b.score) - Number(a.score)).map((hotel) => (
-          <li key={hotel.name} className={RAIL_ITEM}>
-            <HotelCard hotel={hotel} />
-          </li>
-        ))}
-      </Rail>
-    </section>
   );
 }

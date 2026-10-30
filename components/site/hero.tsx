@@ -1,6 +1,6 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
-import { SearchBar, type SearchTab } from "@/components/site/search-bar";
+import { SearchBar } from "@/components/site/search-bar";
 import { HeroSlides, type Slide } from "@/components/site/hero-slides";
 
 const FLIGHT_SLIDES: Slide[] = [
@@ -43,9 +43,7 @@ export function CinematicHero({
   return (
     <section className="px-2 sm:px-4">
       <div
-        className={`relative isolate mx-auto flex max-w-[1600px] flex-col justify-end overflow-hidden rounded-[28px] bg-steel ${
-          "min-h-[440px] lg:min-h-[500px]"
-        }`}
+        className={`relative isolate mx-auto flex max-w-[1600px] flex-col justify-end overflow-hidden rounded-[28px] bg-steel ${"min-h-[440px] lg:min-h-[500px]"}`}
       >
         {slides ? (
           <HeroSlides slides={slides} />
@@ -70,9 +68,7 @@ export function CinematicHero({
           <h1 className="max-w-[820px] text-[clamp(2rem,1.2rem+3vw,3.75rem)] font-bold leading-[1.04] tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.25)]">
             {title}
           </h1>
-          {subtitle ? (
-            <p className="mt-4 max-w-[560px] text-lead leading-relaxed text-white/85">{subtitle}</p>
-          ) : null}
+          {subtitle ? <p className="mt-4 max-w-[560px] text-lead leading-relaxed text-white/85">{subtitle}</p> : null}
           {children ? <div className="mt-6 sm:mt-8">{children}</div> : null}
         </div>
       </div>
@@ -80,33 +76,32 @@ export function CinematicHero({
   );
 }
 
-/** The white search card that sits in the search pages' heroes. */
-export function SearchHeroCard({ tab }: { tab: SearchTab }) {
-  return (
-    <div className="rounded-2xl bg-white p-3 shadow-[0_30px_80px_-30px_rgba(0,0,0,0.6)] sm:p-5">
-      <SearchBar defaultTab={tab} />
-    </div>
-  );
-}
-
+/**
+ * Home and Hotels hero, kept short in the Kayak spirit: one headline, the
+ * product tiles and the boarding-pass search on a soft grey panel. On desktop
+ * the destination photos rotate in a rounded frame beside the headline.
+ */
 export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
   const flight = variant === "flight";
   return (
-    <CinematicHero
-      slides={flight ? FLIGHT_SLIDES : STAY_SLIDES}
-      title={
-        flight ? (
-          <>
-            Fly anywhere for less<span className="text-brand">.</span>
-          </>
-        ) : (
-          <>
-            Stays you&apos;ll love<span className="text-brand">.</span>
-          </>
-        )
-      }
-    >
-      <SearchHeroCard tab={flight ? "Flight" : "Hotel"} />
-    </CinematicHero>
+    <section className="px-2 sm:px-4">
+      <div className="mx-auto max-w-[1600px] rounded-[28px] bg-shell px-4 pb-5 pt-7 sm:px-8 sm:pb-8 sm:pt-10 lg:px-14 lg:pb-12">
+        <div className="grid items-end gap-8 lg:grid-cols-[minmax(0,1fr)_400px]">
+          <div>
+            <h1 className="text-[clamp(2rem,1.3rem+2.6vw,3.5rem)] font-semibold leading-[1.05] tracking-tight text-ink">
+              {flight ? "Fly anywhere for less" : "Stays you\u2019ll love"}
+              <span className="text-brand">.</span>
+            </h1>
+          </div>
+          <div className="relative isolate hidden h-[180px] overflow-hidden rounded-3xl bg-steel lg:block">
+            <HeroSlides slides={flight ? FLIGHT_SLIDES : STAY_SLIDES} />
+          </div>
+        </div>
+
+        <div className="mt-6 sm:mt-8">
+          <SearchBar defaultTab={flight ? "Flight" : "Hotel"} />
+        </div>
+      </div>
+    </section>
   );
 }
