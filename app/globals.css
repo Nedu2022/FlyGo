@@ -8,8 +8,9 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-jakarta);
+  /* Plus Jakarta is set tighter than TT Hoves, so headings need less pull. */
+  --tracking-tight: -0.012em;
 
   /* FLYGO brand — orange accent */
   --color-brand: #f58634;
@@ -92,7 +93,7 @@ textarea {
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+  font-family: var(--font-jakarta), Arial, Helvetica, sans-serif;
 }
 
 /* --------------------------------------------------------------------------
