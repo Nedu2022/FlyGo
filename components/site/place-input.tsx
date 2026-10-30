@@ -173,7 +173,6 @@ export function PlaceInput({
               style={{ position: "absolute", top: coords.top, left: coords.left, zIndex: 100 }}
               className="animate-fade w-[min(360px,calc(100vw-1rem))] overflow-hidden rounded-2xl bg-white py-2 shadow-[0_24px_48px_-16px_rgba(16,24,40,0.35)] ring-1 ring-black/5"
             >
-              {!q ? <li className="px-4 pb-1 pt-1 text-tiny font-medium text-label">Popular</li> : null}
               {matches.map((place, index) => {
                 const Icon = kind === "stay" ? (place.code ? Plane : BedDouble) : place.code ? Plane : MapPin;
                 return (

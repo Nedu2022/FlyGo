@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { DateField } from "@/components/ui/calendar";
 import { PlaceInput } from "@/components/site/place-input";
+import { TravellersField } from "@/components/site/travellers-field";
 
 const TABS = [
   { label: "Flights", value: "Flight", icon: Plane },
@@ -59,7 +60,6 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
 
   const flight = tab === "Flight";
   const oneWay = kind !== "Return";
-  const party = flight ? "1 adult, Economy" : tab === "Hotel" ? "2 adults, 1 room" : "4 adults, 2 bedrooms";
   const swap = () => {
     setFrom(to);
     setTo(from);
@@ -155,12 +155,14 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
           <div className="flex min-w-0 flex-[1.4] items-center gap-1">{dates}</div>
           <Divider />
 
-          <input
-            key={tab}
-            defaultValue={party}
-            aria-label={flight ? "Travellers and cabin" : "Guests and rooms"}
-            className="h-12 min-w-0 flex-1 truncate rounded-lg bg-transparent px-3 text-lead text-ink outline-none transition-colors duration-200 focus:bg-shell"
-          />
+          <div className="flex min-w-0 flex-1 px-3">
+            <TravellersField
+              key={tab}
+              kind={flight ? "flight" : "stay"}
+              initial={flight ? undefined : tab === "Hotel" ? { adults: 2 } : { adults: 4, rooms: 2 }}
+              className="h-12 text-lead"
+            />
+          </div>
 
           <button type="submit" className={`h-14 shrink-0 rounded-xl px-8 text-lead ${SEARCH_BUTTON}`}>
             Search
@@ -243,11 +245,14 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
             label={flight ? "Travellers" : "Guests"}
             icon={<Users size={20} strokeWidth={1.8} aria-hidden="true" />}
           >
-            <input
-              defaultValue={flight ? `${party}, 0 bags` : party}
-              aria-label={flight ? "Travellers, cabin and bags" : "Guests and rooms"}
-              className="mx-3 block w-[calc(100%-1.5rem)] min-w-0 bg-transparent text-copy font-semibold text-ink outline-none"
-            />
+            <div className="mx-3">
+              <TravellersField
+                key={tab}
+                kind={flight ? "flight" : "stay"}
+                initial={flight ? undefined : tab === "Hotel" ? { adults: 2 } : { adults: 4, rooms: 2 }}
+                className="h-7 text-copy font-semibold"
+              />
+            </div>
           </Tile>
         </div>
 

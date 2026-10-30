@@ -4,6 +4,7 @@ import { ArrowLeftRight, CalendarDays, ChevronDown, Search } from "lucide-react"
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DateField } from "@/components/ui/calendar";
+import { TravellersField } from "@/components/site/travellers-field";
 import { TRIP } from "@/lib/flight-data";
 
 const SUMMARY = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" });
@@ -127,11 +128,7 @@ export function SearchSummaryBar({ embedded = false }: { embedded?: boolean }) {
           </NotchedField>
 
           <NotchedField label="Travellers" className="lg:flex-1">
-            <input
-              defaultValue={TRIP.passengers}
-              aria-label="Passengers and cabin class"
-              className="w-full bg-transparent text-copy text-ink outline-none"
-            />
+            <TravellersField className="h-6" />
           </NotchedField>
 
           <button
