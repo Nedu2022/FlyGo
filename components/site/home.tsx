@@ -69,7 +69,7 @@ export function DealCard({ deal }: { deal: Deal }) {
         </span>
       </div>
       <div className="px-2 pb-2 pt-4">
-        <p className="font-serif text-[1.9rem] italic leading-none text-ink">{deal.city}</p>
+        <p className="font-serif text-[1.625rem] italic leading-none text-ink">{deal.city}</p>
         <p className="mt-2 text-small text-body">
           LOS → {code} · {deal.duration}
         </p>
