@@ -360,3 +360,64 @@ body {
     radial-gradient(90% 80% at 10% 0%, rgba(245, 134, 52, 0.95) 0%, rgba(245, 134, 52, 0) 65%),
     linear-gradient(160deg, #f58634 0%, #f7a05c 30%, #f9c49a 52%, #a9d2f1 78%, #56ace9 100%);
 }
+
+/* --------------------------------------------------------------------------
+   Page transitions: the old page fades out as the new one fades in with a
+   slight lift. The header stays put, and clicks pass through mid-transition.
+   -------------------------------------------------------------------------- */
+
+@keyframes page-out {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes page-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+::view-transition-old(.page) {
+  animation: page-out 160ms ease-in both;
+}
+
+::view-transition-new(.page) {
+  animation: page-in 320ms cubic-bezier(0.22, 1, 0.36, 1) 80ms both;
+}
+
+::view-transition-group(site-header) {
+  animation: none;
+  z-index: 100;
+}
+::view-transition-old(site-header) {
+  display: none;
+}
+::view-transition-new(site-header) {
+  animation: none;
+}
+
+::view-transition {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(*),
+  ::view-transition-new(*),
+  ::view-transition-group(*) {
+    animation-duration: 0s !important;
+    animation-delay: 0s !important;
+  }
+}
+
+/* Smooth in-page scrolling for anchor links. */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

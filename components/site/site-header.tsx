@@ -65,6 +65,7 @@ export function SiteHeader({
 
   return (
     <header
+      style={{ viewTransitionName: "site-header" }}
       className={
         variant === "solid"
           ? `sticky top-0 z-50 bg-white transition-shadow duration-300 ${

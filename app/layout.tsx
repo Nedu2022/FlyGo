@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ViewTransition } from "react";
 import { Instrument_Serif, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
@@ -35,7 +36,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${sans.variable} ${serif.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
-        <Providers>{children}</Providers>
+        <Providers>
+          {/* The layout persists, so a route change is an update: crossfade it. The header is held still by name. */}
+          <ViewTransition default="page">
+            <div className="flex min-h-full flex-1 flex-col">{children}</div>
+          </ViewTransition>
+        </Providers>
       </body>
     </html>
   );
