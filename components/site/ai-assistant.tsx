@@ -285,11 +285,11 @@ export function AskAiPill() {
     <button
       type="button"
       onClick={() => openAssistant()}
-      className="fixed bottom-[calc(84px+env(safe-area-inset-bottom))] left-4 right-4 z-30 rounded-full bg-[linear-gradient(90deg,#f58634,#f472b6,#56ace9)] p-[1.5px] shadow-[0_14px_34px_-14px_rgba(16,24,40,0.45)] sm:right-auto sm:w-[400px] lg:bottom-6 lg:left-6"
+      className="fixed bottom-[calc(72px+env(safe-area-inset-bottom))] left-5 right-5 z-30 rounded-full bg-[linear-gradient(90deg,#f58634,#f472b6,#56ace9)] p-[1.5px] shadow-[0_14px_34px_-14px_rgba(16,24,40,0.45)] sm:right-auto sm:w-[400px] lg:bottom-6 lg:left-6"
     >
-      <span className="flex h-14 items-center gap-3 rounded-full bg-white px-5 text-left">
-        <Sparkles size={22} strokeWidth={2} aria-hidden="true" className="shrink-0 text-ink" />
-        <span key={i} className="animate-fade truncate text-copy font-medium text-body">
+      <span className="flex h-11 items-center gap-2.5 rounded-full bg-white px-4 text-left sm:h-14 sm:gap-3 sm:px-5">
+        <Sparkles size={18} strokeWidth={2} aria-hidden="true" className="shrink-0 text-ink" />
+        <span key={i} className="animate-fade truncate text-small font-medium text-body sm:text-copy">
           {SUGGESTIONS[i]}
         </span>
       </span>

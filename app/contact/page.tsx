@@ -59,14 +59,14 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
       <SiteHeader variant="solid" />
 
       {/* 1. Every way to reach us, as ticket strips on the grey panel. */}
-      <section className="px-0 sm:px-4">
-        <div className="mx-auto max-w-[1600px] bg-shell px-4 pb-8 pt-8 sm:rounded-[28px] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14 lg:pb-14 lg:pt-14">
+      <section className="px-3 sm:px-4">
+        <div className="mx-auto max-w-[1600px] rounded-[24px] bg-shell px-4 pb-5 pt-6 sm:rounded-[28px] sm:px-10 sm:pb-12 sm:pt-12 lg:px-14 lg:pb-14 lg:pt-14">
           <h1 className="text-display font-bold tracking-tight text-ink">
             Get in touch<span className="text-brand">.</span>
           </h1>
           <p className="mt-3 max-w-[480px] text-lead text-body">Real people, ready to help with any booking.</p>
 
-          <ul className="mt-8 grid gap-3 md:grid-cols-3 md:gap-4">
+          <ul className="mt-6 grid gap-2.5 sm:mt-8 md:grid-cols-3 md:gap-4">
             {CHANNELS.map((channel) => (
               <li key={channel.title}>
                 <a
@@ -75,8 +75,8 @@ export default async function ContactPage({ searchParams }: PageProps<"/contact"
                   rel={channel.action === "Map" ? "noreferrer" : undefined}
                   className="flex items-stretch rounded-[24px] bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05)]"
                 >
-                  <span className="flex min-w-0 flex-1 items-center gap-4 p-4 sm:p-5">
-                    <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-brand-soft text-brand">
+                  <span className="flex min-w-0 flex-1 items-center gap-3 p-3 sm:gap-4 sm:p-5">
+                    <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-brand-soft text-brand sm:h-12 sm:w-12 sm:rounded-2xl">
                       {channel.icon}
                     </span>
                     <span className="min-w-0">

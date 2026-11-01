@@ -38,7 +38,7 @@ export function FiltersSidebar(props: FiltersProps) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-[calc(84px+env(safe-area-inset-bottom))] left-1/2 z-30 flex h-12 -translate-x-1/2 items-center justify-center gap-2 rounded-full bg-ink px-6 text-small font-semibold text-white shadow-[0_14px_30px_-10px_rgba(16,24,40,0.55)] lg:hidden"
+        className="fixed bottom-[calc(72px+env(safe-area-inset-bottom))] left-1/2 z-30 flex h-12 -translate-x-1/2 items-center justify-center gap-2 rounded-full bg-ink px-6 text-small font-semibold text-white shadow-[0_14px_30px_-10px_rgba(16,24,40,0.55)] lg:hidden"
       >
         <SlidersHorizontal size={18} strokeWidth={2} aria-hidden="true" />
         Filters
@@ -54,7 +54,7 @@ export function FiltersSidebar(props: FiltersProps) {
       {open
         ? createPortal(
             <div
-              className="fixed inset-x-0 top-0 bottom-[calc(68px+env(safe-area-inset-bottom))] z-[45] lg:hidden"
+              className="fixed inset-x-0 top-0 bottom-[calc(60px+env(safe-area-inset-bottom))] z-[45] lg:hidden"
               role="dialog"
               aria-modal="true"
               aria-label="Filters"

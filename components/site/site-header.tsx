@@ -80,18 +80,18 @@ export function SiteHeader({
       }
     >
       {/* Kayak-style bar: menu, logo and Ask AI on the left; saved and account on the right. */}
-      <div className="mx-auto flex h-[64px] w-full max-w-[1600px] items-center gap-2 px-3 sm:h-[76px] sm:gap-4 sm:px-6">
+      <div className="mx-auto flex h-[56px] w-full max-w-[1600px] items-center gap-2 px-3 sm:h-[76px] sm:gap-4 sm:px-6">
         <button
           type="button"
           onClick={() => setOpenAt(open ? null : pathname)}
           aria-expanded={open}
           aria-controls="mobile-nav"
           aria-label={open ? "Close menu" : "Open menu"}
-          className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full text-ink"
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full text-ink"
         >
           <Menu size={24} strokeWidth={2} aria-hidden="true" />
         </button>
-        <Logo imgClass="h-[34px] sm:h-[40px]" />
+        <Logo imgClass="h-[30px] sm:h-[40px]" />
 
         <button
           type="button"
@@ -124,7 +124,7 @@ export function SiteHeader({
             type="button"
             onClick={() => openAssistant()}
             aria-label="Ask AI"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-brand shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] md:hidden"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:h-12 sm:w-12 md:hidden"
           >
             <Sparkles size={22} strokeWidth={2} aria-hidden="true" />
           </button>
@@ -138,7 +138,7 @@ export function SiteHeader({
           <Link
             href="/signin"
             aria-label="Sign in or create an account"
-            className="flex h-12 w-12 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)]"
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:h-12 sm:w-12"
           >
             <CircleUserRound size={24} strokeWidth={1.9} aria-hidden="true" />
           </Link>

@@ -28,9 +28,9 @@ export function CinematicHero({
   children?: ReactNode;
 }) {
   return (
-    <section className="px-2 sm:px-4">
+    <section className="px-3 sm:px-4">
       <div
-        className={`relative isolate mx-auto flex max-w-[1600px] flex-col justify-end overflow-hidden rounded-[28px] bg-steel ${"min-h-[440px] lg:min-h-[500px]"}`}
+        className="relative isolate mx-auto flex min-h-[340px] max-w-[1600px] flex-col justify-end overflow-hidden rounded-[24px] bg-steel sm:min-h-[440px] sm:rounded-[28px] lg:min-h-[500px]"
       >
         {slides ? (
           <HeroSlides slides={slides} />
@@ -51,12 +51,12 @@ export function CinematicHero({
           className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(6,22,36,0.55)_0%,rgba(6,22,36,0.1)_38%,rgba(6,22,36,0.35)_62%,rgba(6,22,36,0.82)_100%)]"
         />
 
-        <div className="stagger px-4 pb-4 pt-20 sm:px-8 sm:pb-8 lg:px-14 lg:pb-10">
+        <div className="stagger px-4 pb-4 pt-16 sm:px-8 sm:pb-8 sm:pt-20 lg:px-14 lg:pb-10">
           <h1 className="max-w-[820px] text-display font-bold tracking-tight text-white [text-shadow:0_2px_24px_rgba(0,0,0,0.25)]">
             {title}
           </h1>
-          {subtitle ? <p className="mt-4 max-w-[560px] text-lead leading-relaxed text-white/85">{subtitle}</p> : null}
-          {children ? <div className="mt-6 sm:mt-8">{children}</div> : null}
+          {subtitle ? <p className="mt-2 max-w-[560px] text-copy leading-relaxed text-white/85 sm:mt-4 sm:text-lead">{subtitle}</p> : null}
+          {children ? <div className="mt-5 sm:mt-8">{children}</div> : null}
         </div>
       </div>
     </section>
@@ -98,9 +98,9 @@ export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
   const flight = variant === "flight";
   const columns = flight ? COLLAGE : STAY_COLLAGE;
   return (
-    <section className="px-0 sm:px-4">
-      <div className="relative mx-auto max-w-[1600px] overflow-hidden bg-shell sm:rounded-[28px]">
-        <div className="relative z-10 px-4 pb-6 pt-6 sm:px-10 sm:pb-12 sm:pt-12 lg:w-[70%] lg:px-14 lg:pb-16 lg:pt-16 xl:w-[76%] 2xl:w-[72%]">
+    <section className="px-3 sm:px-4">
+      <div className="relative mx-auto max-w-[1600px] overflow-hidden rounded-[24px] bg-shell sm:rounded-[28px]">
+        <div className="relative z-10 px-3 pb-4 pt-5 sm:px-10 sm:pb-12 sm:pt-12 lg:w-[70%] lg:px-14 lg:pb-16 lg:pt-16 xl:w-[76%] 2xl:w-[72%]">
           <h1 className="hidden text-display font-bold tracking-tight text-ink sm:block">
             {flight ? "Your next trip starts here" : "Stays you\u2019ll love"}
             <span className="text-brand">.</span>

@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState, type ReactNode } from "react"
 
 /** Width of one rail item: most of a phone, two up on tablets, four on desktop. */
 export const RAIL_ITEM =
-  "w-[68%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]";
+  "w-[62%] shrink-0 snap-start sm:w-[calc((100%-1rem)/2)] lg:w-[calc((100%-3rem)/4)]";
 
 /**
  * Horizontal card rail driven by native scrolling with snap points, rather
@@ -57,7 +57,7 @@ export function Rail({
         ref={track}
         onScroll={measure}
         aria-label={label}
-        className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto scroll-smooth px-4 pb-1 sm:mx-0 sm:scroll-px-0 sm:gap-4 sm:px-0"
+        className="no-scrollbar -mx-5 flex snap-x snap-mandatory scroll-px-5 gap-3 overflow-x-auto scroll-smooth px-5 pb-1 sm:mx-0 sm:scroll-px-0 sm:gap-4 sm:px-0"
       >
         {children}
       </ul>

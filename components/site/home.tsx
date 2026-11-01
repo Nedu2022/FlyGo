@@ -100,9 +100,9 @@ const PARTNERS = [
 
 /** Three ticket-style reasons to book, a swipeable row on phones. */
 export function TrustCards() {
-  const card = "flex w-[82%] shrink-0 snap-start flex-col rounded-[28px] bg-shell sm:w-auto";
-  const top = "px-6 pb-4 pt-6 sm:px-7 sm:pt-7";
-  const stub = "px-6 pb-6 pt-3 sm:px-7 sm:pb-7";
+  const card = "flex w-[72%] shrink-0 snap-start flex-col rounded-[22px] bg-shell sm:w-auto sm:rounded-[28px]";
+  const top = "px-5 pb-3 pt-5 sm:px-7 sm:pb-4 sm:pt-7";
+  const stub = "px-5 pb-5 pt-2 sm:px-7 sm:pb-7 sm:pt-3";
   return (
     <section className={`${PAGE} pt-8 sm:pt-12`}>
       <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0">
@@ -110,8 +110,8 @@ export function TrustCards() {
           <div className={top}>
             <div className="flex -space-x-2">
               {PARTNERS.map((src) => (
-                <span key={src} className="flex h-14 w-14 items-center justify-center overflow-hidden rounded-full border-2 border-shell bg-white">
-                  <Image src={src} alt="" width={44} height={44} className="h-9 w-10 object-contain" />
+                <span key={src} className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border-2 border-shell bg-white sm:h-14 sm:w-14">
+                  <Image src={src} alt="" width={44} height={44} className="h-6 w-7 object-contain sm:h-9 sm:w-10" />
                 </span>
               ))}
             </div>
@@ -127,7 +127,7 @@ export function TrustCards() {
           <div className={top}>
             <div className="flex -space-x-2">
               {["Ada Okafor", "Tunde Bello", "Mina Sato"].map((name) => (
-                <Avatar key={name} name={name} size={56} className="ring-2 ring-shell" />
+                <Avatar key={name} name={name} size={44} className="ring-2 ring-shell" />
               ))}
             </div>
           </div>
@@ -140,9 +140,9 @@ export function TrustCards() {
 
         <div className={card}>
           <div className={top}>
-            <div className="flex h-14 items-center gap-1" role="img" aria-label="Rated 4.8 out of 5">
+            <div className="flex h-11 items-center gap-1 sm:h-14" role="img" aria-label="Rated 4.8 out of 5">
               {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} size={26} strokeWidth={0} fill="var(--color-star)" aria-hidden="true" />
+                <Star key={i} size={22} strokeWidth={0} fill="var(--color-star)" aria-hidden="true" />
               ))}
             </div>
           </div>
@@ -172,9 +172,9 @@ export function Services() {
       <ul className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4">
         {SERVICES.map(({ title, body, href, icon: Icon }) => (
           <li key={title}>
-            <Link href={href} className="flex items-stretch rounded-[24px] bg-shell">
-              <span className="flex min-w-0 flex-1 items-center gap-4 p-4 sm:p-5">
-                <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white text-brand shadow-[0_1px_2px_rgba(16,24,40,0.06)]">
+            <Link href={href} className="flex items-stretch rounded-[20px] bg-shell sm:rounded-[24px]">
+              <span className="flex min-w-0 flex-1 items-center gap-3 p-3 sm:gap-4 sm:p-5">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-brand shadow-[0_1px_2px_rgba(16,24,40,0.06)] sm:h-14 sm:w-14 sm:rounded-2xl">
                   <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
                 </span>
                 <span className="min-w-0">
@@ -187,8 +187,8 @@ export function Services() {
                 <span className="absolute -top-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-white" />
                 <span className="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-white" />
               </span>
-              <span className="flex w-16 shrink-0 items-center justify-center text-ink sm:w-20">
-                <ArrowRight size={22} strokeWidth={2} aria-hidden="true" />
+              <span className="flex w-12 shrink-0 items-center justify-center text-ink sm:w-20">
+                <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
               </span>
             </Link>
           </li>
