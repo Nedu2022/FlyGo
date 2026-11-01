@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { ArrowRight, ArrowUp, BedDouble, Plane, Sparkles, X } from "lucide-react";
+import { ArrowRight, ArrowUp, BedDouble, Plane, X } from "lucide-react";
+import { AiMark } from "@/components/site/ai-mark";
 
 /**
  * "Ask AI": a travel planner that reads a plain-English request and replies
@@ -187,7 +188,7 @@ export function AiAssistant() {
       >
         <header className="flex items-center justify-between px-5 py-4">
           <p className="flex items-center gap-2 text-h4 font-semibold text-ink">
-            <Sparkles size={20} strokeWidth={2} aria-hidden="true" className="text-brand" />
+            <AiMark size={22} />
             Ask FLYGO AI
           </p>
           <button
@@ -213,7 +214,7 @@ export function AiAssistant() {
                       onClick={() => ask(s)}
                       className="flex w-full items-center gap-3 rounded-2xl bg-shell px-4 py-3.5 text-left text-copy font-medium text-ink"
                     >
-                      <Sparkles size={16} strokeWidth={2} aria-hidden="true" className="shrink-0 text-brand" />
+                      <AiMark size={16} className="shrink-0" />
                       {s}
                     </button>
                   </li>
@@ -288,7 +289,7 @@ export function AskAiPill() {
       className="fixed bottom-[calc(72px+env(safe-area-inset-bottom))] left-5 right-5 z-30 rounded-full bg-[linear-gradient(90deg,#f58634,#f472b6,#56ace9)] p-[1.5px] shadow-[0_14px_34px_-14px_rgba(16,24,40,0.45)] sm:right-auto sm:w-[400px] lg:bottom-6 lg:left-6"
     >
       <span className="flex h-11 items-center gap-2.5 rounded-full bg-white px-4 text-left sm:h-14 sm:gap-3 sm:px-5">
-        <Sparkles size={18} strokeWidth={2} aria-hidden="true" className="shrink-0 text-ink" />
+        <AiMark size={20} className="shrink-0" />
         <span key={i} className="animate-fade truncate text-small font-medium text-body sm:text-copy">
           {SUGGESTIONS[i]}
         </span>

@@ -11,10 +11,10 @@ import {
   Mail,
   Menu,
   Plane,
-  Sparkles,
   X,
 } from "lucide-react";
 import { openAssistant } from "@/components/site/ai-assistant";
+import { AiMark } from "@/components/site/ai-mark";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -98,7 +98,7 @@ export function SiteHeader({
           onClick={() => openAssistant()}
           className="ml-2 hidden h-11 items-center gap-2 rounded-full px-3 text-copy font-medium text-ink md:flex"
         >
-          <Sparkles size={20} strokeWidth={2} aria-hidden="true" className="text-brand" />
+          <AiMark size={20} />
           Ask AI
         </button>
 
@@ -126,7 +126,7 @@ export function SiteHeader({
             aria-label="Ask AI"
             className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:h-12 sm:w-12 md:hidden"
           >
-            <Sparkles size={22} strokeWidth={2} aria-hidden="true" />
+            <AiMark size={22} />
           </button>
           <Link
             href="/signin"
