@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { AuthShell, SecuritySeal } from "@/components/auth/auth-shell";
+import { AuthShell } from "@/components/auth/auth-shell";
 import { PhoneOrEmailField } from "@/components/auth/fields";
 import { PrimaryButton } from "@/components/auth/buttons";
 
@@ -21,13 +21,12 @@ export default function ForgotPasswordPage() {
   return (
     <AuthShell
       backHref="/signin"
-      title="Forgot Your Password?"
-      subtitle="No worries! Enter your email or phone number, and we’ll send you a reset link."
-      seal={<SecuritySeal />}
+      title="Reset your password"
+      subtitle="Enter your email or phone and we’ll send you a reset link."
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-10 pt-6">
         <PhoneOrEmailField
-          label="Email / Phone Number"
+          label="Email or phone"
           name="identifier"
           autoComplete="username"
           placeholder="Enter email or phone number"
@@ -36,7 +35,7 @@ export default function ForgotPasswordPage() {
         />
 
         <PrimaryButton type="submit" pending={pending}>
-          Send Reset Link
+          Send reset link
         </PrimaryButton>
 
         <p className="text-center text-copy text-body">

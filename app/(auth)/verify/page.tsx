@@ -50,18 +50,18 @@ export default function VerifyPage() {
   return (
     <AuthShell
       backHref="/forgot-password"
-      topRight={<StepMarker step={3} label="House Info" />}
-      title="Verify Your Identity"
-      subtitle="We’ve sent a 6-digit code to your email/phone. Enter it below to proceed."
+      topRight={<StepMarker step={3} label="Verify" />}
+      title="Check your inbox"
+      subtitle="Enter the 6-digit code we sent you."
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-10 pt-6">
         <div className="animate-rise">
-          <p className="mb-5 text-center text-lead text-ink">Enter OTP</p>
+          <p className="mb-3 text-small font-medium text-ink">Verification code</p>
           <OtpInput value={code} onChange={setCode} onComplete={verify} invalid={invalid} />
         </div>
 
         <PrimaryButton type="submit" pending={pending}>
-          Verify &amp; Continue
+          Verify
         </PrimaryButton>
 
         <div className="flex items-center justify-between gap-4 text-copy">
@@ -71,13 +71,13 @@ export default function VerifyPage() {
             disabled={cooldown > 0}
             className="font-medium text-brand transition-colors duration-200 disabled:cursor-not-allowed disabled:text-muted"
           >
-            {cooldown > 0 ? `Resend Code in ${cooldown}s` : "Resend Code"}
+            {cooldown > 0 ? `Resend code in ${cooldown}s` : "Resend code"}
           </button>
           <Link
             href="/forgot-password"
             className="text-ink transition-colors duration-200"
           >
-            Change Email/Phone
+            Change email or phone
           </Link>
         </div>
       </form>

@@ -4,9 +4,9 @@ import { useId, useState, type InputHTMLAttributes, type ReactNode } from "react
 
 /** Tall, softly-bordered input; focus lifts a faint blue halo rather than a ring. */
 const inputBase =
-  "h-[56px] w-full rounded-[10px] border border-line bg-white px-5 text-copy text-ink outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-muted focus:border-sky focus:shadow-[0_0_0_4px_var(--color-sky-soft)]";
+  "h-12 w-full rounded-xl border border-line bg-white px-4 text-copy text-ink outline-none transition-[border-color,box-shadow] duration-200 placeholder:text-muted focus:border-sky focus:shadow-[0_0_0_4px_var(--color-sky-soft)]";
 
-export const fieldLabel = "mb-2 block text-copy text-label";
+export const fieldLabel = "mb-1.5 block text-small font-medium text-ink";
 
 type FieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
@@ -60,14 +60,14 @@ export function PasswordField({ label, starred, className = "", ...props }: Fiel
           {...props}
           id={id}
           type={visible ? "text" : "password"}
-          className={`${inputBase} pr-[86px]`}
+          className={`${inputBase} pr-[72px]`}
         />
         <button
           type="button"
           onClick={() => setVisible((v) => !v)}
           aria-pressed={visible}
           aria-controls={id}
-          className="absolute right-4 top-1/2 -translate-y-1/2 rounded px-1 text-copy font-semibold text-ink transition-colors duration-200"
+          className="absolute right-3 top-1/2 -translate-y-1/2 rounded px-1 text-small font-medium text-body transition-colors duration-200"
         >
           {visible ? "Hide" : "Show"}
         </button>
@@ -107,9 +107,9 @@ export function PhoneOrEmailField({
       <Label htmlFor={id} starred={starred}>
         {label}
       </Label>
-      <div className="flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
+      <div className="flex h-12 items-center rounded-xl border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
         {isPhone ? (
-          <div className="relative flex h-full shrink-0 items-center gap-2 pl-5 pr-3">
+          <div className="relative flex h-full shrink-0 items-center gap-2 pl-4 pr-3">
             <span aria-hidden="true" className="flex">
               {selected.flag}
             </span>
@@ -138,7 +138,7 @@ export function PhoneOrEmailField({
             setValue(event.target.value);
             props.onChange?.(event);
           }}
-          className={`h-full w-full bg-transparent text-copy text-ink outline-none placeholder:text-muted ${ isPhone ? "pr-5" : "px-5" }`}
+          className={`h-full w-full bg-transparent text-copy text-ink outline-none placeholder:text-muted ${ isPhone ? "pr-4" : "px-4" }`}
         />
         {/* Carries the dial code to the server when the value is a number. */}
         {isPhone && value ? <input type="hidden" name="dialCode" value={dial} /> : null}
@@ -160,15 +160,15 @@ export function Checkbox({
   return (
     <label
       htmlFor={id}
-      className="inline-flex cursor-pointer select-none items-center gap-3 text-copy text-body"
+      className="inline-flex cursor-pointer select-none items-center gap-2.5 text-small text-body"
     >
-      <span className="relative inline-flex h-[22px] w-[22px] items-center justify-center">
+      <span className="relative inline-flex h-[18px] w-[18px] items-center justify-center">
         <input
           id={id}
           type="checkbox"
           checked={checked}
           onChange={(event) => onChange(event.target.checked)}
-          className="peer h-[22px] w-[22px] cursor-pointer appearance-none rounded-[5px] border border-line transition-colors duration-200 checked:border-sky checked:bg-sky"
+          className="peer h-[18px] w-[18px] cursor-pointer appearance-none rounded-[5px] border border-line transition-colors duration-200 checked:border-sky checked:bg-sky"
         />
         <svg
           viewBox="0 0 24 24"
@@ -178,7 +178,7 @@ export function Checkbox({
           strokeLinecap="round"
           strokeLinejoin="round"
           aria-hidden="true"
-          className="pointer-events-none absolute h-3.5 w-3.5 scale-50 opacity-0 transition-all duration-200 peer-checked:scale-100 peer-checked:opacity-100"
+          className="pointer-events-none absolute h-3 w-3 scale-50 opacity-0 transition-all duration-200 peer-checked:scale-100 peer-checked:opacity-100"
         >
           <path d="M20 6 9 17l-5-5" />
         </svg>
@@ -248,8 +248,8 @@ export function PhoneField({ label, starred, className = "", ...props }: FieldPr
       <Label htmlFor={id} starred={starred}>
         {label}
       </Label>
-      <div className="flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
-        <div className="relative flex h-full shrink-0 items-center gap-2 pl-5 pr-3">
+      <div className="flex h-12 items-center rounded-xl border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
+        <div className="relative flex h-full shrink-0 items-center gap-2 pl-4 pr-3">
           <span aria-hidden="true" className="flex">
             {selected.flag}
           </span>
@@ -273,7 +273,7 @@ export function PhoneField({ label, starred, className = "", ...props }: FieldPr
           id={id}
           type="tel"
           inputMode="tel"
-          className="h-full w-full bg-transparent pr-5 text-copy text-ink outline-none placeholder:text-muted"
+          className="h-full w-full bg-transparent pr-4 text-copy text-ink outline-none placeholder:text-muted"
         />
         <input type="hidden" name="dialCode" value={dial} />
       </div>
@@ -306,8 +306,8 @@ export function CountrySelect({
       <label htmlFor={id} className={fieldLabel}>
         {label}
       </label>
-      <div className="relative flex h-[56px] items-center rounded-[10px] border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
-        <span className="pointer-events-none flex items-center gap-2.5 pl-5 text-copy text-ink">
+      <div className="relative flex h-12 items-center rounded-xl border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
+        <span className="pointer-events-none flex items-center gap-2.5 pl-4 text-copy text-ink">
           {selected.code}
           <span aria-hidden="true" className="flex">
             {selected.flag}
@@ -332,7 +332,7 @@ export function CountrySelect({
           viewBox="0 0 24 24"
           fill="currentColor"
           aria-hidden="true"
-          className="pointer-events-none absolute right-5 text-ink"
+          className="pointer-events-none absolute right-4 text-ink"
         >
           <path d="m6 9 6 7 6-7Z" />
         </svg>

@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { useState, type ButtonHTMLAttributes, type ReactNode } from "react";
 
 const primaryBase =
-  "relative flex h-[56px] w-full items-center justify-center rounded-[10px] bg-sky text-lead font-medium text-white transition-colors duration-200 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky disabled:cursor-not-allowed disabled:opacity-70";
+  "relative flex h-12 w-full items-center justify-center rounded-xl bg-brand text-copy font-semibold text-white transition-colors duration-200 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-70";
 
 type PrimaryButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   pending?: boolean;
@@ -65,23 +65,53 @@ export function Spinner() {
   );
 }
 
-export function GoogleButton({ label = "Register with Google" }: { label?: string }) {
+const socialBase =
+  "flex h-12 w-full items-center justify-center gap-3 rounded-xl text-copy font-medium active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand";
+
+/**
+ * "Continue with Apple" and "Continue with Google", Apple first in black as
+ * Apple's guidelines ask. The OAuth flows aren't wired yet, so tapping one
+ * shows a short notice instead of failing silently.
+ */
+export function SocialButtons({ verb = "Continue" }: { verb?: "Continue" | "Sign up" }) {
+  const [note, setNote] = useState("");
+  const start = (provider: string) => setNote(`${provider} sign-in is coming soon. Use your email for now.`);
   return (
-    <button
-      type="button"
-      className="group flex h-[60px] w-full items-center justify-center gap-4 rounded-[10px] border border-line bg-white text-lead font-semibold text-ink transition-colors duration-200 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky"
-    >
-      <GoogleMark />
-      {label}
-    </button>
+    <div className="flex flex-col gap-2.5">
+      <button type="button" onClick={() => start("Apple")} className={`${socialBase} bg-black text-white`}>
+        <AppleMark />
+        {verb} with Apple
+      </button>
+      <button
+        type="button"
+        onClick={() => start("Google")}
+        className={`${socialBase} border border-line bg-white text-ink`}
+      >
+        <GoogleMark />
+        {verb} with Google
+      </button>
+      {note ? (
+        <p role="status" className="animate-fade text-center text-small text-body">
+          {note}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+
+function AppleMark() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+      <path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.2-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .8 1.1 1.7 2.3 2.9 2.2 1.2 0 1.6-.7 3-.7s1.8.7 3 .7c1.3 0 2.1-1.1 2.8-2.2.9-1.2 1.3-2.5 1.3-2.5s-2.5-1-2.5-3.6ZM14.2 5.4c.6-.8 1.1-1.9 1-3-1 0-2.1.6-2.8 1.5-.6.7-1.2 1.9-1 3 1.1.1 2.2-.6 2.8-1.5Z" />
+    </svg>
   );
 }
 
 function GoogleMark() {
   return (
     <svg
-      width="26"
-      height="26"
+      width="18"
+      height="18"
       viewBox="0 0 48 48"
       aria-hidden="true"
       className="transition-colors duration-300"
@@ -103,11 +133,11 @@ function GoogleMark() {
   );
 }
 
-export function OrDivider() {
+export function OrDivider({ label = "or" }: { label?: string }) {
   return (
-    <div className="flex items-center gap-5" aria-hidden="true">
+    <div className="flex items-center gap-4" aria-hidden="true">
       <span className="h-px flex-1 bg-line" />
-      <span className="text-copy text-muted">Or</span>
+      <span className="text-small text-label">{label}</span>
       <span className="h-px flex-1 bg-line" />
     </div>
   );

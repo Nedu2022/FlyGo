@@ -3,9 +3,9 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { AuthShell, StepMarker } from "@/components/auth/auth-shell";
+import { AuthShell } from "@/components/auth/auth-shell";
 import { Checkbox, PasswordField, PhoneOrEmailField } from "@/components/auth/fields";
-import { GoogleButton, OrDivider, PrimaryButton } from "@/components/auth/buttons";
+import { OrDivider, PrimaryButton, SocialButtons } from "@/components/auth/buttons";
 import { getApiErrorMessage, useAuth } from "@/components/auth/auth-context";
 
 export default function SignInPage() {
@@ -31,17 +31,19 @@ export default function SignInPage() {
   }
 
   return (
-    <AuthShell
-      topRight={<StepMarker step={1} label="Personal Info." />}
-      title="Welcome Back!"
-      subtitle="Sign in to manage your bookings and explore new destinations."
-    >
-      <form onSubmit={handleSubmit} className="stagger flex flex-col gap-5">
+    <AuthShell title="Welcome back" subtitle="Sign in to see your trips and bookings.">
+      <SocialButtons />
+
+      <div className="my-6">
+        <OrDivider label="or sign in with email" />
+      </div>
+
+      <form onSubmit={handleSubmit} className="stagger flex flex-col gap-4">
         <PhoneOrEmailField
-          label="Email address / Phone Number"
+          label="Email or phone"
           name="identifier"
           autoComplete="username"
-          placeholder="Enter email address"
+          placeholder="you@example.com"
           required
         />
 
@@ -50,15 +52,12 @@ export default function SignInPage() {
             label="Password"
             name="password"
             autoComplete="current-password"
-            placeholder="Enter password"
+            placeholder="Your password"
             required
           />
-          <div className="mt-4 flex items-center justify-between gap-4">
+          <div className="mt-3 flex items-center justify-between gap-4">
             <Checkbox label="Remember me" checked={remember} onChange={setRemember} />
-            <Link
-              href="/forgot-password"
-              className="text-copy text-brand transition-colors duration-200"
-            >
+            <Link href="/forgot-password" className="text-small font-medium text-brand">
               Forgot password?
             </Link>
           </div>
@@ -68,21 +67,15 @@ export default function SignInPage() {
           Sign in
         </PrimaryButton>
 
-        {error ? <p role="alert" className="-mt-2 text-small text-red-600">{error}</p> : null}
-
-        <OrDivider />
-        <GoogleButton label="Sign in with Google" />
-
-        <p className="text-center text-copy text-body">
-          Don&apos;t have an account?{" "}
-          <Link
-            href="/signup"
-            className="font-semibold text-brand transition-colors duration-200"
-          >
-            Sign up
-          </Link>
-        </p>
+        {error ? <p role="alert" className="text-small text-red-600">{error}</p> : null}
       </form>
+
+      <p className="mt-6 text-center text-small text-body">
+        New to FLYGO?{" "}
+        <Link href="/signup" className="font-semibold text-brand">
+          Create an account
+        </Link>
+      </p>
     </AuthShell>
   );
 }

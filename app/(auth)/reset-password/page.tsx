@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { AuthShell, StepMarker } from "@/components/auth/auth-shell";
+import { AuthShell } from "@/components/auth/auth-shell";
 import { Checkbox, PasswordField } from "@/components/auth/fields";
 import { PrimaryButton } from "@/components/auth/buttons";
 
@@ -31,13 +31,12 @@ export default function ResetPasswordPage() {
   return (
     <AuthShell
       backHref="/verify"
-      topRight={<StepMarker step={1} label="Personal Info." />}
-      title="Set a New Password"
-      subtitle="Create a strong password to secure your account."
+      title="Choose a new password"
+      subtitle="Use at least 8 characters."
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-6 pt-6">
         <PasswordField
-          label="New Password"
+          label="New password"
           name="password"
           autoComplete="new-password"
           placeholder="Enter password"
@@ -46,7 +45,7 @@ export default function ResetPasswordPage() {
         />
         <div>
           <PasswordField
-            label="Confirm New Password"
+            label="Confirm password"
             name="confirmPassword"
             autoComplete="new-password"
             placeholder="Enter password"

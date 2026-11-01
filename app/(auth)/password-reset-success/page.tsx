@@ -15,11 +15,11 @@ export default function PasswordResetSuccessPage() {
           className="h-[170px] w-[170px] sm:h-[200px] sm:w-[200px]"
         />
       }
-      title="Password Reset Successful!"
-      subtitle="You can now log in with your new password."
+      title="Password updated"
+      subtitle="Sign in with your new password."
     >
       <div className="pt-10">
-        <PrimaryLink href="/signin">Go to Login</PrimaryLink>
+        <PrimaryLink href="/signin">Sign in</PrimaryLink>
       </div>
     </AuthShell>
   );

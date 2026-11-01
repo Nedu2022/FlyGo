@@ -3,6 +3,7 @@ import { ViewTransition } from "react";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { ScrollToTop } from "@/components/site/scroll-to-top";
 
 /**
  * Kayak sets its UI in TT Hoves, a commercial font. Plus Jakarta Sans is the
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col">
         <Providers>
+          <ScrollToTop />
           {/* The layout persists, so a route change is an update: crossfade it. The header is held still by name. */}
           <ViewTransition default="page">
             <div className="flex min-h-full flex-1 flex-col">{children}</div>

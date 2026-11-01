@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import { ChevronLeft } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 
 type AuthShellProps = {
@@ -18,10 +20,35 @@ type AuthShellProps = {
   width?: "form" | "wide";
 };
 
+/** The photo panel beside every auth form on desktop. */
+function PhotoPanel() {
+  return (
+    <aside className="relative hidden overflow-hidden rounded-[28px] bg-steel lg:block">
+      <Image
+        src="/images/photos/hero-sky.webp"
+        alt=""
+        fill
+        priority
+        sizes="45vw"
+        className="object-cover object-[70%_center]"
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,22,36,0)_45%,rgba(6,22,36,0.7)_100%)]"
+      />
+      <div className="absolute inset-x-0 bottom-0 p-10">
+        <p className="max-w-[420px] text-h2 font-bold leading-tight tracking-tight text-white">
+          Flights, stays and private jets, all in one place.
+        </p>
+        <p className="mt-3 text-copy text-white/80">Trusted by travellers across Africa and beyond.</p>
+      </div>
+    </aside>
+  );
+}
+
 /**
- * Single-column auth page. The body is a centred flex column rather than a
- * top-padded block, so short screens sit on the optical centre and long ones
- * grow downward without the page scrolling at common laptop heights.
+ * Auth layout: a compact form column beside a photo panel on desktop, the
+ * form alone on phones. Header holds the logo and an optional corner prompt.
  */
 export function AuthShell({
   topRight,
@@ -33,125 +60,44 @@ export function AuthShell({
   seal,
   width = "form",
 }: AuthShellProps) {
+  const wide = width === "wide";
   return (
-    <div className="flex min-h-dvh flex-col bg-white">
-      <header className="flex shrink-0 items-start justify-between gap-4 px-5 pt-6 sm:px-10 lg:px-14">
-        <Logo imgClass="h-[40px] sm:h-[48px]" />
-        {topRight ? <div className="pt-1 text-right">{topRight}</div> : null}
-      </header>
+    <div className={`grid min-h-dvh bg-white p-3 ${wide ? "" : "lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"}`}>
+      <div className="flex min-h-full flex-col px-2 sm:px-8 lg:px-12">
+        <header className="flex shrink-0 items-center justify-between gap-4 pt-3">
+          <Logo imgClass="h-[30px] sm:h-[36px]" />
+          {topRight ? <div className="text-right">{topRight}</div> : null}
+        </header>
 
-      <main className="relative flex flex-1 flex-col justify-center px-5 py-6 sm:px-10 lg:px-14">
-        {backHref ? (
-          <Link
-            href={backHref}
-            className="group absolute left-5 top-0 inline-flex items-center gap-2 text-copy text-body transition-colors duration-200 sm:left-10 lg:left-14"
-          >
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              aria-hidden="true"
-            >
-              <path d="m15 18-6-6 6-6" />
-            </svg>
-            Back
-          </Link>
-        ) : null}
+        <main className="flex flex-1 flex-col justify-center py-10">
+          <div className={`mx-auto w-full ${wide ? "max-w-[1280px]" : "max-w-[400px]"}`}>
+            {backHref ? (
+              <Link href={backHref} className="mb-6 inline-flex items-center gap-1.5 text-small font-medium text-body">
+                <ChevronLeft size={18} strokeWidth={2} aria-hidden="true" />
+                Back
+              </Link>
+            ) : null}
 
-        <div
-          className={`mx-auto w-full ${width === "wide" ? "max-w-[1280px]" : "max-w-[620px]"}`}
-        >
-          <div className="animate-rise flex flex-col items-center text-center">
-            {icon ? <div className="animate-badge-in mb-6">{icon}</div> : null}
-            <h1 className="text-h1 font-bold tracking-tight text-ink">
-              {title}
-            </h1>
-            {subtitle ? (
-              <p className="mt-3 max-w-[500px] text-lead leading-relaxed text-label">
-                {subtitle}
+            <div className={`animate-rise flex flex-col ${icon ? "items-center text-center" : ""}`}>
+              {icon ? <div className="animate-badge-in mb-6">{icon}</div> : null}
+              <h1 className="text-h1 font-bold tracking-tight text-ink">{title}</h1>
+              {subtitle ? <p className="mt-2 text-copy leading-relaxed text-body">{subtitle}</p> : null}
+            </div>
+
+            <div className="mt-7">{children}</div>
+
+            {seal ? (
+              <p className="mt-6 flex items-center justify-center gap-2 text-small text-label">
+                <Padlock />
+                {seal}
               </p>
             ) : null}
           </div>
+        </main>
+      </div>
 
-          <div className="mt-8">{children}</div>
-
-          {seal ? (
-            <p className="mt-7 flex items-center justify-center gap-2 text-small text-muted">
-              <Padlock />
-              {seal}
-            </p>
-          ) : null}
-        </div>
-      </main>
+      {wide ? null : <PhotoPanel />}
     </div>
-  );
-}
-
-/** Two-up variant: artwork on the left, content on the right. */
-export function AuthSplit({
-  topRight,
-  art,
-  title,
-  subtitle,
-  children,
-}: {
-  topRight?: ReactNode;
-  art: ReactNode;
-  title: string;
-  subtitle?: ReactNode;
-  children: ReactNode;
-}) {
-  return (
-    <div className="flex min-h-dvh flex-col bg-white">
-      <header className="flex shrink-0 items-start justify-between gap-4 px-5 pt-6 sm:px-10 lg:px-14">
-        <Logo imgClass="h-[40px] sm:h-[48px]" />
-        {topRight ? <div className="pt-1 text-right">{topRight}</div> : null}
-      </header>
-
-      <main className="mx-auto flex w-full max-w-[1500px] flex-1 items-center gap-10 px-5 py-8 sm:px-10 lg:gap-16 lg:px-14">
-        <div className="hidden flex-1 lg:block">{art}</div>
-
-        <div className="mx-auto w-full max-w-[620px] lg:mx-0 lg:flex-1">
-          <h1 className="animate-rise text-h1 font-bold tracking-tight text-ink">
-            {title}
-          </h1>
-          {subtitle ? (
-            <p className="animate-rise mt-4 max-w-[520px] text-lead leading-relaxed text-label">
-              {subtitle}
-            </p>
-          ) : null}
-          <div className="mt-9">{children}</div>
-        </div>
-      </main>
-    </div>
-  );
-}
-
-/** "Already have an account? Sign In" — one line in the new signup flow. */
-export function AccountPrompt({
-  text,
-  linkLabel,
-  href,
-}: {
-  text: string;
-  linkLabel: string;
-  href: string;
-}) {
-  return (
-    <p className="text-small leading-tight text-label sm:text-lead">
-      {text}{" "}
-      <Link
-        href={href}
-        className="font-medium text-sky transition-colors duration-200"
-      >
-        {linkLabel}
-      </Link>
-    </p>
   );
 }
 
@@ -168,12 +114,12 @@ export function StepMarker({
   const pad = (n: number) => String(n).padStart(2, "0");
   return (
     <p
-      className="text-small leading-tight text-muted"
+      className="text-tiny leading-tight text-label"
       aria-label={`Step ${step} of ${total}: ${label}`}
     >
       STEP {pad(step)}/{pad(total)}
       <br />
-      <span className="text-copy text-sky">{label}</span>
+      <span className="text-small font-medium text-ink">{label}</span>
     </p>
   );
 }
@@ -197,11 +143,3 @@ function Padlock() {
   );
 }
 
-/** Kept for the standalone password screens that still show a bare padlock. */
-export function SecuritySeal() {
-  return (
-    <span className="text-muted">
-      <Padlock />
-    </span>
-  );
-}

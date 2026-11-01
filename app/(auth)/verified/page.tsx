@@ -15,11 +15,11 @@ export default function VerifiedPage() {
           className="h-[170px] w-[170px] sm:h-[200px] sm:w-[200px]"
         />
       }
-      title="Congratulations!"
-      subtitle="Your account is verified. Your next trip is a few clicks away."
+      title="You’re verified"
+      subtitle="Your next trip is a few clicks away."
     >
       <div className="pt-10">
-        <PrimaryLink href="/dashboard">Go to Dashboard</PrimaryLink>
+        <PrimaryLink href="/dashboard">Go to dashboard</PrimaryLink>
       </div>
     </AuthShell>
   );
