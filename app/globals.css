@@ -48,19 +48,19 @@
      Body steps are fixed rather than fluid: 16px copy, 14px small and 13px
      tiny are the floors for comfortable reading on a phone.
      -------------------------------------------------------------------- */
-  --text-display: clamp(1.5rem, 1.07rem + 1.75vw, 3.125rem);
+  --text-display: clamp(1.75rem, 1.36rem + 1.6vw, 3.125rem);
   --text-display--line-height: 1.08;
-  --text-h1: clamp(1.25rem, 1.03rem + 0.9vw, 2rem);
+  --text-h1: clamp(1.375rem, 1.18rem + 0.85vw, 2rem);
   --text-h1--line-height: 1.2;
-  --text-h2: clamp(1.125rem, 0.96rem + 0.7vw, 1.6875rem);
+  --text-h2: clamp(1.25rem, 1.11rem + 0.55vw, 1.6875rem);
   --text-h2--line-height: 1.25;
-  --text-h3: clamp(1.0625rem, 0.97rem + 0.4vw, 1.375rem);
+  --text-h3: clamp(1.125rem, 1.05rem + 0.3vw, 1.375rem);
   --text-h3--line-height: 1.3;
-  --text-h4: clamp(0.9375rem, 0.88rem + 0.24vw, 1.125rem);
+  --text-h4: clamp(1rem, 0.96rem + 0.16vw, 1.125rem);
   --text-h4--line-height: 1.35;
-  --text-lead: clamp(0.875rem, 0.82rem + 0.24vw, 1.0625rem);
-  --text-copy: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
-  --text-small: clamp(0.78125rem, 0.765rem + 0.06vw, 0.8125rem);
+  --text-lead: clamp(0.9375rem, 0.91rem + 0.12vw, 1.0625rem);
+  --text-copy: 0.9375rem;
+  --text-small: 0.8125rem;
   --text-tiny: 0.75rem;
   --text-micro: 0.65625rem;
 
