@@ -33,7 +33,7 @@ export function SearchSummaryBar({ embedded = false }: { embedded?: boolean }) {
           type="button"
           onClick={() => setEditing((v) => !v)}
           aria-expanded={editing}
-          className="flex w-full items-center gap-3 rounded-xl bg-shell px-4 py-3 text-left ring-1 ring-line lg:hidden"
+          className="flex w-full items-center gap-3 rounded-xl bg-shell px-4 py-3 text-left lg:hidden"
         >
           <Search size={18} strokeWidth={2} aria-hidden="true" className="shrink-0 text-ink" />
           <span className="min-w-0 flex-1">

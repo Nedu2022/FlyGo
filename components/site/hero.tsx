@@ -41,7 +41,6 @@ export function CinematicHero({
             fill
             priority
             sizes="100vw"
-            quality={70}
             className="animate-settle -z-20 object-cover"
             style={{ objectPosition: imagePosition }}
           />
@@ -120,7 +119,6 @@ export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
                     alt=""
                     fill
                     sizes="(max-width: 1280px) 15vw, 220px"
-                    quality={70}
                     priority={c === 0}
                     className="object-cover"
                     style={{ objectPosition: position }}

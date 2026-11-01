@@ -34,7 +34,7 @@ export default function SignUpPage() {
           <li key={title}>
             <Link
               href={href}
-              className="flex items-center gap-4 rounded-xl border border-line bg-white px-4 py-3.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
+              className="flex items-center gap-4 rounded-xl bg-shell px-4 py-3.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand"
             >
               <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-soft text-brand">
                 <Icon size={20} strokeWidth={1.9} aria-hidden="true" />

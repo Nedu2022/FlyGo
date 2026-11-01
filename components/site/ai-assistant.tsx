@@ -250,7 +250,7 @@ export function AiAssistant() {
         </div>
 
         <form onSubmit={submit} className="px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-2">
-          <div className="flex items-center gap-2 rounded-full bg-shell p-1.5 pl-5 ring-1 ring-line focus-within:ring-2 focus-within:ring-brand">
+          <div className="flex items-center gap-2 rounded-full bg-shell p-1.5 pl-5 focus-within:ring-2 focus-within:ring-brand">
             <input
               ref={input}
               value={draft}

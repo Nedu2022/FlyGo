@@ -66,7 +66,7 @@ export function FiltersSidebar(props: FiltersProps) {
                 className="animate-fade absolute inset-0 bg-ink/40"
               />
               <div className="animate-rise absolute inset-x-0 bottom-0 flex max-h-[calc(100%-4rem)] flex-col rounded-t-3xl bg-white shadow-[0_-12px_32px_-16px_rgba(16,24,40,0.35)]">
-                <div className="flex items-center justify-between border-b border-line px-5 py-4">
+                <div className="flex items-center justify-between px-5 pb-2 pt-5">
                   <h2 className="text-h4 font-semibold text-ink">Filters</h2>
                   <button
                     type="button"
@@ -80,7 +80,7 @@ export function FiltersSidebar(props: FiltersProps) {
                 <div className="overflow-y-auto px-5">
                   <FilterGroups {...props} />
                 </div>
-                <div className="border-t border-line p-4">
+                <div className="p-4 shadow-[0_-8px_20px_-14px_rgba(16,24,40,0.25)]">
                   <button
                     type="button"
                     onClick={() => setOpen(false)}

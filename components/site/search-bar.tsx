@@ -184,7 +184,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
                 type="button"
                 aria-label="Swap origin and destination"
                 onClick={swap}
-                className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg bg-white text-ink ring-1 ring-line"
+                className="absolute right-3 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-lg bg-white text-ink shadow-[0_1px_4px_rgba(16,24,40,0.16)]"
               >
                 <ArrowUpDown size={18} strokeWidth={2} aria-hidden="true" />
               </button>
@@ -259,7 +259,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               />
             </div>
           )}
-          <div className="flex h-12 shrink-0 items-stretch rounded-xl ring-1 ring-line">
+          <div className="flex h-12 shrink-0 items-stretch rounded-xl bg-shell">
             <div className="flex items-center px-1 [&_button]:text-copy">
               {departField}
               <span aria-hidden="true" className="text-label">

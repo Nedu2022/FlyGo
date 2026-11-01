@@ -27,7 +27,7 @@ export function ContactForm({ topic }: { topic?: string }) {
   }
 
   return (
-    <div className="rounded-[28px] bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.05),0_18px_40px_-24px_rgba(16,24,40,0.35)] ring-1 ring-line sm:p-8">
+    <div className="rounded-[28px] bg-white p-5 shadow-[0_1px_2px_rgba(16,24,40,0.05),0_18px_40px_-24px_rgba(16,24,40,0.35)] sm:p-8">
       {sent ? (
         <div role="status" className="animate-rise py-10 text-center">
           <span className="animate-badge-in mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-brand-soft text-brand">
