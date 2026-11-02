@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { ReactNode } from "react";
 import { SearchBar } from "@/components/site/search-bar";
+import { RecentSearches } from "@/components/site/recent-searches";
 import { HeroSlides, type Slide } from "@/components/site/hero-slides";
 
 /**
@@ -106,6 +107,7 @@ export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
           </h1>
           <div className="sm:mt-8">
             <SearchBar defaultTab={flight ? "Flight" : "Hotel"} />
+            <RecentSearches />
           </div>
         </div>
 

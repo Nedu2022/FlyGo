@@ -65,7 +65,7 @@ export function JetOfferCard({ offer, from, to }: { offer: JetOffer; from: strin
                 view === "share" ? "bg-ink text-white" : "bg-shell text-ink"
               }`}
             >
-              Share with others
+              Book by seat
             </button>
           </div>
         </div>

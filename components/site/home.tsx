@@ -93,12 +93,6 @@ export function DealCard({ deal }: { deal: Deal }) {
   );
 }
 
-const TRUST = [
-  { label: "Full price up front", icon: BadgeCheck },
-  { label: "Secure card payment", icon: Lock },
-  { label: "Verified hosts", icon: ShieldCheck },
-];
-
 /** The search card, under the hero; the services grid scrolls here. */
 export function SearchSection() {
   return (
@@ -108,14 +102,6 @@ export function SearchSection() {
         <SearchBar />
         <RecentSearches />
       </div>
-      <ul className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-small text-body">
-        {TRUST.map(({ label, icon: Icon }) => (
-          <li key={label} className="flex items-center gap-1.5">
-            <Icon size={16} strokeWidth={2} aria-hidden="true" className="text-sky" />
-            {label}
-          </li>
-        ))}
-      </ul>
     </section>
   );
 }
@@ -141,9 +127,9 @@ export function StaysRail() {
 
 const FEATURES = [
   {
-    title: "Share a private jet",
-    body: "Join others on the same route and split the cost.",
-    cta: "See shared flights",
+    title: "Fly private by the seat",
+    body: "Access executive private jet routes at commercial business-class fares.",
+    cta: "Explore flights",
     href: "/private-jets#share",
     art: <ShareIllustration className="h-28 w-auto sm:h-36" />,
     tone: "bg-brand-soft",
