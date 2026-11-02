@@ -142,7 +142,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
               <span
                 className={`flex h-12 w-12 items-center justify-center rounded-xl transition-colors duration-200 sm:h-[60px] sm:w-[60px] sm:rounded-2xl ${
                   on
-                    ? "bg-linear-to-br from-brand to-brand-hover text-white shadow-[0_8px_18px_-8px_rgba(224,117,42,0.75)]"
+                    ? "bg-ink text-white shadow-[0_8px_18px_-8px_rgba(16,24,40,0.55)]"
                     : "bg-white text-ink shadow-[0_1px_2px_rgba(16,24,40,0.06),0_4px_12px_-6px_rgba(16,24,40,0.2)]"
                 }`}
               >

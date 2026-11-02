@@ -51,7 +51,7 @@ export function BottomNav() {
                 >
                   <span
                     className={`flex h-7 w-12 items-center justify-center rounded-full transition-colors duration-200 ${
-                      active ? "bg-brand-soft text-brand" : ""
+                      active ? "bg-sky-soft text-blue" : ""
                     }`}
                   >
                     {tab.icon}

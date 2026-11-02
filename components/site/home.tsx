@@ -25,7 +25,7 @@ const FEATURES = [
     cta: "Explore flights",
     href: "/private-jets#share",
     art: <ShareIllustration className="h-28 w-auto sm:h-36" />,
-    tone: "bg-brand-soft",
+    tone: "bg-shell",
   },
   {
     title: "Earn from your place",

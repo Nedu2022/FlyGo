@@ -91,7 +91,7 @@ function OfferCard({ offer }: { offer: HomeOffer }) {
     <Link href={offer.href} className="block h-full rounded-[24px] bg-shell p-2">
       <div className="relative aspect-[4/3] overflow-hidden rounded-[18px] bg-steel">
         <Image src={offer.image} alt="" fill sizes="(max-width: 640px) 70vw, (max-width: 1024px) 40vw, 300px" className="object-cover" />
-        <span className="absolute left-3 top-3 rounded-full bg-brand px-2.5 py-1 text-tiny font-bold text-white">
+        <span className="absolute left-3 top-3 rounded-full bg-white px-2.5 py-1 text-tiny font-bold text-ink">
           {offer.tag ?? `-${discount(offer)}%`}
         </span>
         {offer.logo ? (

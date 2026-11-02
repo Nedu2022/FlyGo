@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
-export const alt = "FLYGO Bookings: flights, hotels, apartments and private jets";
+export const alt = "FLYGO Bookings: go anywhere, in style";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -26,15 +26,15 @@ export default async function OpengraphImage() {
         <img src={logo} alt="" width={189} height={84} />
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 84, fontWeight: 800, color: "#1e293b", letterSpacing: -3, lineHeight: 1.02 }}>
-            Fly, stay and go,
+            Go anywhere,
           </div>
-          <div style={{ fontSize: 84, fontWeight: 800, color: "#f58634", letterSpacing: -3, lineHeight: 1.02 }}>your way.</div>
+          <div style={{ fontSize: 84, fontWeight: 800, color: "#167ee6", letterSpacing: -3, lineHeight: 1.02, fontStyle: "italic" }}>in style.</div>
         </div>
         <div style={{ display: "flex", gap: 16 }}>
           {["Flights", "Hotels", "Apartments", "Private jets"].map((label) => (
             <div
               key={label}
-              style={{ display: "flex", padding: "14px 26px", borderRadius: 999, background: "#fff3e6", color: "#c25e16", fontSize: 30, fontWeight: 600 }}
+              style={{ display: "flex", padding: "14px 26px", borderRadius: 999, background: "#eaf5fd", color: "#09688c", fontSize: 30, fontWeight: 600 }}
             >
               {label}
             </div>

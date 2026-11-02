@@ -36,7 +36,7 @@ const tileClass =
 function TileBody({ tile }: { tile: Tile }) {
   return (
     <>
-      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-soft text-brand sm:h-12 sm:w-12">
+      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-sky-soft text-blue sm:h-12 sm:w-12">
         {tile.icon}
       </span>
       <span className="text-tiny font-medium leading-tight text-ink sm:text-small">{tile.label}</span>
@@ -59,15 +59,12 @@ export function HomeHero() {
 
       <div className={`${PAGE} grid items-center gap-10 pb-12 pt-8 sm:pb-16 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14 lg:pb-24 lg:pt-20`}>
         <div className="animate-rise">
-          <p className="inline-flex rounded-full bg-brand-soft px-3 py-1 text-tiny font-semibold text-brand-hover">
-            Flights · Stays · Private jets
-          </p>
-          <h1 className="mt-4 text-display font-bold leading-[1.05] tracking-tight text-ink">
-            Fly, stay and go,
+          <h1 className="text-display font-bold leading-[1.05] tracking-tight text-ink">
+            Go anywhere,
             <br />
-            <span className="bg-linear-to-r from-brand to-[#f2a24f] bg-clip-text text-transparent">your way.</span>
+            <span className="font-script text-[1.25em] font-bold leading-none tracking-normal text-blue">in style.</span>
           </h1>
-          <p className="mt-4 max-w-[440px] text-lead text-body">Book it all in one place, with the full price up front.</p>
+          <p className="mt-4 max-w-[440px] text-lead text-body">Flights, stays and private jets. No hidden fees.</p>
           <div className="mt-7 flex flex-wrap gap-3">
             <button
               type="button"

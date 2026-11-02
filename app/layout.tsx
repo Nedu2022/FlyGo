@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { ViewTransition } from "react";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Dancing_Script, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { ScrollToTop } from "@/components/site/scroll-to-top";
@@ -16,6 +16,14 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from "@/lib/seo";
 const sans = Plus_Jakarta_Sans({
   variable: "--font-jakarta",
   subsets: ["latin"],
+  display: "swap",
+});
+
+/** Handwritten accent for a word or two in display headlines. */
+const script = Dancing_Script({
+  variable: "--font-dancing",
+  subsets: ["latin"],
+  weight: ["600", "700"],
   display: "swap",
 });
 
@@ -70,7 +78,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${sans.variable} h-full antialiased`}
+      className={`${sans.variable} ${script.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
         <JsonLd data={ORGANIZATION} />

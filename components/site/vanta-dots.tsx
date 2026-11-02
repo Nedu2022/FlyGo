@@ -32,8 +32,8 @@ export function VantaDots({ className = "" }: { className?: string }) {
           gyroControls: false,
           scale: 1,
           scaleMobile: 1,
-          color: 0xf58634,
-          color2: 0xf58634,
+          color: 0x56ace9,
+          color2: 0x56ace9,
           backgroundColor: 0xffffff,
           size: 2.6,
           spacing: 26,
@@ -54,7 +54,7 @@ export function VantaDots({ className = "" }: { className?: string }) {
     <div
       ref={el}
       aria-hidden="true"
-      className={`bg-white bg-[radial-gradient(color-mix(in_srgb,var(--color-brand)_40%,transparent)_1.2px,transparent_1.6px)] bg-size-[26px_26px] ${className}`}
+      className={`bg-white bg-[radial-gradient(color-mix(in_srgb,var(--color-sky)_45%,transparent)_1.2px,transparent_1.6px)] bg-size-[26px_26px] ${className}`}
     />
   );
 }
