@@ -1,6 +1,7 @@
 "use client";
 
-import { useId, type InputHTMLAttributes } from "react";
+import { ChevronDown } from "lucide-react";
+import { useId, type InputHTMLAttributes, type SelectHTMLAttributes } from "react";
 
 /** Tall, softly-bordered input; focus lifts a faint blue halo rather than a ring. */
 const inputBase =
@@ -96,5 +97,36 @@ export function Checkbox({
       </span>
       {label}
     </label>
+  );
+}
+
+type SelectProps = SelectHTMLAttributes<HTMLSelectElement> & {
+  label: string;
+  options: { value: string; label: string }[];
+};
+
+export function SelectField({ label, options, className = "", ...props }: SelectProps) {
+  const id = useId();
+  return (
+    <div className={className}>
+      <label htmlFor={id} className={fieldLabel}>
+        {label}
+      </label>
+      <div className="relative">
+        <select id={id} {...props} className={`${inputBase} cursor-pointer appearance-none pr-10`}>
+          {options.map((o) => (
+            <option key={o.value} value={o.value}>
+              {o.label}
+            </option>
+          ))}
+        </select>
+        <ChevronDown
+          size={16}
+          strokeWidth={2}
+          aria-hidden="true"
+          className="pointer-events-none absolute right-3.5 top-1/2 -translate-y-1/2 text-label"
+        />
+      </div>
+    </div>
   );
 }

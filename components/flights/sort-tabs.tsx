@@ -1,6 +1,6 @@
 "use client";
 
-import type { SortMode } from "@/lib/flight-data";
+export type SortMode = "best" | "cheapest" | "quickest";
 
 export type SortSummary = { mode: SortMode; label: string; price: string; duration: string };
 

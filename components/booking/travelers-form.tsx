@@ -1,192 +1,109 @@
 "use client";
 
-import { useId, useState, type FormEvent, type ReactNode } from "react";
+import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
-import { TRAVELER_NOTICE } from "@/lib/flight-data";
+import { Panel } from "@/components/booking/booking-shell";
+import { useBooking, type Passenger } from "@/components/booking/booking-context";
+import { useAuth } from "@/components/auth/auth-context";
+import { SelectField, TextField } from "@/components/auth/fields";
+import { PrimaryButton } from "@/components/auth/buttons";
 
-const MONTHS = [
-  "Month", "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December",
+const TITLES = ["mr", "ms", "mrs", "miss", "dr"].map((t) => ({ value: t, label: t[0].toUpperCase() + t.slice(1) }));
+const GENDERS = [
+  { value: "m", label: "Male" },
+  { value: "f", label: "Female" },
+];
+const COUNTRIES = [
+  { value: "NG", label: "Nigeria" },
+  { value: "GH", label: "Ghana" },
+  { value: "KE", label: "Kenya" },
+  { value: "ZA", label: "South Africa" },
+  { value: "GB", label: "United Kingdom" },
+  { value: "US", label: "United States" },
 ];
 
+/** The passenger fields Duffel needs to create an order. */
 export function TravelersForm() {
   const router = useRouter();
+  const { user } = useAuth();
+  const { offer, passenger, setPassenger } = useBooking();
   const [pending, setPending] = useState(false);
+  const needsPassport = offer.passenger_identity_documents_required;
 
-  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+    const f = new FormData(event.currentTarget);
+    const get = (key: string) => String(f.get(key) ?? "").trim();
     setPending(true);
-    await new Promise((resolve) => setTimeout(resolve, 700));
+    setPassenger({
+      title: get("title") as Passenger["title"],
+      given_name: get("given_name"),
+      family_name: get("family_name"),
+      gender: get("gender") as Passenger["gender"],
+      born_on: get("born_on"),
+      email: get("email"),
+      phone_number: get("phone_number"),
+      passport: needsPassport
+        ? {
+            unique_identifier: get("passport"),
+            issuing_country_code: get("country"),
+            expires_on: get("expires_on"),
+          }
+        : undefined,
+    });
     router.push("/booking/services");
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <p className="rounded-md bg-sky-tint px-5 py-4 text-small leading-relaxed text-ink">
-        {TRAVELER_NOTICE}
-      </p>
-
-      <div className="mt-7 grid gap-6 sm:grid-cols-2">
-        <Field label="Email address">
-          <input
-            type="email"
-            name="email"
-            autoComplete="email"
-            required
-            placeholder="Enter your email"
-            className={inputClass}
-          />
-        </Field>
-
-        <Field label="Phone number">
-          <div className="flex h-[52px] items-center rounded-lg border border-line bg-white transition-colors duration-200 focus-within:border-sky">
-            <span className="flex shrink-0 items-center gap-2 border-r border-line px-4">
-              <svg width="18" height="13" viewBox="0 0 22 15" aria-hidden="true">
-                <rect width="22" height="15" rx="2" fill="#008751" />
-                <rect x="7.3" width="7.4" height="15" fill="#ffffff" />
-              </svg>
-              <span className="text-copy text-label">234</span>
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="text-label">
-                <path d="m6 9 6 7 6-7Z" />
-              </svg>
-            </span>
-            <input
-              type="tel"
-              name="phone"
-              autoComplete="tel"
-              placeholder="234"
-              className="h-full w-full bg-transparent px-4 text-copy text-ink outline-none placeholder:text-muted"
-            />
-          </div>
-        </Field>
-
-        <Field label="Given names">
-          <input name="givenNames" required placeholder="Enter your name" className={inputClass} />
-        </Field>
-
-        <Field label="Surname">
-          <input name="surname" required placeholder="Enter your syrname" className={inputClass} />
-        </Field>
-
-        {/* Nationality and gender share the left column, as in the design. */}
-        <div className="grid grid-cols-[1.4fr_1fr] gap-4">
-          <Field label="Nationality">
-            <SelectBox name="nationality" options={["Nigeria", "Ghana", "Kenya", "India", "United Kingdom"]} flag />
-          </Field>
-          <Field label="Gender">
-            <SelectBox name="gender" options={["Male", "Female", "Prefer not to say"]} />
-          </Field>
+    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <Panel title="Passenger 1 · Adult">
+        <p className="-mt-3 mb-5 text-small text-label">Names must match the passport.</p>
+        <div className="grid gap-4 sm:grid-cols-[120px_1fr_1fr]">
+          <SelectField label="Title" name="title" options={TITLES} defaultValue={passenger?.title} />
+          <TextField label="First name" name="given_name" required autoComplete="given-name" defaultValue={passenger?.given_name} />
+          <TextField label="Last name" name="family_name" required autoComplete="family-name" defaultValue={passenger?.family_name} />
         </div>
+        <div className="mt-4 grid gap-4 sm:grid-cols-2">
+          <TextField label="Date of birth" name="born_on" type="date" required defaultValue={passenger?.born_on} />
+          <SelectField label="Gender" name="gender" options={GENDERS} defaultValue={passenger?.gender} />
+        </div>
+      </Panel>
 
-        <Field label="Date of birth">
-          <DateTriplet name="dob" />
-        </Field>
-
-        <Field label="Passport number">
-          <input name="passport" placeholder="Enter your ps no" className={inputClass} />
-        </Field>
-
-        <Field label="Passport expiration date">
-          <DateTriplet name="passportExpiry" />
-        </Field>
-      </div>
-
-      <button
-        type="submit"
-        disabled={pending}
-        className="mt-9 h-[52px] w-full max-w-[680px] rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 active:translate-y-px disabled:opacity-70"
-      >
-        {pending ? "Saving…" : "Continue"}
-      </button>
-    </form>
-  );
-}
-
-const inputClass =
-  "h-[52px] w-full rounded-lg border border-line bg-white px-4 text-copy text-ink outline-none transition-colors duration-200 placeholder:text-muted focus:border-sky";
-
-function Field({ label, children }: { label: string; children: ReactNode }) {
-  return (
-    <div>
-      <p className="mb-2 text-copy text-ink">{label}</p>
-      {children}
-    </div>
-  );
-}
-
-function SelectBox({
-  name,
-  options,
-  flag = false,
-}: {
-  name: string;
-  options: string[];
-  flag?: boolean;
-}) {
-  const id = useId();
-  return (
-    <div className="relative flex h-[52px] items-center rounded-lg border border-line bg-white transition-colors duration-200 focus-within:border-sky">
-      {flag ? (
-        <svg width="18" height="13" viewBox="0 0 22 15" aria-hidden="true" className="ml-4 shrink-0">
-          <rect width="22" height="15" rx="2" fill="#008751" />
-          <rect x="7.3" width="7.4" height="15" fill="#ffffff" />
-        </svg>
+      {needsPassport ? (
+        <Panel title="Passport">
+          <div className="grid gap-4 sm:grid-cols-2">
+            <TextField label="Passport number" name="passport" required defaultValue={passenger?.passport?.unique_identifier} />
+            <SelectField label="Issuing country" name="country" options={COUNTRIES} defaultValue={passenger?.passport?.issuing_country_code} />
+            <TextField label="Expiry date" name="expires_on" type="date" required defaultValue={passenger?.passport?.expires_on} />
+          </div>
+        </Panel>
       ) : null}
-      <label htmlFor={id} className="sr-only">
-        {name}
-      </label>
-      <select
-        id={id}
-        name={name}
-        className="h-full w-full cursor-pointer appearance-none bg-transparent px-3 pr-8 text-copy text-label outline-none"
-      >
-        {options.map((option) => (
-          <option key={option}>{option}</option>
-        ))}
-      </select>
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="pointer-events-none absolute right-3 text-label">
-        <path d="m6 9 6 7 6-7Z" />
-      </svg>
-    </div>
-  );
-}
 
-function DateTriplet({ name }: { name: string }) {
-  return (
-    <div className="flex h-[52px] items-center rounded-lg border border-line bg-white transition-colors duration-200 focus-within:border-sky">
-      <div className="relative flex h-full flex-1 items-center border-r border-line">
-        <label htmlFor={`${name}-month`} className="sr-only">
-          Month
-        </label>
-        <select
-          id={`${name}-month`}
-          name={`${name}Month`}
-          className="h-full w-full cursor-pointer appearance-none bg-transparent px-4 pr-8 text-copy text-label outline-none"
-        >
-          {MONTHS.map((month) => (
-            <option key={month}>{month}</option>
-          ))}
-        </select>
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" className="pointer-events-none absolute right-3 text-label">
-          <path d="m6 9 6 7 6-7Z" />
-        </svg>
-      </div>
-      <input
-        name={`${name}Day`}
-        inputMode="numeric"
-        maxLength={2}
-        placeholder="DD"
-        aria-label="Day"
-        className="h-full w-full flex-1 border-r border-line bg-transparent px-4 text-copy text-ink outline-none placeholder:text-muted"
-      />
-      <input
-        name={`${name}Year`}
-        inputMode="numeric"
-        maxLength={4}
-        placeholder="YYYY"
-        aria-label="Year"
-        className="h-full w-full flex-1 bg-transparent px-4 text-copy text-ink outline-none placeholder:text-muted"
-      />
-    </div>
+      <Panel title="Contact">
+        <div className="grid gap-4 sm:grid-cols-2">
+          <TextField
+            label="Email"
+            name="email"
+            type="email"
+            required
+            autoComplete="email"
+            defaultValue={passenger?.email ?? user?.email}
+          />
+          <TextField
+            label="Phone"
+            name="phone_number"
+            type="tel"
+            required
+            autoComplete="tel"
+            placeholder="+234 801 234 5678"
+            defaultValue={passenger?.phone_number ?? user?.phone}
+          />
+        </div>
+      </Panel>
+
+      <PrimaryButton pending={pending} className="sm:max-w-[240px]">
+        Continue
+      </PrimaryButton>
+    </form>
   );
 }

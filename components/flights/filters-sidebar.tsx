@@ -1,9 +1,8 @@
 "use client";
 
-import { SlidersHorizontal, Star, X } from "lucide-react";
+import { SlidersHorizontal, X } from "lucide-react";
 import { useEffect, useId, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { AIRLINE_FILTERS, PRICE_RANGE, TIME_RANGE } from "@/lib/flight-data";
 
 /**
  * Desktop: a sticky column. Phones: a "Filters" button that opens the same
@@ -17,6 +16,12 @@ type FiltersProps = {
   /** Cheapest fare under each stops option, shown beside it. */
   stopPrices: Record<StopsFilter, string | null>;
   resultCount: number;
+  /** Every airline in the results, for the airline filter. */
+  airlines: string[];
+  hiddenAirlines: string[];
+  onToggleAirline: (airline: string) => void;
+  bagsOnly: boolean;
+  onBagsOnly: () => void;
 };
 
 export function FiltersSidebar(props: FiltersProps) {
@@ -104,7 +109,7 @@ const STOP_OPTIONS: { value: StopsFilter; label: string }[] = [
   { value: "one", label: "1 stop" },
 ];
 
-function FilterGroups({ stops, onStopsChange, stopPrices }: FiltersProps) {
+function FilterGroups({ stops, onStopsChange, stopPrices, airlines, hiddenAirlines, onToggleAirline, bagsOnly, onBagsOnly }: FiltersProps) {
   return (
     <>
       <FilterGroup heading="Stops">
@@ -139,23 +144,19 @@ function FilterGroups({ stops, onStopsChange, stopPrices }: FiltersProps) {
         </div>
       </FilterGroup>
 
-      <FilterGroup heading="Price">
-        <DualRange minLabel={PRICE_RANGE.min} maxLabel={PRICE_RANGE.max} />
-      </FilterGroup>
-
-      <FilterGroup heading="Departure Time">
-        <DualRange minLabel={TIME_RANGE.min} maxLabel={TIME_RANGE.max} />
-      </FilterGroup>
-
-      <FilterGroup heading="Rating">
-        <RatingChips />
+      <FilterGroup heading="Bags">
+        <CheckboxRow label="Checked bag included" checked={bagsOnly} onChange={onBagsOnly} />
       </FilterGroup>
 
       <FilterGroup heading="Airlines" last>
         <ul className="space-y-4">
-          {AIRLINE_FILTERS.map((airline) => (
+          {airlines.map((airline) => (
             <li key={airline}>
-              <CheckboxRow label={airline} />
+              <CheckboxRow
+                label={airline}
+                checked={!hiddenAirlines.includes(airline)}
+                onChange={() => onToggleAirline(airline)}
+              />
             </li>
           ))}
         </ul>
@@ -165,129 +166,15 @@ function FilterGroups({ stops, onStopsChange, stopPrices }: FiltersProps) {
 }
 
 function FilterGroup({ heading, children, last = false }: { heading: string; children: ReactNode; last?: boolean }) {
-  const [open, setOpen] = useState(true);
-
   return (
     <section className={`py-6 ${last ? "" : "border-b border-line"}`}>
-      <h3>
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-expanded={open}
-          className="flex w-full items-center justify-between gap-3 text-left"
-        >
-          <span className="text-lead font-medium text-ink">{heading}</span>
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            aria-hidden="true"
-            className={`shrink-0 text-ink transition-transform duration-300 ${open ? "" : "rotate-180"}`}
-          >
-            <path d="m18 15-6-6-6 6" />
-          </svg>
-        </button>
-      </h3>
-
-      <div
-        className={`grid transition-[grid-template-rows] duration-300 ease-out ${
-          open ? "grid-rows-[1fr]" : "grid-rows-[0fr]"
-        }`}
-      >
-        <div className="min-h-0 overflow-hidden">
-          <div className="pt-6">{children}</div>
-        </div>
-      </div>
+      <h3 className="text-lead font-medium text-ink">{heading}</h3>
+      <div className="pt-4">{children}</div>
     </section>
   );
 }
 
-/** Two thumbs sharing one painted track; only the thumbs take pointer events. */
-function DualRange({ minLabel, maxLabel }: { minLabel: string; maxLabel: string }) {
-  const [low, setLow] = useState(0);
-  const [high, setHigh] = useState(100);
-
-  return (
-    <div>
-      <div className="relative h-5">
-        <span className="absolute inset-x-0 top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-[#6b5f5a]/50" />
-        <span
-          className="absolute top-1/2 h-[3px] -translate-y-1/2 rounded-full bg-[#6b5f5a]"
-          style={{ left: `${Math.min(low, high)}%`, right: `${100 - Math.max(low, high)}%` }}
-        />
-        <input
-          type="range"
-          aria-label={`Minimum (${minLabel})`}
-          value={low}
-          onChange={(event) => setLow(Math.min(Number(event.target.value), high))}
-          className="range-thumb absolute inset-0 w-full"
-        />
-        <input
-          type="range"
-          aria-label={`Maximum (${maxLabel})`}
-          value={high}
-          onChange={(event) => setHigh(Math.max(Number(event.target.value), low))}
-          className="range-thumb absolute inset-0 w-full"
-        />
-      </div>
-
-      <div className="mt-3 flex items-center justify-between text-copy text-body">
-        <span>{minLabel}</span>
-        <span>{maxLabel}</span>
-      </div>
-    </div>
-  );
-}
-
-/** Minimum-rating picker: tap a star to require at least that many. */
-function RatingChips() {
-  const [min, setMin] = useState(0);
-
-  return (
-    <div>
-      <div className="flex items-center gap-1" role="radiogroup" aria-label="Minimum rating">
-        {[1, 2, 3, 4, 5].map((n) => {
-          const on = n <= min;
-          return (
-            <button
-              key={n}
-              type="button"
-              role="radio"
-              aria-checked={min === n}
-              aria-label={`${n} star${n > 1 ? "s" : ""} and up`}
-              onClick={() => setMin(min === n ? 0 : n)}
-              className="flex h-10 w-10 items-center justify-center rounded-xl"
-            >
-              <Star
-                size={24}
-                strokeWidth={1.6}
-                aria-hidden="true"
-                className={`transition-colors duration-200 ${on ? "fill-star text-star" : "fill-transparent text-muted"}`}
-              />
-            </button>
-          );
-        })}
-      </div>
-      <div className="mt-2 flex items-center justify-between">
-        <p className="text-small font-medium text-ink">
-          {min ? `${min} star${min > 1 ? "s" : ""}${min < 5 ? " & up" : ""}` : "Any rating"}
-        </p>
-        {min ? (
-          <button type="button" onClick={() => setMin(0)} className="text-small font-medium text-blue">
-            Clear
-          </button>
-        ) : null}
-      </div>
-    </div>
-  );
-}
-
-function CheckboxRow({ label }: { label: string }) {
+function CheckboxRow({ label, checked, onChange }: { label: string; checked: boolean; onChange: () => void }) {
   const id = useId();
   return (
     <label htmlFor={id} className="flex cursor-pointer items-center gap-4 text-copy text-body">
@@ -295,6 +182,8 @@ function CheckboxRow({ label }: { label: string }) {
         <input
           id={id}
           type="checkbox"
+          checked={checked}
+          onChange={onChange}
           className="peer h-[22px] w-[22px] cursor-pointer appearance-none rounded-[4px] border-2 border-ink transition-colors duration-200 checked:border-sky checked:bg-sky"
         />
         <svg

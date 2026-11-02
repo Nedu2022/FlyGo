@@ -98,7 +98,9 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
             ? `/private-jets?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`
             : flight
               ? "/flights"
-              : "/hotels",
+              : tab === "Apartment"
+                ? "/hotels/search?type=apartments"
+                : "/hotels/search",
         );
       }}
     >

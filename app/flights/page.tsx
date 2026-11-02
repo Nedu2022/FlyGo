@@ -1,47 +1,50 @@
 "use client";
 
-import { Bell } from "lucide-react";
 import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SearchSummaryBar } from "@/components/flights/search-summary-bar";
 import { CinematicHero } from "@/components/site/hero";
 import { FiltersSidebar, type StopsFilter } from "@/components/flights/filters-sidebar";
-import { SortTabs, type SortSummary } from "@/components/flights/sort-tabs";
-import { DateStrip } from "@/components/flights/date-strip";
+import { SortTabs, type SortMode, type SortSummary } from "@/components/flights/sort-tabs";
 import { FlightResultCard } from "@/components/flights/flight-result-card";
-import { ProviderModal } from "@/components/flights/provider-modal";
-import { FLIGHT_RESULTS, TRIP, type FlightResult, type SortMode } from "@/lib/flight-data";
+import { OFFERS, SEARCH, includedBags, type Offer } from "@/lib/duffel";
+import { duration, minutes, money } from "@/lib/format";
 
-const totalMinutes = (r: FlightResult) => r.outbound.minutes + r.inbound.minutes;
-const maxStops = (r: FlightResult) => Math.max(r.outbound.stops, r.inbound.stops);
+const price = (o: Offer) => Number(o.total_amount);
+const travelMinutes = (o: Offer) => o.slices.reduce((sum, s) => sum + minutes(s.duration), 0);
+const maxStops = (o: Offer) => Math.max(...o.slices.map((s) => s.segments.length - 1));
 
 /** "Best" weighs price against total journey time, the way metasearch sites rank. */
-const score = (r: FlightResult) => r.amount + totalMinutes(r) * 0.5;
+const score = (o: Offer) => price(o) + travelMinutes(o) * 0.5;
 
-const SORTERS: Record<SortMode, (a: FlightResult, b: FlightResult) => number> = {
+const SORTERS: Record<SortMode, (a: Offer, b: Offer) => number> = {
   best: (a, b) => score(a) - score(b),
-  cheapest: (a, b) => a.amount - b.amount,
-  quickest: (a, b) => totalMinutes(a) - totalMinutes(b),
+  cheapest: (a, b) => price(a) - price(b),
+  quickest: (a, b) => travelMinutes(a) - travelMinutes(b),
 };
 
-const STOP_TESTS: Record<StopsFilter, (r: FlightResult) => boolean> = {
+const STOP_TESTS: Record<StopsFilter, (o: Offer) => boolean> = {
   any: () => true,
-  direct: (r) => maxStops(r) === 0,
-  one: (r) => maxStops(r) === 1,
+  direct: (o) => maxStops(o) === 0,
+  one: (o) => maxStops(o) === 1,
 };
 
-function hours(minutes: number) {
-  return `${Math.floor(minutes / 60)}h ${String(minutes % 60).padStart(2, "0")}m`;
-}
+const AIRLINES = [...new Set(OFFERS.map((o) => o.owner.name))].sort();
 
 export default function FlightSearchPage() {
-  const [comparing, setComparing] = useState<string | null>(null);
   const [sort, setSort] = useState<SortMode>("best");
   const [stops, setStops] = useState<StopsFilter>("any");
-  const [alerts, setAlerts] = useState(false);
+  const [hiddenAirlines, setHiddenAirlines] = useState<string[]>([]);
+  const [bagsOnly, setBagsOnly] = useState(false);
 
-  const filtered = useMemo(() => FLIGHT_RESULTS.filter(STOP_TESTS[stops]), [stops]);
+  const filtered = useMemo(
+    () =>
+      OFFERS.filter(STOP_TESTS[stops])
+        .filter((o) => !hiddenAirlines.includes(o.owner.name))
+        .filter((o) => !bagsOnly || includedBags(o).checked > 0),
+    [stops, hiddenAirlines, bagsOnly],
+  );
   const sorted = useMemo(() => [...filtered].sort(SORTERS[sort]), [filtered, sort]);
 
   const tabs: SortSummary[] = (["best", "cheapest", "quickest"] as const).map((mode) => {
@@ -49,8 +52,8 @@ export default function FlightSearchPage() {
     return {
       mode,
       label: mode[0].toUpperCase() + mode.slice(1),
-      price: top ? top.price : "—",
-      duration: top ? hours(Math.round(totalMinutes(top) / 2)) : "",
+      price: top ? money(top.total_amount, top.total_currency) : "—",
+      duration: top ? duration(top.slices[0].duration) : "",
     };
   });
 
@@ -60,10 +63,16 @@ export default function FlightSearchPage() {
 
   const stopPrices = Object.fromEntries(
     (Object.keys(STOP_TESTS) as StopsFilter[]).map((key) => {
-      const options = FLIGHT_RESULTS.filter(STOP_TESTS[key]);
-      return [key, options.length ? `$${Math.min(...options.map((r) => r.amount))}` : null];
+      const options = OFFERS.filter(STOP_TESTS[key]);
+      return [key, options.length ? money(Math.min(...options.map(price))) : null];
     }),
   ) as Record<StopsFilter, string | null>;
+
+  const clear = () => {
+    setStops("any");
+    setHiddenAirlines([]);
+    setBagsOnly(false);
+  };
 
   return (
     <>
@@ -72,10 +81,10 @@ export default function FlightSearchPage() {
         slides={[{ src: "/images/photos/hero-sky.webp", position: "70% center" }]}
         title={
           <>
-            {TRIP.from} <span className="text-brand">→</span> {TRIP.to}
+            {SEARCH.from} <span className="text-brand">→</span> {SEARCH.to}
           </>
         }
-        subtitle={`${TRIP.trip} · ${TRIP.passengers} · from $${Math.min(...FLIGHT_RESULTS.map((r) => r.amount))}`}
+        subtitle={`${SEARCH.dates} · ${SEARCH.passengers}`}
       >
         <SearchSummaryBar embedded />
       </CinematicHero>
@@ -87,50 +96,34 @@ export default function FlightSearchPage() {
             onStopsChange={setStops}
             stopPrices={stopPrices}
             resultCount={filtered.length}
+            airlines={AIRLINES}
+            hiddenAirlines={hiddenAirlines}
+            onToggleAirline={(name) =>
+              setHiddenAirlines((list) => (list.includes(name) ? list.filter((n) => n !== name) : [...list, name]))
+            }
+            bagsOnly={bagsOnly}
+            onBagsOnly={() => setBagsOnly((v) => !v)}
           />
 
           <div className="min-w-0 space-y-4">
-            <div className="hidden items-center justify-between gap-3 rounded-2xl bg-white p-4 sm:flex sm:p-5">
-              <div>
-                <h2 className="text-copy font-semibold text-ink">
-                  {filtered.length} of {FLIGHT_RESULTS.length} flights
-                </h2>
-              </div>
-              <button
-                type="button"
-                role="switch"
-                aria-checked={alerts}
-                onClick={() => setAlerts((v) => !v)}
-                className="flex shrink-0 items-center gap-2 rounded-full bg-shell py-1.5 pl-3 pr-1.5 text-small font-medium text-ink sm:gap-3 sm:pl-4"
-              >
-                <Bell size={16} strokeWidth={2} aria-hidden="true" />
-                <span className="hidden min-[400px]:inline">{alerts ? "Tracking prices" : "Track prices"}</span>
-                <span className="min-[400px]:hidden">Alerts</span>
-                <span className={`flex h-6 w-10 items-center rounded-full p-0.5 transition-colors duration-200 ${alerts ? "bg-brand" : "bg-muted/60"}`}>
-                  <span className={`h-5 w-5 rounded-full bg-white shadow transition-transform duration-200 ${alerts ? "translate-x-4" : ""}`} />
-                </span>
-              </button>
-            </div>
-
-            <DateStrip />
             <SortTabs tabs={tabs} active={sort} onChange={setSort} />
+            <p className="px-1 text-small text-label">{filtered.length} flights</p>
 
             {sorted.length ? (
               <ul className="space-y-3">
-                {sorted.map((result) => (
-                  <li key={result.id}>
+                {sorted.map((offer) => (
+                  <li key={offer.id}>
                     <FlightResultCard
-                      result={result}
-                      badge={result.id === cheapestId ? "Cheapest" : result.id === quickestId ? "Quickest" : undefined}
-                      onView={() => setComparing(result.id)}
+                      offer={offer}
+                      badge={offer.id === cheapestId ? "Cheapest" : offer.id === quickestId ? "Quickest" : undefined}
                     />
                   </li>
                 ))}
               </ul>
             ) : (
               <p className="rounded-2xl bg-white p-8 text-center text-copy text-body">
-                No flights match these filters.{" "}
-                <button type="button" onClick={() => setStops("any")} className="font-semibold text-blue">
+                No flights match.{" "}
+                <button type="button" onClick={clear} className="font-semibold text-blue">
                   Clear filters
                 </button>
               </p>
@@ -138,8 +131,6 @@ export default function FlightSearchPage() {
           </div>
         </div>
       </main>
-
-      <ProviderModal open={comparing !== null} onClose={() => setComparing(null)} />
 
       <SiteFooter flush />
     </>

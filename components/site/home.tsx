@@ -119,7 +119,7 @@ export function TrustCards() {
           <TearLine />
           <div className={stub}>
             <p className="text-h4 font-semibold text-ink">Every airline, one search</p>
-            <p className="mt-1 text-small text-body">We check them all so you get the lowest fare.</p>
+            <p className="mt-1 text-small text-body">300+ airlines, full price shown up front.</p>
           </div>
         </div>
 

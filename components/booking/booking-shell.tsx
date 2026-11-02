@@ -1,35 +1,31 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
-import { SearchSummaryBar } from "@/components/flights/search-summary-bar";
-import { BookingStepper } from "@/components/booking/stepper";
-import { BOOKING_STEPS } from "@/lib/flight-data";
+import { BookingStepper, STEPS } from "@/components/booking/stepper";
 
-/** Header + search card + stepper + the two-column body every step shares. */
+/** Header, stepper and the two-column body every booking step shares. */
 export function BookingShell({
   step,
+  steps = STEPS,
   children,
   aside,
 }: {
   step: number;
+  steps?: readonly string[];
   children: ReactNode;
   aside: ReactNode;
 }) {
   return (
     <>
       <SiteHeader variant="solid" />
-      <SearchSummaryBar />
 
       <div className="bg-canvas">
-        {/* The design leads with the stepper, but the page still needs a single
-            top-level heading for assistive tech and document outline. */}
         <h1 className="sr-only">
-          Booking — step {step} of {BOOKING_STEPS.length}:{" "}
-          {BOOKING_STEPS[step - 1]?.label}
+          Booking: step {step} of {steps.length}, {steps[step - 1]}
         </h1>
-        <BookingStepper current={step} />
+        {steps.length > 1 ? <BookingStepper current={step} steps={steps} /> : <div className="h-6" />}
 
-        <main className="mx-auto grid w-full max-w-[1240px] gap-10 px-5 pb-20 sm:px-8 lg:grid-cols-[1fr_320px]">
+        <main className="mx-auto grid w-full max-w-[1120px] gap-8 px-5 pb-20 sm:px-8 lg:grid-cols-[minmax(0,1fr)_340px]">
           <div className="flex min-w-0 flex-col gap-6">{children}</div>
           <div className="lg:sticky lg:top-24 lg:self-start">{aside}</div>
         </main>
@@ -40,22 +36,12 @@ export function BookingShell({
   );
 }
 
-/** Blue icon + heading that opens each block in the flow. */
-export function SectionHeading({
-  icon,
-  title,
-  trailing,
-}: {
-  icon: ReactNode;
-  title: string;
-  trailing?: ReactNode;
-}) {
+/** White panel that holds each block of a step. */
+export function Panel({ title, children }: { title?: string; children: ReactNode }) {
   return (
-    <div className="flex flex-wrap items-center gap-3">
-      <span className="flex shrink-0 items-center text-sky">{icon}</span>
-      <h2 className="text-h4 font-medium text-sky">{title}</h2>
-      {trailing ? <div className="ml-auto">{trailing}</div> : null}
-    </div>
+    <section className="rounded-2xl bg-white p-5 sm:p-6">
+      {title ? <h2 className="mb-5 text-h4 font-semibold text-ink">{title}</h2> : null}
+      {children}
+    </section>
   );
 }
-

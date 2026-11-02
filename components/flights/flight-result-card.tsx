@@ -1,70 +1,72 @@
 "use client";
 
 import { Briefcase, Heart, Luggage, Plane } from "lucide-react";
-import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
-import { stopLabel, type FlightLeg, type FlightResult } from "@/lib/flight-data";
+import { includedBags, layovers, rules, stops, type Carrier, type Offer, type Slice } from "@/lib/duffel";
+import { clock, dayShift, duration, money } from "@/lib/format";
 
 /**
- * One itinerary as a boarding pass: airline and both legs on the ticket, a
- * perforated tear line with punched notches, and the fare on the stub. The
- * tear runs vertically on desktop and across the card on phones. Notches are
- * filled with the results page's background so they read as cut-outs.
+ * One Duffel offer as a boarding pass: airline and both slices on the
+ * ticket, a perforated tear line, and the fare on the stub. The tear runs
+ * vertically on desktop and across the card on phones.
  */
-export function FlightResultCard({
-  result,
-  badge,
-  onView,
-}: {
-  result: FlightResult;
-  /** "Cheapest", "Quickest"… — set by the list, not the data. */
-  badge?: string;
-  onView: () => void;
-}) {
+export function FlightResultCard({ offer, badge }: { offer: Offer; badge?: string }) {
   const [saved, setSaved] = useState(false);
+  const bags = includedBags(offer);
 
   return (
-    <article className="relative grid rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05),0_10px_28px_-18px_rgba(16,24,40,0.3)] md:grid-cols-[minmax(0,1fr)_auto_230px]">
+    <article className="relative grid rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05),0_10px_28px_-18px_rgba(16,24,40,0.3)] md:grid-cols-[minmax(0,1fr)_auto_220px]">
       {/* Ticket */}
       <div className="min-w-0 p-4 sm:p-6">
         <div className="flex items-center gap-3">
-          <AirlineMark airline={result.airline} code={result.code} logo={result.logo} />
+          <AirlineMark carrier={offer.owner} />
           <div className="min-w-0 flex-1">
-            <p className="truncate text-copy font-medium text-ink">{result.airline}</p>
-            <p className="text-tiny text-label">
-              {result.cabin} · {result.outbound.from} ⇄ {result.outbound.to}
-            </p>
+            <p className="truncate text-copy font-medium text-ink">{offer.owner.name}</p>
+            <p className="truncate text-tiny text-label">{offer.slices[0].fare_brand_name}</p>
           </div>
           <div className="hidden flex-wrap justify-end gap-1.5 sm:flex">
-            <Tags result={result} badge={badge} />
+            <Tags offer={offer} badge={badge} />
           </div>
         </div>
         <div className="mt-3 flex flex-wrap gap-1.5 sm:hidden">
-          <Tags result={result} badge={badge} />
+          <Tags offer={offer} badge={badge} />
         </div>
 
         <div className="mt-5 space-y-5">
-          <Leg leg={result.outbound} label="Outbound" />
-          <Leg leg={result.inbound} label="Return" />
+          {offer.slices.map((slice) => (
+            <Leg key={slice.id} slice={slice} />
+          ))}
         </div>
       </div>
 
       {/* Tear line */}
       <div aria-hidden="true" className="relative mx-4 h-px md:mx-0 md:my-5 md:h-auto md:w-px">
         <span className="absolute inset-0 border-t-2 border-dashed border-line md:border-l-2 md:border-t-0" />
-        <span className="absolute -left-[26px] top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-shell md:-top-[30px] md:left-1/2 md:h-5 md:w-5 md:-translate-x-1/2 md:translate-y-0" />
-        <span className="absolute -right-[26px] top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-shell md:-bottom-[30px] md:left-1/2 md:right-auto md:top-auto md:h-5 md:w-5 md:-translate-x-1/2 md:translate-y-0" />
+        <span className="absolute -left-[26px] top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-shell md:-top-[30px] md:left-1/2 md:-translate-x-1/2 md:translate-y-0" />
+        <span className="absolute -right-[26px] top-1/2 h-5 w-5 -translate-y-1/2 rounded-full bg-shell md:-bottom-[30px] md:left-1/2 md:right-auto md:top-auto md:-translate-x-1/2 md:translate-y-0" />
       </div>
 
       {/* Stub */}
       <div className="flex items-center justify-between gap-4 p-4 sm:px-6 md:flex-col md:items-stretch md:justify-between md:py-6">
         <div className="md:text-right">
-          <p className="text-tiny font-medium text-label">Return per person</p>
-          <p className="text-h2 font-bold leading-tight tracking-tight text-ink">{result.price}</p>
-          <div className="mt-1 flex items-center gap-2 md:justify-end">
-            <Bags bags={result.bags} />
-            <span className="text-tiny text-label">on {result.provider}</span>
-          </div>
+          <p className="text-h2 font-bold leading-tight tracking-tight text-ink">
+            {money(offer.total_amount, offer.total_currency)}
+          </p>
+          <p className="text-tiny text-label">Round trip, taxes included</p>
+          <p
+            className="mt-1.5 flex items-center gap-3 text-tiny text-body md:justify-end"
+            aria-label={`${bags.carryOn} cabin bag, ${bags.checked} checked bag${bags.checked === 1 ? "" : "s"} included`}
+          >
+            <span className="flex items-center gap-1">
+              <Briefcase size={15} strokeWidth={1.8} aria-hidden="true" />
+              {bags.carryOn}
+            </span>
+            <span className={`flex items-center gap-1 ${bags.checked ? "" : "text-muted"}`}>
+              <Luggage size={16} strokeWidth={1.8} aria-hidden="true" />
+              {bags.checked}
+            </span>
+          </p>
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
@@ -77,104 +79,89 @@ export function FlightResultCard({
           >
             <Heart size={18} strokeWidth={1.9} fill={saved ? "currentColor" : "none"} aria-hidden="true" />
           </button>
-          <button
-            type="button"
-            onClick={onView}
-            className="h-11 flex-1 rounded-xl bg-brand px-5 text-small font-semibold text-white active:translate-y-px"
+          <Link
+            href={`/booking/details?offer=${offer.id}`}
+            className="flex h-11 flex-1 items-center justify-center rounded-xl bg-brand px-6 text-small font-semibold text-white active:translate-y-px"
           >
-            View deal
-          </button>
+            Select
+          </Link>
         </div>
       </div>
     </article>
   );
 }
 
-function Tags({ result, badge }: { result: FlightResult; badge?: string }) {
+function Tags({ offer, badge }: { offer: Offer; badge?: string }) {
+  const { refundable, freeChange } = rules(offer);
   return (
     <>
       {badge ? (
         <span className="rounded-full bg-brand-soft px-2.5 py-1 text-tiny font-semibold text-brand-hover">{badge}</span>
       ) : null}
-      {result.freeCancellation ? (
-        <span className="rounded-full bg-sky-soft px-2.5 py-1 text-tiny font-semibold text-blue">
-          Free cancellation
-        </span>
+      {refundable ? (
+        <span className="rounded-full bg-sky-soft px-2.5 py-1 text-tiny font-semibold text-blue">Refundable</span>
       ) : null}
-      {result.seatsLeft ? (
-        <span className="rounded-full bg-shell px-2.5 py-1 text-tiny font-medium text-body">
-          {result.seatsLeft} seats left
-        </span>
+      {freeChange ? (
+        <span className="rounded-full bg-shell px-2.5 py-1 text-tiny font-medium text-body">Free changes</span>
       ) : null}
     </>
   );
 }
 
-function Leg({ leg, label }: { leg: FlightLeg; label: string }) {
+export function Leg({ slice }: { slice: Slice }) {
+  const first = slice.segments[0];
+  const last = slice.segments[slice.segments.length - 1];
+  const shift = dayShift(first.departing_at, last.arriving_at);
+  const via = layovers(slice);
+  const count = via.length;
+
   return (
-    <div>
-      <p className="text-micro font-medium uppercase tracking-[0.14em] text-label">{label}</p>
-      <div className="mt-1.5 flex min-w-0 items-center gap-3 sm:gap-5">
-        <div className="shrink-0">
-          <p className="text-h3 font-semibold leading-none tracking-tight text-ink">{leg.depart}</p>
-          <p className="mt-1 text-small font-medium text-body">{leg.from}</p>
-        </div>
+    <div className="flex min-w-0 items-center gap-3 sm:gap-5">
+      <div className="shrink-0">
+        <p className="text-h3 font-semibold leading-none tracking-tight text-ink">{clock(first.departing_at)}</p>
+        <p className="mt-1 text-small font-medium text-body">{slice.origin.iata_code}</p>
+      </div>
 
-        <div className="min-w-0 flex-1 text-center">
-          <p className="text-tiny text-label">{leg.duration}</p>
-          <div className="relative my-1.5 flex items-center">
-            <span className="h-1.5 w-1.5 shrink-0 rounded-full border border-muted" />
-            <span className="h-px flex-1 border-t border-dashed border-muted" />
-            {Array.from({ length: leg.stops }, (_, i) => (
-              <span
-                key={i}
-                className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand ring-2 ring-white"
-                style={{ left: `${((i + 1) / (leg.stops + 1)) * 100}%` }}
-              />
-            ))}
-            <Plane size={16} strokeWidth={2} aria-hidden="true" className="shrink-0 rotate-45 text-ink" />
-          </div>
-          <p className={`truncate text-tiny font-semibold ${leg.stops ? "text-brand-hover" : "text-sky"}`}>
-            {stopLabel(leg)}
-            {leg.via ? <span className="font-normal text-label"> · {leg.via}</span> : null}
-          </p>
+      <div className="min-w-0 flex-1 text-center">
+        <p className="text-tiny text-label">{duration(slice.duration)}</p>
+        <div className="relative my-1.5 flex items-center">
+          <span className="h-1.5 w-1.5 shrink-0 rounded-full border border-muted" />
+          <span className="h-px flex-1 border-t border-dashed border-muted" />
+          {via.map((code, i) => (
+            <span
+              key={code}
+              className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-brand ring-2 ring-white"
+              style={{ left: `${((i + 1) / (count + 1)) * 100}%` }}
+            />
+          ))}
+          <Plane size={16} strokeWidth={2} aria-hidden="true" className="shrink-0 rotate-45 text-ink" />
         </div>
+        <p className={`truncate text-tiny font-semibold ${count ? "text-brand-hover" : "text-sky"}`}>
+          {stops(slice)}
+          {count ? <span className="font-normal text-label"> · {via.join(", ")}</span> : null}
+        </p>
+      </div>
 
-        <div className="shrink-0 text-right">
-          <p className="text-h3 font-semibold leading-none tracking-tight text-ink">
-            {leg.arrive}
-            {leg.nextDay ? <sup className="ml-0.5 text-micro font-medium text-brand">+1</sup> : null}
-          </p>
-          <p className="mt-1 text-small font-medium text-body">{leg.to}</p>
-        </div>
+      <div className="shrink-0 text-right">
+        <p className="text-h3 font-semibold leading-none tracking-tight text-ink">
+          {clock(last.arriving_at)}
+          {shift > 0 ? <sup className="ml-0.5 text-micro font-medium text-brand">+{shift}</sup> : null}
+        </p>
+        <p className="mt-1 text-small font-medium text-body">{slice.destination.iata_code}</p>
       </div>
     </div>
   );
 }
 
-/** The airline's logo when we have one, otherwise its IATA code on a badge. */
-export function AirlineMark({ airline, code, logo }: { airline: string; code: string; logo: string | null }) {
-  return (
-    <span className="flex h-10 w-10 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-shell sm:h-11 sm:w-11">
-      {logo ? (
-        <Image src={logo} alt={airline} width={44} height={44} className="h-8 w-8 object-contain" />
-      ) : (
-        <span aria-label={airline} className="text-small font-semibold tracking-tight text-steel">
-          {code}
-        </span>
-      )}
-    </span>
-  );
-}
-
-function Bags({ bags }: { bags: FlightResult["bags"] }) {
+/** Airline logo from Duffel's CDN (SVG, so no optimisation needed). */
+export function AirlineMark({ carrier, size = 44 }: { carrier: Carrier; size?: number }) {
   return (
     <span
-      className="flex items-center gap-1.5 text-label"
-      aria-label={`Cabin bag ${bags.cabin ? "included" : "not included"}, checked bag ${bags.checked ? "included" : "not included"}`}
+      className="flex shrink-0 items-center justify-center overflow-hidden rounded-lg bg-shell"
+      style={{ width: size, height: size }}
     >
-      <Briefcase size={16} strokeWidth={1.8} aria-hidden="true" className={bags.cabin ? "text-ink" : "opacity-40"} />
-      <Luggage size={18} strokeWidth={1.8} aria-hidden="true" className={bags.checked ? "text-ink" : "opacity-40"} />
+      {/* eslint-disable-next-line @next/next/no-img-element -- remote SVG logo */}
+      <img src={carrier.logo_symbol_url} alt={carrier.name} width={size * 0.7} height={size * 0.7} loading="lazy" />
     </span>
   );
 }

@@ -4,100 +4,9 @@
 export const NAV_LINKS = [
   { href: "/flights", label: "Flights" },
   { href: "/hotels", label: "Hotels" },
-  { href: "/hotels?type=apartments", label: "Apartments" },
+  { href: "/hotels/search?type=apartments", label: "Apartments" },
   { href: "/private-jets", label: "Private jets" },
 ] as const;
-
-export const RESORT_COUNTRIES = [
-  { region: "Caribbean", name: "Jamaica", budget: "$2099", love: "5k people love this", image: "/images/photos/hero-pool.webp" },
-  { region: "Europe", name: "Greece", budget: "$1799", love: "1.5k people love this", image: "/images/photos/stay-santorini.webp" },
-  { region: "South Asia", name: "Maldives", budget: "$3599", love: "3.5k people love this", image: "/images/photos/stay-overwater.webp" },
-];
-
-export type Hotel = {
-  name: string;
-  stars: number;
-  address: string;
-  score: string;
-  reviews: string;
-  price: string;
-  image: string;
-};
-
-export const HOTELS: Hotel[] = [
-  {
-    name: "Leonardo London Heathrow Airport",
-    stars: 5,
-    address: "Bath Rd, Sipson, West Drayton UB7 0DP, UK",
-    score: "9.6",
-    reviews: "10125 reviews",
-    price: "$799",
-    image: "/images/photos/stay-suite.webp",
-  },
-  {
-    name: "Sonder Kensington Gardens",
-    stars: 5,
-    address: "15 Prince of Wales Terrace, London W8 5PQ, UK",
-    score: "9.4",
-    reviews: "8420 reviews",
-    price: "$650",
-    image: "/images/photos/stay-infinity.webp",
-  },
-  {
-    name: "Aviator Hotel Hampshire",
-    stars: 4,
-    address: "55 Farnborough Rd, Farnborough GU14 6EL, United Kingdom",
-    score: "9.1",
-    reviews: "6310 reviews",
-    price: "$540",
-    image: "/images/photos/stay-room.webp",
-  },
-  {
-    name: "Crowne Plaza Gerrards Cross",
-    stars: 5,
-    address: "Oxford Rd, Beaconsfield HP9 2XE, United Kingdom",
-    score: "9.5",
-    reviews: "7788 reviews",
-    price: "$720",
-    image: "/images/photos/stay-twin.webp",
-  },
-  {
-    name: "Vancouver Harbour Suites",
-    stars: 5,
-    address: "1128 W Hastings St, Vancouver, BC, Canada",
-    score: "9.3",
-    reviews: "5240 reviews",
-    price: "$610",
-    image: "/images/photos/stay-overwater.webp",
-  },
-  {
-    name: "Berlin Mitte Grand",
-    stars: 4,
-    address: "Friedrichstrasse 96, 10117 Berlin, Germany",
-    score: "9.0",
-    reviews: "4180 reviews",
-    price: "$430",
-    image: "/images/photos/stay-santorini.webp",
-  },
-  {
-    name: "Toronto Lakeside Residences",
-    stars: 5,
-    address: "10 Yonge St, Toronto, ON, Canada",
-    score: "9.2",
-    reviews: "6902 reviews",
-    price: "$580",
-    image: "/images/photos/stay-cliff.webp",
-  },
-  {
-    name: "Porto Ribeira Boutique",
-    stars: 4,
-    address: "Cais da Ribeira 12, 4050-509 Porto, Portugal",
-    score: "9.4",
-    reviews: "3990 reviews",
-    price: "$395",
-    image: "/images/photos/lisbon-tram.webp",
-  },
-];
 
 export type Faq = {
   question: string;
@@ -124,7 +33,7 @@ export const FAQS: Faq[] = [
   {
     question: "How does FLYGO find such low prices?",
     answer:
-      "We search hundreds of airlines, hotels and travel sites at once. You see every price side by side, so you can pick the best deal without opening twenty tabs.",
+      "We search 300+ airlines and over 2 million hotels and apartments at once, and show the full price with taxes up front. You book directly with us.",
   },
   {
     question: "Which payment methods can I use?",
@@ -185,7 +94,7 @@ export const FOOTER_LINKS = [
     links: [
       { label: "Flights", href: "/flights" },
       { label: "Hotels", href: "/hotels" },
-      { label: "Apartments", href: "/hotels?type=apartments" },
+      { label: "Apartments", href: "/hotels/search?type=apartments" },
       { label: "Private jets", href: "/private-jets" },
       { label: "Travel deals", href: "/flights" },
     ],
@@ -207,7 +116,7 @@ export const FOOTER_LINKS = [
   },
 ]
 
-export const FOOTER_BLURB = "Compare flights and stays from hundreds of sites. Book in minutes.";
+export const FOOTER_BLURB = "Flights, hotels, apartments and private jets, booked in minutes.";
 
 export const FOOTER_CONTACT = {
   email: "advhghj@gmail.com",

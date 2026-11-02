@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DateField } from "@/components/ui/calendar";
 import { TravellersField } from "@/components/site/travellers-field";
-import { TRIP } from "@/lib/flight-data";
+import { SEARCH as TRIP } from "@/lib/duffel";
 
 const SUMMARY = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" });
 
@@ -21,7 +21,7 @@ export function SearchSummaryBar({ embedded = false }: { embedded?: boolean }) {
   const [to, setTo] = useState(TRIP.to);
   const [trip, setTrip] = useState(TRIP.trip);
   const [departure, setDeparture] = useState(() => new Date(2026, 11, 15));
-  const [returnDate, setReturnDate] = useState(() => new Date(2026, 11, 22));
+  const [returnDate, setReturnDate] = useState(() => new Date(2027, 0, 9));
   const oneWay = trip !== "Round-Trip";
   // Phones open on a one-line summary; the full form unfolds on demand.
   const [editing, setEditing] = useState(false);

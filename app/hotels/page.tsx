@@ -2,55 +2,50 @@ import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { Hero } from "@/components/site/hero";
 import { SectionHeader } from "@/components/site/section-header";
-import { HotelCard, ResortCountryCard } from "@/components/site/cards";
-import { Faq } from "@/components/site/faq";
+import { StayTile } from "@/components/stays/stay-card";
 import { Rail, RAIL_ITEM } from "@/components/site/rail";
 import { PAGE } from "@/components/site/container";
-import { HOTELS, RESORT_COUNTRIES } from "@/lib/site-data";
+import { STAYS } from "@/lib/liteapi";
 
 export const metadata = {
-  title: "Hotels — FLYGO Bookings",
-  description: "Find and book luxury stays, resorts and apartments with Flygo.",
+  title: "Hotels and apartments — FLYGO Bookings",
+  description: "Find and book hotels and apartments with Flygo.",
 };
+
+const byRating = [...STAYS].sort((a, b) => b.rating - a.rating);
 
 export default function HotelsPage() {
   return (
     <>
       <SiteHeader variant="solid" />
-
       <Hero variant="stay" />
 
       <section className={`${PAGE} pt-16 lg:pt-24`}>
-        <SectionHeader
-          title="Top-rated hotels"
-          href="/hotels"
-        />
-
-        <Rail label="popular hotels" className="mt-6">
-          {[...HOTELS].sort((a, b) => Number(b.score) - Number(a.score)).map((hotel) => (
-            <li
-              key={hotel.name}
-              className={RAIL_ITEM}
-            >
-              <HotelCard hotel={hotel} />
-            </li>
-          ))}
+        <SectionHeader title="Top-rated hotels" href="/hotels/search" />
+        <Rail label="Top-rated hotels" className="mt-6">
+          {byRating
+            .filter((h) => h.type === "hotel")
+            .map((hotel) => (
+              <li key={hotel.id} className={RAIL_ITEM}>
+                <StayTile hotel={hotel} />
+              </li>
+            ))}
         </Rail>
       </section>
 
-      <section className={`${PAGE} pt-16 lg:pt-24`}>
-        <SectionHeader
-          title="Resort escapes"
-        />
-
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {RESORT_COUNTRIES.map((country) => (
-            <ResortCountryCard key={country.name} country={country} />
-          ))}
-        </div>
+      <section className={`${PAGE} pb-16 pt-16 lg:pb-24 lg:pt-24`}>
+        <SectionHeader title="Apartments" href="/hotels/search?type=apartments" />
+        <Rail label="Apartments" className="mt-6">
+          {byRating
+            .filter((h) => h.type === "apartment")
+            .map((hotel) => (
+              <li key={hotel.id} className={RAIL_ITEM}>
+                <StayTile hotel={hotel} />
+              </li>
+            ))}
+        </Rail>
       </section>
 
-      <Faq />
       <SiteFooter />
     </>
   );

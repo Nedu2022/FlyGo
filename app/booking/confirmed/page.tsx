@@ -1,145 +1,54 @@
-import Image from "next/image";
-import Link from "next/link";
-import { SiteHeader } from "@/components/site/site-header";
-import { SiteFooter } from "@/components/site/site-footer";
-import { BOOKED_TRIP } from "@/lib/flight-data";
+"use client";
 
-export const metadata = {
-  title: "Booking confirmed — FLYGO Bookings",
-};
+import { useBooking } from "@/components/booking/booking-context";
+import { Confirmation, DetailRow } from "@/components/booking/confirmation";
+import { AirlineMark, Leg } from "@/components/flights/flight-result-card";
+import { includedBags } from "@/lib/duffel";
+import { day, money } from "@/lib/format";
+
+/** Duffel returns a 6-character airline booking reference on the order. */
+function reference(id: string) {
+  const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+  let n = [...id].reduce((sum, c) => sum * 31 + c.charCodeAt(0), 7) >>> 0;
+  return Array.from({ length: 6 }, () => {
+    const c = chars[n % chars.length];
+    n = Math.floor(n / chars.length) + 97;
+    return c;
+  }).join("");
+}
 
 export default function BookingConfirmedPage() {
+  const { offer, passenger, seat, bags, total } = useBooking();
+  const name = passenger ? `${passenger.given_name} ${passenger.family_name}` : "Traveller";
+
   return (
-    <>
-      <SiteHeader variant="solid" />
-
-      <main className="bg-canvas">
-        <div className="mx-auto w-full max-w-[1000px] px-5 py-16 text-center sm:px-8">
-          <Image
-            src="/images/auth/success-check.svg"
-            alt=""
-            width={180}
-            height={180}
-            priority
-            className="animate-badge-in mx-auto h-[170px] w-[170px]"
-          />
-
-          <h1 className="mt-8 text-h1 font-bold tracking-tight text-ink">
-            Your Flight is Booked!
-          </h1>
-          <p className="mt-4 text-lead text-label">
-            Thank you for choosing Flygo! Your booking details have been sent to your email.
-          </p>
-
-          <BoardingPass />
-
-          <Link
-            href="#"
-            className="animate-rise mt-10 flex h-[56px] w-full max-w-[460px] items-center justify-center rounded-lg bg-sky text-copy font-medium text-white transition-all duration-200 active:translate-y-px sm:mx-auto"
-          >
-            Download E-Ticket &amp; Boarding Pass
-          </Link>
-
-          <Link
-            href="/hotels"
-            className="mt-5 inline-block text-copy text-brand transition-colors duration-200"
-          >
-            Book a Hotel for Your Trip
-          </Link>
-        </div>
-      </main>
-
-      <SiteFooter flush />
-    </>
-  );
-}
-
-function BoardingPass() {
-  return (
-    <div className="animate-rise mx-auto mt-10 max-w-[570px] overflow-hidden rounded-xl border-2 border-sky text-left">
-      <div className="bg-sky px-5 py-3 text-white">
-        <p className="text-lead font-bold">{BOOKED_TRIP.passenger}</p>
-        <p className="mt-0.5 text-small font-semibold">Seat No: {BOOKED_TRIP.seat}</p>
+    <Confirmation
+      title="Your flight is booked"
+      referenceLabel="Booking reference"
+      reference={reference(offer.id)}
+      email={passenger?.email}
+      next={{ label: "Find a hotel", href: "/hotels" }}
+    >
+      <div className="flex items-center gap-3">
+        <AirlineMark carrier={offer.owner} size={36} />
+        <p className="text-copy font-semibold text-ink">{offer.owner.name}</p>
       </div>
 
-      <div className="flex flex-col bg-white sm:flex-row">
-        <div className="flex-1">
-          {BOOKED_TRIP.legs.map((leg, index) => (
-            <div
-              key={index}
-              className={`flex items-center gap-4 px-4 py-4 ${
-                index > 0 ? "border-t border-line" : ""
-              }`}
-            >
-              <span className="flex w-[74px] shrink-0 items-center">
-                {leg.logo ? (
-                  <Image
-                    src={leg.logo}
-                    alt={leg.carrier}
-                    width={100}
-                    height={70}
-                    className="h-[26px] w-auto object-contain"
-                  />
-                ) : (
-                  <span className="text-tiny leading-tight text-body">{leg.carrier}</span>
-                )}
-              </span>
-
-              <div className="text-right">
-                <p className="text-copy font-semibold text-ink">{leg.departTime}</p>
-                <p className="text-small text-body">{leg.departCode}</p>
-              </div>
-
-              <div className="min-w-0 flex-1 text-center">
-                <p className="text-tiny text-body">{leg.duration}</p>
-                <Rail stops={leg.stops} />
-                <p className="text-tiny">
-                  <span className="text-[#e0518a]">{leg.stops}</span>{" "}
-                  <span className="text-body">{leg.via}</span>
-                </p>
-              </div>
-
-              <div>
-                <p className="text-copy font-semibold text-ink">
-                  {leg.arriveTime}
-                  {leg.nextDay ? <sup className="text-micro font-normal">+1</sup> : null}
-                </p>
-                <p className="text-small text-body">{leg.arriveCode}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex shrink-0 flex-col items-center justify-center gap-3 border-line px-6 py-5 sm:border-l">
-          <p className="text-lead font-semibold text-ink">{BOOKED_TRIP.price}</p>
-          <Link
-            href="#"
-            className="flex h-[36px] items-center gap-2 rounded-md bg-brand px-4 text-small font-medium text-white transition-colors duration-200"
-          >
-            View
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <path d="M4 12h15M14 7l5 5-5 5" />
-            </svg>
-          </Link>
-        </div>
+      <div className="mt-5 space-y-5">
+        {offer.slices.map((slice) => (
+          <div key={slice.id}>
+            <p className="mb-2 text-tiny text-label">{day(slice.segments[0].departing_at)}</p>
+            <Leg slice={slice} />
+          </div>
+        ))}
       </div>
-    </div>
-  );
-}
 
-/** Line with a stop dot per leg and a plane glyph at the arrival end. */
-function Rail({ stops }: { stops: string }) {
-  const count = Number.parseInt(stops, 10) || 0;
-  return (
-    <span className="my-1 flex items-center" aria-hidden="true">
-      <span className="h-px flex-1 bg-ink" />
-      {Array.from({ length: count }, (_, i) => (
-        <span key={i} className="mx-[3px] h-[5px] w-[5px] rounded-full bg-[#e0518a]" />
-      ))}
-      <span className="h-px flex-1 bg-ink" />
-      <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor" className="shrink-0 text-ink">
-        <path d="M21 16v-2l-8-5V3.5a1.5 1.5 0 0 0-3 0V9l-8 5v2l8-2.5V18l-2 1.5V21l3.5-1 3.5 1v-1.5L13 18v-4.5L21 16Z" />
-      </svg>
-    </span>
+      <dl className="mt-6 space-y-2.5 border-t border-line pt-5">
+        <DetailRow label="Passenger" value={name} />
+        <DetailRow label="Seat" value={seat ? seat.designator : "At check-in"} />
+        <DetailRow label="Checked bags" value={includedBags(offer).checked + bags} />
+        <DetailRow label="Paid" value={money(total, offer.total_currency)} />
+      </dl>
+    </Confirmation>
   );
 }
