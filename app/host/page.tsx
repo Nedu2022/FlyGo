@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { BadgeCheck, Camera, Wallet } from "lucide-react";
 import { SiteHeader } from "@/components/site/site-header";
@@ -5,9 +6,11 @@ import { SiteFooter } from "@/components/site/site-footer";
 import { PAGE } from "@/components/site/container";
 import { HostIllustration } from "@/components/ui/illustrations";
 
-export const metadata = {
-  title: "List your place — FLYGO Bookings",
-  description: "Earn from your apartment, house or spare room with FLYGO.",
+export const metadata: Metadata = {
+  title: "List your apartment and earn",
+  description: "List your apartment, house or room on FLYGO. Get verified once and get paid to your bank.",
+  alternates: { canonical: "/host" },
+  openGraph: { title: "List your apartment and earn", description: "List your apartment, house or room on FLYGO. Get verified once and get paid to your bank.", url: "/host" },
 };
 
 const ICON = { size: 22, strokeWidth: 1.9, "aria-hidden": true } as const;

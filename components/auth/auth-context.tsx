@@ -26,7 +26,7 @@ export type CheckStatus = "pending" | "verified";
  */
 export type Verification = {
   phone?: { number: string; status: CheckStatus };
-  identity?: { type: string; number: string; files: string[]; status: CheckStatus };
+  identity?: { type: string; number: string; country?: string; files: string[]; status: CheckStatus };
   selfie?: { file: string; status: CheckStatus };
   address?: { line: string; city: string; state: string; proof: string; status: CheckStatus };
   payout?: { bank: string; accountNumber: string; accountName: string; status: CheckStatus };

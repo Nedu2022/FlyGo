@@ -3,7 +3,8 @@ import Link from "next/link";
 import { PAGE } from "@/components/site/container";
 import { Rail, RAIL_ITEM } from "@/components/site/rail";
 import { SectionHeader } from "@/components/site/section-header";
-import { ArrowRight, Plane } from "lucide-react";
+import { ArrowRight, BadgeCheck, Lock, Plane, ShieldCheck } from "lucide-react";
+import { RecentSearches } from "@/components/site/recent-searches";
 import { SearchBar } from "@/components/site/search-bar";
 import { StayTile } from "@/components/stays/stay-card";
 import { HostIllustration, ShareIllustration } from "@/components/ui/illustrations";
@@ -92,6 +93,12 @@ export function DealCard({ deal }: { deal: Deal }) {
   );
 }
 
+const TRUST = [
+  { label: "Full price up front", icon: BadgeCheck },
+  { label: "Secure card payment", icon: Lock },
+  { label: "Verified hosts", icon: ShieldCheck },
+];
+
 /** The search card, under the hero; the services grid scrolls here. */
 export function SearchSection() {
   return (
@@ -99,7 +106,16 @@ export function SearchSection() {
       <div className="rounded-[28px] bg-shell p-4 sm:p-6 lg:p-8">
         <h2 className="mb-5 text-h3 font-semibold tracking-tight text-ink">Where to next?</h2>
         <SearchBar />
+        <RecentSearches />
       </div>
+      <ul className="mt-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-small text-body">
+        {TRUST.map(({ label, icon: Icon }) => (
+          <li key={label} className="flex items-center gap-1.5">
+            <Icon size={16} strokeWidth={2} aria-hidden="true" className="text-sky" />
+            {label}
+          </li>
+        ))}
+      </ul>
     </section>
   );
 }

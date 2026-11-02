@@ -56,11 +56,11 @@ function SignIn() {
 
         <p className="text-center text-tiny text-label">
           By continuing you accept our{" "}
-          <Link href="/about" className="underline underline-offset-2">
+          <Link href="/terms" className="underline underline-offset-2">
             Terms
           </Link>{" "}
           and{" "}
-          <Link href="/about" className="underline underline-offset-2">
+          <Link href="/privacy" className="underline underline-offset-2">
             Privacy Policy
           </Link>
           .

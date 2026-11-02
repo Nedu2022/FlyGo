@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { CinematicHero } from "@/components/site/hero";
@@ -7,9 +8,11 @@ import { PAGE } from "@/components/site/container";
 import { ShareIllustration } from "@/components/ui/illustrations";
 import { JET_CITIES, findCity, jetOffers } from "@/lib/jet-data";
 
-export const metadata = {
-  title: "Private jets — FLYGO Bookings",
-  description: "Book a private jet for yourself, or share one and split the cost.",
+export const metadata: Metadata = {
+  title: "Private jet charter and jet sharing",
+  description: "Charter a private jet from Lagos, Abuja and beyond, or share one and split the cost.",
+  alternates: { canonical: "/private-jets" },
+  openGraph: { title: "Private jet charter and jet sharing", description: "Charter a private jet from Lagos, Abuja and beyond, or share one and split the cost.", url: "/private-jets" },
 };
 
 const cityParam = (value: string | string[] | undefined, fallback: string) =>

@@ -15,55 +15,21 @@ export type Faq = {
 };
 
 export const FAQS: Faq[] = [
+  { question: "Are there booking fees?", answer: "No. The price you see includes taxes and fees." },
   {
-    question: "Are there any booking fees?",
-    answer:
-      "No. The price you see includes taxes and fees where the provider shares them, and we never add a charge of our own at checkout.",
+    question: "Can I cancel?",
+    answer: "It depends on the fare or room. Free cancellation is labelled before you pay.",
+  },
+  { question: "How long do refunds take?", answer: "Usually 5 to 10 working days after the airline or hotel approves it." },
+  { question: "How do I pay?", answer: "By debit or credit card. You're only charged once your booking is confirmed." },
+  { question: "How does jet sharing work?", answer: "Join a group flying your route and split the cost by seat." },
+  {
+    question: "Can I list my apartment?",
+    answer: "Yes, with the same account. Add your place, verify your identity, and get paid to your bank.",
   },
   {
-    question: "What is your cancellation policy?",
-    answer:
-      "It depends on the fare or room you choose. Free-cancellation options are labelled clearly, and most stays can be cancelled up to 48 hours before check-in.",
-  },
-  {
-    question: "How long does a refund take?",
-    answer:
-      "Usually 5 to 10 working days after the airline or hotel approves it. We email you at each step, and you can track it in your account.",
-  },
-  {
-    question: "How does FLYGO find such low prices?",
-    answer:
-      "We search 300+ airlines and over 2 million hotels and apartments at once, and show the full price with taxes up front. You book directly with us.",
-  },
-  {
-    question: "Which payment methods can I use?",
-    answer:
-      "Debit and credit cards, Paystack and Flutterwave. Every payment is encrypted, and you're only charged once your booking is confirmed.",
-  },
-  {
-    question: "Can I change the name or dates on my booking?",
-    answer:
-      "Dates can often be changed for a fare difference. Name changes depend on the airline, so contact us with your booking reference and we'll check for you.",
-  },
-  {
-    question: "Can I book flights and hotels together?",
-    answer:
-      "Yes. Search a flight, then add a stay from the same trip page. Everything lands in one itinerary in your account.",
-  },
-  {
-    question: "How do price alerts work?",
-    answer:
-      "Save a route or a hotel and we watch it for you. When the price drops, we email you so you can book at the right moment.",
-  },
-  {
-    question: "Which currency will I be charged in?",
-    answer:
-      "The currency shown at checkout. You can switch currency before you pay, and the total is locked in once you confirm.",
-  },
-  {
-    question: "How do I contact support about a booking?",
-    answer:
-      "By chat, phone or email, 24/7. Have your booking reference ready and we'll sort it quickly.",
+    question: "Why verify my identity?",
+    answer: "It keeps hosts and travellers safe. It's needed for private jets, jet sharing and hosting.",
   },
 ];
 
@@ -105,14 +71,14 @@ export const FOOTER_LINKS = [
     links: [
       { label: "About Us", href: "/about" },
       { label: "Contact Us", href: "/contact" },
-      { label: "Help Centre", href: "/contact" },
+      { label: "Help Centre", href: "/contact#faq" },
     ],
   },
   {
     heading: "Legal",
     links: [
-      { label: "Terms & Conditions", href: "/about" },
-      { label: "Privacy Policy", href: "/about" },
+      { label: "Terms", href: "/terms" },
+      { label: "Privacy", href: "/privacy" },
     ],
   },
 ]
@@ -127,10 +93,11 @@ export const FOOTER_CONTACT = {
 
 /** Socials in the dark footer. Each key maps to an icon in <SocialIcon />. */
 export const FOOTER_SOCIALS = [
-  { name: "facebook", label: "Facebook", href: "#" },
-  { name: "instagram", label: "Instagram", href: "#" },
-  { name: "tiktok", label: "TikTok", href: "#" },
-  { name: "x", label: "X", href: "#" },
+  // Add each profile URL to show its icon; empty ones are hidden.
+  { name: "facebook", label: "Facebook", href: "" },
+  { name: "instagram", label: "Instagram", href: "" },
+  { name: "tiktok", label: "TikTok", href: "" },
+  { name: "x", label: "X", href: "" },
 ] as const;
 
 /* --------------------------------------------------------------------------
@@ -138,28 +105,28 @@ export const FOOTER_SOCIALS = [
    -------------------------------------------------------------------------- */
 
 export const ABOUT_MISSION =
-  "One search for flights and stays, clear prices, and help from real people when plans change. We want booking a trip to take minutes, not evenings.";
+  "Flights, stays and private jets in one place, with the full price up front and real people to help.";
 
 export const ABOUT_VISION =
-  "To be the first place travellers in Africa and beyond turn to when they plan a trip, because we are fast, honest about price and there when it matters.";
+  "The first place travellers in Africa turn to when they plan a trip.";
 
 export type CoreValue = {
   title: string;
   body: string;
   /** Matches an icon in <ValueIcon />. */
-  icon: "customer" | "innovation" | "transparency" | "sustainability";
+  icon: "customer" | "innovation" | "transparency" | "safety";
 };
 
 export const CORE_VALUES: CoreValue[] = [
   {
     icon: "customer",
     title: "Travellers first",
-    body: "Every decision starts with what makes the trip easier for you.",
+    body: "Every choice starts with what makes your trip easier.",
   },
   {
     icon: "innovation",
     title: "Built to be fast",
-    body: "Fast search, smart alerts and tools that save you time.",
+    body: "Search and book in minutes.",
   },
   {
     icon: "transparency",
@@ -167,9 +134,9 @@ export const CORE_VALUES: CoreValue[] = [
     body: "The price you see is the price you pay. No surprises.",
   },
   {
-    icon: "sustainability",
-    title: "Travel responsibly",
-    body: "We highlight greener options and travel more responsibly.",
+    icon: "safety",
+    title: "Verified people",
+    body: "Hosts and travellers confirm who they are.",
   },
 ];
 

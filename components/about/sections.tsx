@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { BadgeCheck, HeartHandshake, Leaf, Zap } from "lucide-react";
+import { BadgeCheck, HeartHandshake, ShieldCheck, Zap } from "lucide-react";
 import type { ReactNode } from "react";
 import Link from "next/link";
 import { ABOUT_MISSION, ABOUT_VISION, CORE_VALUES } from "@/lib/site-data";
@@ -20,7 +20,7 @@ export function AboutHero() {
           Travel made simple<span className="text-brand">.</span>
         </>
       }
-      subtitle="Flights and stays, compared in one search."
+      subtitle="Flights, stays and private jets in one place."
     >
       <div className="flex flex-wrap gap-3">
         <Link
@@ -169,7 +169,7 @@ const VALUE_ICONS = {
   customer: HeartHandshake,
   innovation: Zap,
   transparency: BadgeCheck,
-  sustainability: Leaf,
+  safety: ShieldCheck,
 };
 
 function ValueIcon({ name, size = 22 }: { name: string; size?: number }) {

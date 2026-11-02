@@ -4,9 +4,15 @@ import { StayResults } from "@/components/stays/stay-results";
 import { STAYS, STAY_SEARCH } from "@/lib/liteapi";
 import { day } from "@/lib/format";
 
-export const metadata = {
-  title: "Stays — FLYGO Bookings",
-};
+export async function generateMetadata({ searchParams }: { searchParams: Promise<{ type?: string }> }) {
+  const apartments = (await searchParams).type === "apartments";
+  const title = apartments ? "Apartments in London" : "Hotels in London";
+  return {
+    title,
+    description: `Compare ${apartments ? "apartments" : "hotels"} in London by price, rating and free cancellation.`,
+    alternates: { canonical: apartments ? "/hotels/search?type=apartments" : "/hotels/search" },
+  };
+}
 
 export default async function StaySearchPage({ searchParams }: { searchParams: Promise<{ type?: string }> }) {
   const { type } = await searchParams;

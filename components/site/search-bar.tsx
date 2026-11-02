@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import { saveRecent } from "@/lib/recent-searches";
 import { useRouter } from "next/navigation";
 import { ArrowLeftRight, ArrowUpDown, BedDouble, Building2, ChevronDown, Plane, type LucideProps } from "lucide-react";
 import { DateField } from "@/components/ui/calendar";
@@ -39,6 +40,8 @@ const TABS = [
 export type SearchTab = (typeof TABS)[number]["value"];
 
 export const SEARCH_TAB_EVENT = "flygo:search-tab";
+
+const SHORT = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" });
 
 const TRIP_KINDS = ["Return", "One-way", "Multi-city"] as const;
 /** Charters are quoted point to point, so no multi-city. */
@@ -102,15 +105,22 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        router.push(
-          jet
-            ? `/private-jets?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`
-            : flight
-              ? "/flights"
-              : tab === "Apartment"
-                ? "/hotels/search?type=apartments"
-                : "/hotels/search",
-        );
+        const href = jet
+          ? `/private-jets?from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`
+          : flight
+            ? "/flights"
+            : tab === "Apartment"
+              ? "/hotels/search?type=apartments"
+              : "/hotels/search";
+        const dates = `${SHORT.format(departure)}${flight && oneWay ? "" : ` – ${SHORT.format(returnDate)}`}`;
+        const place = (value: string) => value.replace(/\s*\(.*\)$/, "") || "Anywhere";
+        saveRecent({
+          kind: tab,
+          label: flight ? `${place(from)} → ${place(to)}` : `${tab === "Apartment" ? "Apartments" : "Hotels"} in ${place(where)}`,
+          detail: dates,
+          href,
+        });
+        router.push(href);
       }}
     >
       {/* Product tiles */}

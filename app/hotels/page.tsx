@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { Hero } from "@/components/site/hero";
@@ -7,9 +8,11 @@ import { Rail, RAIL_ITEM } from "@/components/site/rail";
 import { PAGE } from "@/components/site/container";
 import { STAYS } from "@/lib/liteapi";
 
-export const metadata = {
-  title: "Hotels and apartments — FLYGO Bookings",
-  description: "Find and book hotels and apartments with Flygo.",
+export const metadata: Metadata = {
+  title: "Hotels and apartments",
+  description: "Book top-rated hotels and short-let apartments with free cancellation on many rooms. Full price shown up front.",
+  alternates: { canonical: "/hotels" },
+  openGraph: { title: "Hotels and apartments", description: "Book top-rated hotels and short-let apartments with free cancellation on many rooms. Full price shown up front.", url: "/hotels" },
 };
 
 const byRating = [...STAYS].sort((a, b) => b.rating - a.rating);

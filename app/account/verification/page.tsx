@@ -11,17 +11,39 @@ import { VerifyIllustration } from "@/components/ui/illustrations";
 
 const ICON = { size: 20, strokeWidth: 1.9, "aria-hidden": true } as const;
 
+/** Internationally accepted identity documents for global travel and luxury charters. */
 const ID_TYPES = [
-  { value: "passport", label: "International passport" },
-  { value: "nin", label: "National ID (NIN)" },
+  { value: "passport", label: "Passport" },
+  { value: "national_id", label: "National ID card" },
   { value: "drivers_licence", label: "Driver's licence" },
-  { value: "voters_card", label: "Voter's card" },
+  { value: "residence_permit", label: "Residence permit / Green card" },
 ];
 
-const BANKS = ["Access Bank", "GTBank", "First Bank", "Zenith Bank", "UBA", "Kuda", "Opay", "Moniepoint"].map((b) => ({
-  value: b,
-  label: b,
-}));
+const COUNTRIES = [
+  { value: "US", label: "United States" },
+  { value: "GB", label: "United Kingdom" },
+  { value: "CA", label: "Canada" },
+  { value: "EU", label: "European Union" },
+  { value: "AE", label: "United Arab Emirates" },
+  { value: "SA", label: "Saudi Arabia" },
+  { value: "QA", label: "Qatar" },
+  { value: "CH", label: "Switzerland" },
+  { value: "SG", label: "Singapore" },
+  { value: "AU", label: "Australia" },
+  { value: "ZA", label: "South Africa" },
+  { value: "NG", label: "Nigeria" },
+  { value: "GH", label: "Ghana" },
+  { value: "KE", label: "Kenya" },
+  { value: "OTHER", label: "Other country" },
+];
+
+const PAYOUT_METHODS = [
+  { value: "wire", label: "International Bank Transfer (SWIFT / Wire)" },
+  { value: "ach", label: "US Direct Deposit (ACH / Routing)" },
+  { value: "sepa", label: "SEPA Transfer (Europe / IBAN)" },
+  { value: "bacs", label: "UK Faster Payments / Sort Code" },
+  { value: "local", label: "Local African / Regional Bank" },
+];
 
 type Key = keyof Verification;
 
@@ -76,10 +98,10 @@ export default function VerificationPage() {
 
       <h3 className="mb-3 mt-8 text-small font-semibold uppercase tracking-[0.12em] text-label">Travellers</h3>
       <ul className="space-y-2">
-        {row("phone", <Smartphone {...ICON} />, "Phone number", v.phone?.number ?? "We text you a code", (
+        {row("phone", <Smartphone {...ICON} />, "Phone number", v.phone?.number ?? "We text you a verification code", (
           <PhoneForm initial={user.phone} onDone={(number) => save("phone", { number, status: "verified" })} />
         ))}
-        {row("identity", <IdCard {...ICON} />, "ID document", v.identity ? labelFor(v.identity.type) : "Passport, NIN, driver's licence or voter's card", (
+        {row("identity", <IdCard {...ICON} />, "ID document", v.identity ? labelFor(v.identity.type) : "Passport, national ID card or driver's licence", (
           <IdentityForm onDone={(value) => save("identity", value)} />
         ))}
         {row("selfie", <Fingerprint {...ICON} />, "Selfie", "Matched to your ID photo", (
@@ -138,7 +160,7 @@ function Check({
 function Status({ status }: { status?: CheckStatus }) {
   if (status === "verified") return <span className="rounded-full bg-sky px-2.5 py-1 text-tiny font-semibold text-white">Verified</span>;
   if (status === "pending") return <span className="rounded-full bg-brand-soft px-2.5 py-1 text-tiny font-semibold text-brand-hover">In review</span>;
-  return <span className="rounded-full bg-white px-2.5 py-1 text-tiny font-medium text-label">To do</span>;
+  return null;
 }
 
 function PhoneForm({ initial, onDone }: { initial?: string; onDone: (number: string) => void }) {
@@ -155,7 +177,16 @@ function PhoneForm({ initial, onDone }: { initial?: string; onDone: (number: str
         }}
         className="grid gap-4 sm:max-w-[420px]"
       >
-        <TextField label="Phone number" type="tel" autoComplete="tel" placeholder="+234 801 234 5678" value={number} onChange={(e) => setNumber(e.target.value)} required minLength={10} />
+        <TextField
+          label="Phone number"
+          type="tel"
+          autoComplete="tel"
+          placeholder="+1 555 123 4567 or +44 7911 123456"
+          value={number}
+          onChange={(e) => setNumber(e.target.value)}
+          required
+          minLength={8}
+        />
         <PrimaryButton>Send code</PrimaryButton>
       </form>
     );
@@ -173,6 +204,7 @@ function PhoneForm({ initial, onDone }: { initial?: string; onDone: (number: str
 
 function IdentityForm({ onDone }: { onDone: (value: NonNullable<Verification["identity"]>) => void }) {
   const [type, setType] = useState("passport");
+  const [country, setCountry] = useState("US");
   const [front, setFront] = useState<File | null>(null);
   const [back, setBack] = useState<File | null>(null);
   const [error, setError] = useState("");
@@ -180,19 +212,23 @@ function IdentityForm({ onDone }: { onDone: (value: NonNullable<Verification["id
 
   const submit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!front || (twoSided && !back)) return setError("Add a photo of each side.");
+    if (!front || (twoSided && !back)) {
+      return setError(twoSided ? "Please upload both front and back photos of your ID." : "Please upload your passport photo page.");
+    }
     const number = String(new FormData(e.currentTarget).get("number")).trim();
-    onDone({ type, number, files: [front, back].filter(Boolean).map((f) => f!.name), status: "pending" });
+    if (!number) return setError("Please enter your document number.");
+    onDone({ type, country, number, files: [front, back].filter(Boolean).map((f) => f!.name), status: "pending" });
   };
 
   return (
     <form onSubmit={submit} className="grid gap-4 sm:grid-cols-2">
-      <SelectField label="Document" options={ID_TYPES} value={type} onChange={(e) => setType(e.target.value)} />
-      <TextField label="Document number" name="number" required />
-      <FilePick label={twoSided ? "Front" : "Photo page"} file={front} onPick={(f, err) => (setFront(f), setError(err ?? ""))} />
-      {twoSided ? <FilePick label="Back" file={back} onPick={(f, err) => (setBack(f), setError(err ?? ""))} /> : null}
+      <SelectField label="Document type" options={ID_TYPES} value={type} onChange={(e) => setType(e.target.value)} />
+      <SelectField label="Issuing country" options={COUNTRIES} value={country} onChange={(e) => setCountry(e.target.value)} />
+      <TextField label="Document number" name="number" placeholder="e.g. Passport or ID number" required className="sm:col-span-2" />
+      <FilePick label={twoSided ? "Front of ID" : "Passport photo page"} file={front} onPick={(f, err) => (setFront(f), setError(err ?? ""))} />
+      {twoSided ? <FilePick label="Back of ID" file={back} onPick={(f, err) => (setBack(f), setError(err ?? ""))} /> : null}
       {error ? <p role="alert" className="text-small text-red-600 sm:col-span-2">{error}</p> : null}
-      <PrimaryButton className="sm:col-span-2 sm:max-w-[220px]">Submit</PrimaryButton>
+      <PrimaryButton className="sm:col-span-2 sm:max-w-[220px]">Submit for verification</PrimaryButton>
     </form>
   );
 }
@@ -226,7 +262,7 @@ function AddressForm({ onDone }: { onDone: (value: NonNullable<Verification["add
     >
       <TextField label="Street address" name="line" autoComplete="street-address" required className="sm:col-span-2" />
       <TextField label="City" name="city" autoComplete="address-level2" required />
-      <TextField label="State" name="state" autoComplete="address-level1" required />
+      <TextField label="State / Province" name="state" autoComplete="address-level1" required />
       <div className="sm:col-span-2">
         <FilePick label="Proof of address" file={proof} onPick={(f, err) => (setProof(f), setError(err ?? ""))} />
       </div>
@@ -247,10 +283,10 @@ function PayoutForm({ name, onDone }: { name: string; onDone: (value: NonNullabl
       }}
       className="grid gap-4 sm:grid-cols-2"
     >
-      <SelectField label="Bank" name="bank" options={BANKS} />
-      <TextField label="Account number" name="account" inputMode="numeric" pattern="\d{10}" title="10-digit NUBAN" required />
-      <TextField label="Account name" name="accountName" defaultValue={name} required className="sm:col-span-2" />
-      <PrimaryButton className="sm:col-span-2 sm:max-w-[220px]">Save</PrimaryButton>
+      <SelectField label="Payout method" name="bank" options={PAYOUT_METHODS} />
+      <TextField label="Account number or IBAN" name="account" placeholder="IBAN, account or routing number" required />
+      <TextField label="Account holder name" name="accountName" defaultValue={name} required className="sm:col-span-2" />
+      <PrimaryButton className="sm:col-span-2 sm:max-w-[220px]">Save payout details</PrimaryButton>
     </form>
   );
 }

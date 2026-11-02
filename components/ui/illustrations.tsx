@@ -104,3 +104,21 @@ export function ShareIllustration({ className }: Props) {
     </Frame>
   );
 }
+
+/** A plane that has wandered off its dotted route, beside a "?" signpost: page not found. */
+export function LostIllustration({ className }: Props) {
+  return (
+    <Frame className={className}>
+      <circle cx="100" cy="70" r="58" fill={C.brandSoft} />
+      <path d="M28 112c20-4 34-26 54-30s30 16 48 6" stroke={C.brand} strokeWidth="3" strokeDasharray="2 7" strokeLinecap="round" />
+      <path d="M130 88c12-6 18-24 26-40" stroke={C.ink} strokeWidth="2.5" strokeDasharray="2 7" strokeLinecap="round" opacity="0.5" />
+      <g transform="translate(150 22) rotate(-35)">
+        <path d="M0 14 32 0l-8 30-9-9-7 9V18Z" fill={C.white} stroke={C.ink} strokeWidth="3" strokeLinejoin="round" />
+        <path d="M8 18 32 0" stroke={C.ink} strokeWidth="2.5" />
+      </g>
+      <path d="M64 130V62" stroke={C.ink} strokeWidth="4" strokeLinecap="round" />
+      <path d="M44 50h40l8 9-8 9H44V50Z" fill={C.sky} stroke={C.ink} strokeWidth="3" strokeLinejoin="round" />
+      <text x="66" y="65" textAnchor="middle" fontSize="15" fontWeight="800" fill={C.white} fontFamily="sans-serif">?</text>
+    </Frame>
+  );
+}

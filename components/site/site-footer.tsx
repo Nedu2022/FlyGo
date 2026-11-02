@@ -19,7 +19,7 @@ export function SiteFooter({ flush = false }: { flush?: boolean }) {
           <div>
             <p className="max-w-[420px] text-lead text-ink">{FOOTER_BLURB}</p>
             <div className="mt-7 flex gap-3">
-              {FOOTER_SOCIALS.map((social) => (
+              {FOOTER_SOCIALS.filter((social) => social.href).map((social) => (
                 <SocialIcon
                   key={social.name}
                   name={social.name}
