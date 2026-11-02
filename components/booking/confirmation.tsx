@@ -41,7 +41,7 @@ export function Confirmation({
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
             <Link
-              href="/account#trips"
+              href="/account"
               className="flex h-12 flex-1 items-center justify-center rounded-xl bg-brand text-copy font-semibold text-white"
             >
               View my trips

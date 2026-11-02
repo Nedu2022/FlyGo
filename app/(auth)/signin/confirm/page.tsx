@@ -6,7 +6,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { MailCheck } from "lucide-react";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { Checkbox } from "@/components/auth/fields";
-import { PrimaryButton } from "@/components/auth/buttons";
+import { PrimaryButton, safeNext } from "@/components/auth/buttons";
 import { OtpInput } from "@/components/auth/otp-input";
 import { useAuth } from "@/components/auth/auth-context";
 
@@ -17,7 +17,9 @@ import { useAuth } from "@/components/auth/auth-context";
  */
 function Confirm() {
   const router = useRouter();
-  const email = useSearchParams().get("email") ?? "";
+  const params = useSearchParams();
+  const email = params.get("email") ?? "";
+  const next = safeNext(params.get("next"));
   const { signIn, isKnownEmail } = useAuth();
 
   const [step, setStep] = useState<"code" | "setup">("code");
@@ -43,7 +45,7 @@ function Confirm() {
     // No backend yet: any 6-digit code is accepted.
     if (isKnownEmail(email)) {
       signIn(email);
-      router.push("/");
+      router.push(next);
     } else {
       setStep("setup");
     }
@@ -53,7 +55,7 @@ function Confirm() {
     e.preventDefault();
     setBusy(true);
     signIn(email);
-    router.push("/");
+    router.push(next);
   };
 
   if (step === "setup") {

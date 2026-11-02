@@ -1,0 +1,111 @@
+"use client";
+
+import Link from "next/link";
+import type { ReactNode } from "react";
+import { BedDouble, Building2, CalendarCheck, House, Plane, Users } from "lucide-react";
+import { PAGE } from "@/components/site/container";
+import { VantaDots } from "@/components/site/vanta-dots";
+import { AiMark } from "@/components/site/ai-mark";
+import { openAssistant } from "@/components/site/ai-assistant";
+import { PrivateJet, SEARCH_TAB_EVENT, type SearchTab } from "@/components/site/search-bar";
+
+const ICON = { size: 22, strokeWidth: 1.9, "aria-hidden": true } as const;
+
+type Tile = { label: string; icon: ReactNode } & ({ tab: SearchTab } | { href: string } | { action: () => void });
+
+const TILES: Tile[] = [
+  { label: "Flights", icon: <Plane {...ICON} />, tab: "Flight" },
+  { label: "Hotels", icon: <BedDouble {...ICON} />, tab: "Hotel" },
+  { label: "Apartments", icon: <Building2 {...ICON} />, tab: "Apartment" },
+  { label: "Private jets", icon: <PrivateJet {...ICON} />, tab: "Jet" },
+  { label: "Share a jet", icon: <Users {...ICON} />, href: "/private-jets#share" },
+  { label: "List your place", icon: <House {...ICON} />, href: "/host" },
+  { label: "Ask AI", icon: <AiMark size={22} />, action: () => openAssistant() },
+  { label: "My trips", icon: <CalendarCheck {...ICON} />, href: "/account" },
+];
+
+function pickTab(tab: SearchTab) {
+  window.dispatchEvent(new CustomEvent(SEARCH_TAB_EVENT, { detail: tab }));
+  document.getElementById("search")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+const tileClass =
+  "flex h-full flex-col items-center justify-center gap-2 rounded-2xl bg-white px-1 py-3.5 text-center shadow-[0_1px_2px_rgba(16,24,40,0.05),0_8px_20px_-14px_rgba(16,24,40,0.3)] sm:gap-3 sm:py-5";
+
+function TileBody({ tile }: { tile: Tile }) {
+  return (
+    <>
+      <span className="flex h-11 w-11 items-center justify-center rounded-full bg-brand-soft text-brand sm:h-12 sm:w-12">
+        {tile.icon}
+      </span>
+      <span className="text-tiny font-medium leading-tight text-ink sm:text-small">{tile.label}</span>
+    </>
+  );
+}
+
+/**
+ * Home hero: the line and two actions on the left, every FLYGO service as a
+ * tile grid on the right, over a slow three.js dot field.
+ */
+export function HomeHero() {
+  return (
+    <section className="relative isolate overflow-hidden">
+      <VantaDots className="absolute inset-0 -z-20" />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(255,255,255,0.96)_0%,rgba(255,255,255,0.75)_45%,rgba(255,255,255,0.2)_100%)] lg:bg-[linear-gradient(90deg,rgba(255,255,255,0.97)_0%,rgba(255,255,255,0.85)_38%,rgba(255,255,255,0)_70%)]"
+      />
+
+      <div className={`${PAGE} grid items-center gap-10 pb-12 pt-8 sm:pb-16 sm:pt-14 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:gap-14 lg:pb-24 lg:pt-20`}>
+        <div className="animate-rise">
+          <p className="inline-flex rounded-full bg-brand-soft px-3 py-1 text-tiny font-semibold text-brand-hover">
+            Flights · Stays · Private jets
+          </p>
+          <h1 className="mt-4 text-display font-bold leading-[1.05] tracking-tight text-ink">
+            Fly, stay and go,
+            <br />
+            <span className="bg-linear-to-r from-brand to-[#f2a24f] bg-clip-text text-transparent">your way.</span>
+          </h1>
+          <p className="mt-4 max-w-[440px] text-lead text-body">Book it all in one place, with the full price up front.</p>
+          <div className="mt-7 flex flex-wrap gap-3">
+            <button
+              type="button"
+              onClick={() => pickTab("Flight")}
+              className="h-12 rounded-full bg-brand px-7 text-copy font-semibold text-white shadow-[0_10px_22px_-10px_rgba(224,117,42,0.8)] active:translate-y-px"
+            >
+              Start searching
+            </button>
+            <Link
+              href="/host"
+              className="flex h-12 items-center rounded-full bg-white px-6 text-copy font-semibold text-ink shadow-[0_1px_2px_rgba(16,24,40,0.06),0_8px_20px_-14px_rgba(16,24,40,0.35)]"
+            >
+              List your place
+            </Link>
+          </div>
+        </div>
+
+        <div className="animate-rise rounded-[28px] bg-white/60 p-2.5 shadow-[0_20px_50px_-30px_rgba(16,24,40,0.35)] backdrop-blur-md sm:p-4">
+          <ul className="grid grid-cols-4 gap-2 sm:gap-3">
+            {TILES.map((tile) => (
+              <li key={tile.label}>
+                {"tab" in tile ? (
+                  <button type="button" onClick={() => pickTab(tile.tab)} className={`${tileClass} w-full`}>
+                    <TileBody tile={tile} />
+                  </button>
+                ) : "href" in tile ? (
+                  <Link href={tile.href} className={tileClass}>
+                    <TileBody tile={tile} />
+                  </Link>
+                ) : (
+                  <button type="button" onClick={tile.action} className={`${tileClass} w-full`}>
+                    <TileBody tile={tile} />
+                  </button>
+                )}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}

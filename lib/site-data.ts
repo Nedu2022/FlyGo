@@ -96,7 +96,8 @@ export const FOOTER_LINKS = [
       { label: "Hotels", href: "/hotels" },
       { label: "Apartments", href: "/hotels/search?type=apartments" },
       { label: "Private jets", href: "/private-jets" },
-      { label: "Travel deals", href: "/flights" },
+      { label: "Share a jet", href: "/private-jets#share" },
+      { label: "List your place", href: "/host" },
     ],
   },
   {

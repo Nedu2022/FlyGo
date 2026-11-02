@@ -76,6 +76,9 @@ export function SiteHeader({
         </nav>
 
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
+          <Link href="/host" className="hidden rounded-full px-3.5 py-2 text-copy font-medium text-ink lg:block">
+            List your place
+          </Link>
           <button
             type="button"
             onClick={() => openAssistant()}
@@ -88,7 +91,7 @@ export function SiteHeader({
           {isAuthenticated ? (
             <>
               <Link
-                href="/account#saved"
+                href="/account/saved"
                 aria-label="Saved"
                 className="hidden h-12 w-12 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:flex"
               >

@@ -1,18 +1,19 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { Suspense, useState, type FormEvent } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { AuthShell } from "@/components/auth/auth-shell";
 import { TextField } from "@/components/auth/fields";
-import { OrDivider, PrimaryButton, SocialButtons } from "@/components/auth/buttons";
+import { OrDivider, PrimaryButton, SocialButtons, safeNext } from "@/components/auth/buttons";
 
 /**
  * One screen for signing in and signing up, as on Kayak: continue with Apple
  * or Google, or enter an email and we send a code. No passwords.
  */
-export default function SignInPage() {
+function SignIn() {
   const router = useRouter();
+  const next = safeNext(useSearchParams().get("next"));
   const [email, setEmail] = useState("");
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -28,12 +29,12 @@ export default function SignInPage() {
     }
 
     setBusy(true);
-    router.push(`/signin/confirm?email=${encodeURIComponent(trimmed)}`);
+    router.push(`/signin/confirm?email=${encodeURIComponent(trimmed)}&next=${encodeURIComponent(next)}`);
   }
 
   return (
     <AuthShell heading="Sign in or create an account">
-      <SocialButtons />
+      <SocialButtons next={next} />
 
       <div className="my-6">
         <OrDivider label="or use your email" />
@@ -66,5 +67,13 @@ export default function SignInPage() {
         </p>
       </form>
     </AuthShell>
+  );
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense>
+      <SignIn />
+    </Suspense>
   );
 }

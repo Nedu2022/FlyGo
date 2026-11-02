@@ -2,7 +2,10 @@
 
 import { useMemo, useState } from "react";
 import { StayCard } from "@/components/stays/stay-card";
+import { Pagination, scrollToList } from "@/components/ui/pagination";
 import { cheapest, refundable, total, type Hotel } from "@/lib/liteapi";
+
+const PAGE_SIZE = 4;
 
 type Sort = "recommended" | "price" | "rating";
 const SORTS: { value: Sort; label: string }[] = [
@@ -18,6 +21,7 @@ export function StayResults({ stays }: { stays: Hotel[] }) {
   const [sort, setSort] = useState<Sort>("recommended");
   const [freeCancel, setFreeCancel] = useState(false);
   const [breakfast, setBreakfast] = useState(false);
+  const [page, setPage] = useState(1);
 
   const shown = useMemo(() => {
     const list = stays
@@ -30,6 +34,9 @@ export function StayResults({ stays }: { stays: Hotel[] }) {
     };
     return [...list].sort(by[sort]);
   }, [stays, sort, freeCancel, breakfast]);
+
+  const current = Math.min(page, Math.max(1, Math.ceil(shown.length / PAGE_SIZE)));
+  const pageItems = shown.slice((current - 1) * PAGE_SIZE, current * PAGE_SIZE);
 
   return (
     <div className="space-y-4">
@@ -48,17 +55,29 @@ export function StayResults({ stays }: { stays: Hotel[] }) {
         </Chip>
       </div>
 
-      <p className="px-1 text-small text-label">{shown.length} places</p>
+      <p id="stays" className="scroll-mt-24 px-1 text-small text-label">
+        {shown.length} places
+      </p>
 
       {shown.length ? (
         <ul className="space-y-4">
-          {shown.map((h) => (
+          {pageItems.map((h, i) => (
             <li key={h.id}>
-              <StayCard hotel={h} />
+              <StayCard hotel={h} eager={i === 0} />
             </li>
           ))}
         </ul>
-      ) : (
+      ) : null}
+      <Pagination
+        page={current}
+        pageSize={PAGE_SIZE}
+        total={shown.length}
+        onChange={(p) => {
+          setPage(p);
+          scrollToList("stays");
+        }}
+      />
+      {shown.length ? null : (
         <p className="rounded-2xl bg-white p-8 text-center text-copy text-body">No places match these filters.</p>
       )}
     </div>

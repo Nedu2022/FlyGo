@@ -1,20 +1,21 @@
-import { SiteHeader } from "@/components/site/site-header";
-import { SiteFooter } from "@/components/site/site-footer";
-import { PAGE } from "@/components/site/container";
-import { AccountView } from "@/components/account/account-view";
+import Link from "next/link";
+import { EmptyState } from "@/components/account/account-shell";
+import { TripsIllustration } from "@/components/ui/illustrations";
 
-export const metadata = {
-  title: "Your account — FLYGO Bookings",
-};
-
-export default function AccountPage() {
+export default function TripsPage() {
   return (
-    <>
-      <SiteHeader variant="solid" />
-      <main className={PAGE}>
-        <AccountView />
-      </main>
-      <SiteFooter />
-    </>
+    <section>
+      <h2 className="mb-4 text-h3 font-semibold tracking-tight text-ink">Trips</h2>
+      <EmptyState
+        art={<TripsIllustration />}
+        title="No trips yet"
+        note="Flights, stays and jets you book will show up here."
+        action={
+          <Link href="/#search" className="mt-5 rounded-full bg-brand px-5 py-2.5 text-small font-semibold text-white">
+            Start searching
+          </Link>
+        }
+      />
+    </section>
   );
 }

@@ -3,9 +3,11 @@ import Link from "next/link";
 import { PAGE } from "@/components/site/container";
 import { Rail, RAIL_ITEM } from "@/components/site/rail";
 import { SectionHeader } from "@/components/site/section-header";
-import { ArrowRight, BedDouble, Building2, Plane, Star } from "lucide-react";
-import { Avatar } from "@/components/ui/avatar";
-import { PrivateJet } from "@/components/site/search-bar";
+import { ArrowRight, Plane } from "lucide-react";
+import { SearchBar } from "@/components/site/search-bar";
+import { StayTile } from "@/components/stays/stay-card";
+import { HostIllustration, ShareIllustration } from "@/components/ui/illustrations";
+import { STAYS } from "@/lib/liteapi";
 import { DEALS, type Deal } from "@/lib/site-data";
 
 /** "$1,299" -> 1299, for ordering cheapest first. */
@@ -90,110 +92,73 @@ export function DealCard({ deal }: { deal: Deal }) {
   );
 }
 
-const PARTNERS = [
-  "/images/airlines/emirates.svg",
-  "/images/providers/wego.svg",
-  "/images/providers/mytrip.svg",
-  "/images/providers/city-travel.svg",
-  "/images/providers/lucky2go.svg",
-];
-
-/** Three ticket-style reasons to book, a swipeable row on phones. */
-export function TrustCards() {
-  const card = "flex w-[72%] shrink-0 snap-start flex-col rounded-[22px] bg-shell sm:w-auto sm:rounded-[28px]";
-  const top = "px-5 pb-3 pt-5 sm:px-7 sm:pb-4 sm:pt-7";
-  const stub = "px-5 pb-5 pt-2 sm:px-7 sm:pb-7 sm:pt-3";
+/** The search card, under the hero; the services grid scrolls here. */
+export function SearchSection() {
   return (
-    <section className={`${PAGE} pt-8 sm:pt-12`}>
-      <div className="no-scrollbar -mx-4 flex snap-x snap-mandatory scroll-px-4 gap-3 overflow-x-auto px-4 sm:mx-0 sm:grid sm:grid-cols-3 sm:gap-4 sm:overflow-visible sm:px-0">
-        <div className={card}>
-          <div className={top}>
-            <div className="flex -space-x-2">
-              {PARTNERS.map((src) => (
-                <span key={src} className="flex h-11 w-11 items-center justify-center overflow-hidden rounded-full border-2 border-shell bg-white sm:h-14 sm:w-14">
-                  <Image src={src} alt="" width={44} height={44} className="h-6 w-7 object-contain sm:h-9 sm:w-10" />
-                </span>
-              ))}
-            </div>
-          </div>
-          <TearLine />
-          <div className={stub}>
-            <p className="text-h4 font-semibold text-ink">Every airline, one search</p>
-            <p className="mt-1 text-small text-body">300+ airlines, full price shown up front.</p>
-          </div>
-        </div>
-
-        <div className={card}>
-          <div className={top}>
-            <div className="flex -space-x-2">
-              {["Ada Okafor", "Tunde Bello", "Mina Sato"].map((name) => (
-                <Avatar key={name} name={name} size={44} className="ring-2 ring-shell" />
-              ))}
-            </div>
-          </div>
-          <TearLine />
-          <div className={stub}>
-            <p className="text-h4 font-semibold text-ink">2 million journeys</p>
-            <p className="mt-1 text-small text-body">Planned by travellers across Africa and beyond.</p>
-          </div>
-        </div>
-
-        <div className={card}>
-          <div className={top}>
-            <div className="flex h-11 items-center gap-1 sm:h-14" role="img" aria-label="Rated 4.8 out of 5">
-              {Array.from({ length: 5 }, (_, i) => (
-                <Star key={i} size={22} strokeWidth={0} fill="var(--color-star)" aria-hidden="true" />
-              ))}
-            </div>
-          </div>
-          <TearLine />
-          <div className={stub}>
-            <p className="text-h4 font-semibold text-ink">Rated 4.8 out of 5</p>
-            <p className="mt-1 text-small text-body">Honest prices and help when plans change.</p>
-          </div>
-        </div>
+    <section id="search" className={`${PAGE} scroll-mt-20`}>
+      <div className="rounded-[28px] bg-shell p-4 sm:p-6 lg:p-8">
+        <h2 className="mb-5 text-h3 font-semibold tracking-tight text-ink">Where to next?</h2>
+        <SearchBar />
       </div>
     </section>
   );
 }
 
-const SERVICES = [
-  { title: "Flights", body: "Compare airlines in one search", href: "/flights", icon: Plane },
-  { title: "Hotels", body: "Top-rated stays, free cancellation", href: "/hotels", icon: BedDouble },
-  { title: "Apartments", body: "Room for families and long stays", href: "/hotels", icon: Building2 },
-  { title: "Private jets", body: "Book a whole jet or share one", href: "/private-jets", icon: PrivateJet },
-];
-
-/** Every FLYGO service as a short ticket strip, with an arrow on the stub. */
-export function Services() {
+/** Best-reviewed stays, hotels and apartments together. */
+export function StaysRail() {
   return (
     <section className={`${PAGE} pt-16 lg:pt-24`}>
-      <SectionHeader title="Everything for your trip" />
-      <ul className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4">
-        {SERVICES.map(({ title, body, href, icon: Icon }) => (
-          <li key={title}>
-            <Link href={href} className="flex items-stretch rounded-[20px] bg-shell sm:rounded-[24px]">
-              <span className="flex min-w-0 flex-1 items-center gap-3 p-3 sm:gap-4 sm:p-5">
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-white text-brand shadow-[0_1px_2px_rgba(16,24,40,0.06)] sm:h-14 sm:w-14 sm:rounded-2xl">
-                  <Icon size={24} strokeWidth={1.9} aria-hidden="true" />
-                </span>
-                <span className="min-w-0">
-                  <span className="block text-h4 font-semibold text-ink">{title}</span>
-                  <span className="block text-small text-body">{body}</span>
-                </span>
-              </span>
-              <span aria-hidden="true" className="relative w-px self-stretch">
-                <span className="absolute inset-y-3 left-0 border-l-2 border-dashed border-line" />
-                <span className="absolute -top-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-white" />
-                <span className="absolute -bottom-2.5 left-1/2 h-5 w-5 -translate-x-1/2 rounded-full bg-white" />
-              </span>
-              <span className="flex w-12 shrink-0 items-center justify-center text-ink sm:w-20">
-                <ArrowRight size={20} strokeWidth={2} aria-hidden="true" />
-              </span>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <SectionHeader title="Loved by guests" href="/hotels/search" />
+      <Rail label="top-rated stays" className="mt-6">
+        {[...STAYS]
+          .sort((a, b) => b.rating - a.rating)
+          .slice(0, 6)
+          .map((hotel) => (
+            <li key={hotel.id} className={RAIL_ITEM}>
+              <StayTile hotel={hotel} />
+            </li>
+          ))}
+      </Rail>
+    </section>
+  );
+}
+
+const FEATURES = [
+  {
+    title: "Share a private jet",
+    body: "Join others on the same route and split the cost.",
+    cta: "See shared flights",
+    href: "/private-jets#share",
+    art: <ShareIllustration className="h-28 w-auto sm:h-36" />,
+    tone: "bg-brand-soft",
+  },
+  {
+    title: "Earn from your place",
+    body: "List your apartment and get booked by travellers.",
+    cta: "List your place",
+    href: "/host",
+    art: <HostIllustration className="h-28 w-auto sm:h-36" />,
+    tone: "bg-sky-soft",
+  },
+];
+
+/** The two services that aren't a search: jet sharing and hosting. */
+export function FeatureBanners() {
+  return (
+    <section className={`${PAGE} grid gap-4 pt-16 sm:grid-cols-2 lg:pt-24`}>
+      {FEATURES.map((f) => (
+        <Link key={f.title} href={f.href} className={`flex items-center gap-4 rounded-[28px] p-5 sm:p-7 ${f.tone}`}>
+          <div className="min-w-0 flex-1">
+            <h3 className="text-h3 font-semibold tracking-tight text-ink">{f.title}</h3>
+            <p className="mt-1.5 text-small text-body">{f.body}</p>
+            <span className="mt-4 inline-flex items-center gap-1.5 text-small font-semibold text-ink">
+              {f.cta}
+              <ArrowRight size={16} strokeWidth={2.2} aria-hidden="true" />
+            </span>
+          </div>
+          <div className="shrink-0">{f.art}</div>
+        </Link>
+      ))}
     </section>
   );
 }

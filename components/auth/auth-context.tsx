@@ -15,6 +15,21 @@ export type User = {
   email: string;
   phone?: string;
   provider: "email" | "apple" | "google";
+  verification?: Verification;
+};
+
+export type CheckStatus = "pending" | "verified";
+
+/**
+ * KYC checks, filled in from the account's Verification page. Only file
+ * names are kept in the browser; the documents go to the KYC provider.
+ */
+export type Verification = {
+  phone?: { number: string; status: CheckStatus };
+  identity?: { type: string; number: string; files: string[]; status: CheckStatus };
+  selfie?: { file: string; status: CheckStatus };
+  address?: { line: string; city: string; state: string; proof: string; status: CheckStatus };
+  payout?: { bank: string; accountNumber: string; accountName: string; status: CheckStatus };
 };
 
 type AuthContextValue = {
@@ -24,13 +39,19 @@ type AuthContextValue = {
   /** True when this email has signed in on this device before. */
   isKnownEmail: (email: string) => boolean;
   signIn: (email: string, provider?: User["provider"]) => void;
-  /** Name and phone are optional and added later from the account page. */
-  updateProfile: (changes: Pick<User, "fullName" | "phone">) => void;
+  /** Details are optional at sign-up and added later from the account pages. */
+  updateProfile: (changes: Partial<Omit<User, "id" | "email" | "provider">>) => void;
   logout: () => void;
 };
 
 const USER_KEY = "flygo:user";
 const KNOWN_KEY = "flygo:known-emails";
+/** Profiles by email, so signing out and back in keeps details and checks. */
+const PROFILES_KEY = "flygo:profiles";
+
+function saveProfile(user: User) {
+  write(PROFILES_KEY, { ...read<Record<string, User>>(PROFILES_KEY, {}), [user.email]: user });
+}
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
@@ -71,12 +92,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       isKnownEmail: (email) => read<string[]>(KNOWN_KEY, []).includes(email.toLowerCase()),
       signIn: (email, provider = "email") => {
         const address = email.toLowerCase();
-        const next: User = {
+        const next: User = read<Record<string, User>>(PROFILES_KEY, {})[address] ?? {
           id: crypto.randomUUID(),
           fullName: address.split("@")[0],
           email: address,
           provider,
         };
+        saveProfile(next);
         const known = read<string[]>(KNOWN_KEY, []);
         if (!known.includes(address)) write(KNOWN_KEY, [...known, address]);
         write(USER_KEY, next);
@@ -86,6 +108,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         if (!user) return;
         const next = { ...user, ...changes };
         write(USER_KEY, next);
+        saveProfile(next);
         setUser(next);
       },
       logout: () => {

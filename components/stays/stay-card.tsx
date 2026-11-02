@@ -31,7 +31,7 @@ export function StarRow({ count }: { count: number }) {
 }
 
 /** Search result: photo, name, score, and the cheapest rate for the stay. */
-export function StayCard({ hotel }: { hotel: Hotel }) {
+export function StayCard({ hotel, eager = false }: { hotel: Hotel; eager?: boolean }) {
   const rate = cheapest(hotel);
   const anyRefundable = hotel.roomTypes.some((rt) => refundable(rt.rates[0]));
   const breakfast = hotel.roomTypes.some((rt) => rt.rates[0].boardType !== "RO");
@@ -42,7 +42,7 @@ export function StayCard({ hotel }: { hotel: Hotel }) {
       className="grid overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05),0_10px_28px_-18px_rgba(16,24,40,0.3)] sm:grid-cols-[260px_minmax(0,1fr)]"
     >
       <div className="relative aspect-[16/10] bg-shell sm:aspect-auto sm:min-h-[220px]">
-        <Image src={hotel.main_photo} alt={hotel.name} fill sizes="(max-width: 640px) 92vw, 260px" className="object-cover" />
+        <Image src={hotel.main_photo} alt={hotel.name} fill priority={eager} sizes="(max-width: 640px) 92vw, 260px" className="object-cover" />
       </div>
 
       <div className="flex min-w-0 flex-col gap-3 p-4 sm:p-5">

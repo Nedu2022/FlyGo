@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowLeftRight, ArrowUpDown, BedDouble, Building2, ChevronDown, Plane, type LucideProps } from "lucide-react";
 import { DateField } from "@/components/ui/calendar";
@@ -38,6 +38,8 @@ const TABS = [
 
 export type SearchTab = (typeof TABS)[number]["value"];
 
+export const SEARCH_TAB_EVENT = "flygo:search-tab";
+
 const TRIP_KINDS = ["Return", "One-way", "Multi-city"] as const;
 /** Charters are quoted point to point, so no multi-city. */
 const JET_TRIP_KINDS = ["One-way", "Return"] as const;
@@ -62,6 +64,13 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
   const [to, setTo] = useState("");
   const [where, setWhere] = useState("");
   const [bags, setBags] = useState(BAGS[0]);
+
+  // The home services grid picks a tab by event, then scrolls here.
+  useEffect(() => {
+    const pick = (event: Event) => setTab((event as CustomEvent<SearchTab>).detail);
+    window.addEventListener(SEARCH_TAB_EVENT, pick);
+    return () => window.removeEventListener(SEARCH_TAB_EVENT, pick);
+  }, []);
 
   const jet = tab === "Jet";
   /** Flights and jets share the route fields; stays have a destination. */

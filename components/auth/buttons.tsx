@@ -61,12 +61,12 @@ const socialBase =
  * Apple's guidelines ask. Until real OAuth is connected, each signs in a
  * local demo account so the rest of the app can be used.
  */
-export function SocialButtons({ verb = "Continue" }: { verb?: "Continue" | "Sign up" }) {
+export function SocialButtons({ verb = "Continue", next = "/" }: { verb?: "Continue" | "Sign up"; next?: string }) {
   const router = useRouter();
   const { signIn } = useAuth();
   const start = (provider: "apple" | "google") => {
     signIn(`traveller@${provider === "apple" ? "icloud" : "gmail"}.com`, provider);
-    router.push("/");
+    router.push(next);
   };
   return (
     <div className="flex flex-col gap-2.5">
@@ -128,4 +128,9 @@ export function OrDivider({ label = "or" }: { label?: string }) {
       <span className="h-px flex-1 bg-line" />
     </div>
   );
+}
+
+/** Where to go after signing in: a same-site path from ?next=, else home. */
+export function safeNext(value: string | null) {
+  return value && value.startsWith("/") && !value.startsWith("//") ? value : "/";
 }
