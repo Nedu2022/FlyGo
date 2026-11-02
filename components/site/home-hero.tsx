@@ -2,26 +2,27 @@
 
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { BedDouble, Building2, CalendarCheck, House, Plane, Users } from "lucide-react";
+import { BedDouble, Building2, Plane, Users } from "lucide-react";
 import { PAGE } from "@/components/site/container";
 import { VantaDots } from "@/components/site/vanta-dots";
 import { AiMark } from "@/components/site/ai-mark";
 import { openAssistant } from "@/components/site/ai-assistant";
 import { PrivateJet, SEARCH_TAB_EVENT, type SearchTab } from "@/components/site/search-bar";
+import { showOffers } from "@/components/site/offers";
+import type { OfferKind } from "@/lib/offers";
 
 const ICON = { size: 22, strokeWidth: 1.9, "aria-hidden": true } as const;
 
-type Tile = { label: string; icon: ReactNode } & ({ tab: SearchTab } | { href: string } | { action: () => void });
+type Tile = { label: string; icon: ReactNode } & ({ offers: OfferKind } | { action: () => void });
 
+/** Each service opens its offers below; Ask AI opens the assistant. */
 const TILES: Tile[] = [
-  { label: "Flights", icon: <Plane {...ICON} />, tab: "Flight" },
-  { label: "Hotels", icon: <BedDouble {...ICON} />, tab: "Hotel" },
-  { label: "Apartments", icon: <Building2 {...ICON} />, tab: "Apartment" },
-  { label: "Private jets", icon: <PrivateJet {...ICON} />, tab: "Jet" },
-  { label: "Share a jet", icon: <Users {...ICON} />, href: "/private-jets#share" },
-  { label: "List your place", icon: <House {...ICON} />, href: "/host" },
+  { label: "Flights", icon: <Plane {...ICON} />, offers: "flights" },
+  { label: "Hotels", icon: <BedDouble {...ICON} />, offers: "hotels" },
+  { label: "Apartments", icon: <Building2 {...ICON} />, offers: "apartments" },
+  { label: "Private jets", icon: <PrivateJet {...ICON} />, offers: "jets" },
+  { label: "Shared jets", icon: <Users {...ICON} />, offers: "shared" },
   { label: "Ask AI", icon: <AiMark size={22} />, action: () => openAssistant() },
-  { label: "My trips", icon: <CalendarCheck {...ICON} />, href: "/account" },
 ];
 
 function pickTab(tab: SearchTab) {
@@ -85,22 +86,16 @@ export function HomeHero() {
         </div>
 
         <div className="animate-rise rounded-[28px] bg-white/60 p-2.5 shadow-[0_20px_50px_-30px_rgba(16,24,40,0.35)] backdrop-blur-md sm:p-4">
-          <ul className="grid grid-cols-4 gap-2 sm:gap-3">
+          <ul className="grid grid-cols-3 gap-2 sm:gap-3">
             {TILES.map((tile) => (
               <li key={tile.label}>
-                {"tab" in tile ? (
-                  <button type="button" onClick={() => pickTab(tile.tab)} className={`${tileClass} w-full`}>
-                    <TileBody tile={tile} />
-                  </button>
-                ) : "href" in tile ? (
-                  <Link href={tile.href} className={tileClass}>
-                    <TileBody tile={tile} />
-                  </Link>
-                ) : (
-                  <button type="button" onClick={tile.action} className={`${tileClass} w-full`}>
-                    <TileBody tile={tile} />
-                  </button>
-                )}
+                <button
+                  type="button"
+                  onClick={"offers" in tile ? () => showOffers(tile.offers) : tile.action}
+                  className={`${tileClass} w-full`}
+                >
+                  <TileBody tile={tile} />
+                </button>
               </li>
             ))}
           </ul>

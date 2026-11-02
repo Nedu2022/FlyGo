@@ -33,27 +33,6 @@ export const FAQS: Faq[] = [
   },
 ];
 
-export type Deal = {
-  city: string;
-  country: string;
-  duration: string;
-  out: string;
-  back: string;
-  price: string;
-  image: string;
-};
-
-/** Cheapest return fares from Lagos this week, for the deals rail. */
-export const DEALS: Deal[] = [
-  { city: "London", country: "United Kingdom", duration: "6h 25m, direct", out: "Tue 17/11", back: "Sun 22/11", price: "$433", image: "/images/photos/london.webp" },
-  { city: "Dubai", country: "United Arab Emirates", duration: "7h 05m, direct", out: "Thu 19/11", back: "Mon 23/11", price: "$389", image: "/images/photos/dubai.webp" },
-  { city: "Paris", country: "France", duration: "6h 40m, direct", out: "Wed 25/11", back: "Sun 29/11", price: "$471", image: "/images/photos/paris.webp" },
-  { city: "Santorini", country: "Greece", duration: "9h 50m, 1 stop", out: "Fri 20/11", back: "Fri 27/11", price: "$612", image: "/images/photos/santorini.webp" },
-  { city: "New York", country: "United States", duration: "11h 30m, direct", out: "Sat 21/11", back: "Sun 29/11", price: "$698", image: "/images/photos/new-york.webp" },
-  { city: "Cape Town", country: "South Africa", duration: "6h 15m, direct", out: "Mon 23/11", back: "Mon 30/11", price: "$455", image: "/images/photos/cape-town.webp" },
-  { city: "Lisbon", country: "Portugal", duration: "8h 10m, 1 stop", out: "Tue 24/11", back: "Sun 29/11", price: "$498", image: "/images/photos/lisbon.webp" },
-];
-
 export const FOOTER_LINKS = [
   {
     heading: "Links",
