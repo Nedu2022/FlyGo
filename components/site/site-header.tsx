@@ -88,14 +88,14 @@ export function SiteHeader({
           {isAuthenticated ? (
             <>
               <Link
-                href="/dashboard"
-                aria-label="Saved trips"
+                href="/account#saved"
+                aria-label="Saved"
                 className="hidden h-12 w-12 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:flex"
               >
                 <Heart size={22} strokeWidth={2} aria-hidden="true" />
               </Link>
               <Link
-                href="/dashboard"
+                href="/account"
                 aria-label="Your account"
                 className="flex h-10 w-10 items-center justify-center rounded-full bg-brand text-white shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:h-12 sm:w-12"
               >

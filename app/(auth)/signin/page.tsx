@@ -32,7 +32,7 @@ export default function SignInPage() {
   }
 
   return (
-    <AuthShell heading="Sign in or create an account" closeHref="/">
+    <AuthShell heading="Sign in or create an account">
       <SocialButtons />
 
       <div className="my-6">

@@ -20,7 +20,7 @@ export function BottomNav() {
   const { isAuthenticated } = useAuth();
 
   const accountTab = {
-    href: isAuthenticated ? "/dashboard" : "/signin",
+    href: isAuthenticated ? "/account" : "/signin",
     label: isAuthenticated ? "Account" : "Sign in",
     icon: <CircleUserRound {...ICON} />,
   };

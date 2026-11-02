@@ -4,7 +4,7 @@ import { PAGE } from "@/components/site/container";
 import { Rail, RAIL_ITEM } from "@/components/site/rail";
 import { SectionHeader } from "@/components/site/section-header";
 import { ArrowRight, BedDouble, Building2, Plane, Star } from "lucide-react";
-import { Avatar } from "@/components/dashboard/icons";
+import { Avatar } from "@/components/ui/avatar";
 import { PrivateJet } from "@/components/site/search-bar";
 import { DEALS, type Deal } from "@/lib/site-data";
 

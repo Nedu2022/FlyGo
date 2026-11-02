@@ -13,6 +13,7 @@ export type User = {
   id: string;
   fullName: string;
   email: string;
+  phone?: string;
   provider: "email" | "apple" | "google";
 };
 
@@ -23,6 +24,8 @@ type AuthContextValue = {
   /** True when this email has signed in on this device before. */
   isKnownEmail: (email: string) => boolean;
   signIn: (email: string, provider?: User["provider"]) => void;
+  /** Name and phone are optional and added later from the account page. */
+  updateProfile: (changes: Pick<User, "fullName" | "phone">) => void;
   logout: () => void;
 };
 
@@ -76,6 +79,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
         const known = read<string[]>(KNOWN_KEY, []);
         if (!known.includes(address)) write(KNOWN_KEY, [...known, address]);
+        write(USER_KEY, next);
+        setUser(next);
+      },
+      updateProfile: (changes) => {
+        if (!user) return;
+        const next = { ...user, ...changes };
         write(USER_KEY, next);
         setUser(next);
       },
