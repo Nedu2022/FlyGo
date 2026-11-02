@@ -1,6 +1,6 @@
 "use client";
 
-import { useId, useState, type InputHTMLAttributes, type ReactNode } from "react";
+import { useId, type InputHTMLAttributes } from "react";
 
 /** Tall, softly-bordered input; focus lifts a faint blue halo rather than a ring. */
 const inputBase =
@@ -12,6 +12,8 @@ type FieldProps = InputHTMLAttributes<HTMLInputElement> & {
   label: string;
   /** Marks the label with the design's trailing asterisk. */
   starred?: boolean;
+  /** Inline validation message shown under the field. */
+  error?: string;
 };
 
 function Label({
@@ -31,7 +33,7 @@ function Label({
   );
 }
 
-export function TextField({ label, starred, className = "", ...props }: FieldProps) {
+export function TextField({ label, starred, error, className = "", ...props }: FieldProps) {
   const generatedId = useId();
   const id = props.id ?? generatedId;
 
@@ -40,109 +42,18 @@ export function TextField({ label, starred, className = "", ...props }: FieldPro
       <Label htmlFor={id} starred={starred}>
         {label}
       </Label>
-      <input {...props} id={id} className={inputBase} />
-    </div>
-  );
-}
-
-export function PasswordField({ label, starred, className = "", ...props }: FieldProps) {
-  const generatedId = useId();
-  const id = props.id ?? generatedId;
-  const [visible, setVisible] = useState(false);
-
-  return (
-    <div className={className}>
-      <Label htmlFor={id} starred={starred}>
-        {label}
-      </Label>
-      <div className="relative">
-        <input
-          {...props}
-          id={id}
-          type={visible ? "text" : "password"}
-          className={`${inputBase} pr-[72px]`}
-        />
-        <button
-          type="button"
-          onClick={() => setVisible((v) => !v)}
-          aria-pressed={visible}
-          aria-controls={id}
-          className="absolute right-3 top-1/2 -translate-y-1/2 rounded px-1 text-small font-medium text-body transition-colors duration-200"
-        >
-          {visible ? "Hide" : "Show"}
-        </button>
-      </div>
-    </div>
-  );
-}
-
-/** Dial codes offered by the phone field, flag first so it reads at a glance. */
-const DIAL_CODES = [
-  { code: "+234", country: "Nigeria", flag: <FlagNG /> },
-  { code: "+44", country: "United Kingdom", flag: <FlagGB /> },
-  { code: "+1", country: "United States", flag: <FlagUS /> },
-] as const;
-
-/**
- * Email-or-phone field. Typing anything non-numeric hides the dial code, so a
- * single input serves both halves of "Email / Phone Number".
- */
-export function PhoneOrEmailField({
-  label,
-  starred,
-  className = "",
-  ...props
-}: FieldProps) {
-  const generatedId = useId();
-  const id = props.id ?? generatedId;
-  const [dial, setDial] = useState<string>(DIAL_CODES[0].code);
-  const [value, setValue] = useState("");
-
-  // Blank counts as "phone" so the picker is there from the start.
-  const isPhone = value === "" || /^[\d\s()+-]+$/.test(value);
-  const selected = DIAL_CODES.find((entry) => entry.code === dial) ?? DIAL_CODES[0];
-
-  return (
-    <div className={className}>
-      <Label htmlFor={id} starred={starred}>
-        {label}
-      </Label>
-      <div className="flex h-12 items-center rounded-xl border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
-        {isPhone ? (
-          <div className="relative flex h-full shrink-0 items-center gap-2 pl-4 pr-3">
-            <span aria-hidden="true" className="flex">
-              {selected.flag}
-            </span>
-            <span className="text-copy text-label">{dial}</span>
-            <Chevron />
-            <select
-              aria-label="Country dialling code"
-              value={dial}
-              onChange={(event) => setDial(event.target.value)}
-              className="absolute inset-0 cursor-pointer opacity-0"
-            >
-              {DIAL_CODES.map((entry) => (
-                <option key={entry.code} value={entry.code}>
-                  {entry.country} ({entry.code})
-                </option>
-              ))}
-            </select>
-          </div>
-        ) : null}
-
-        <input
-          {...props}
-          id={id}
-          value={value}
-          onChange={(event) => {
-            setValue(event.target.value);
-            props.onChange?.(event);
-          }}
-          className={`h-full w-full bg-transparent text-copy text-ink outline-none placeholder:text-muted ${ isPhone ? "pr-4" : "px-4" }`}
-        />
-        {/* Carries the dial code to the server when the value is a number. */}
-        {isPhone && value ? <input type="hidden" name="dialCode" value={dial} /> : null}
-      </div>
+      <input
+        {...props}
+        id={id}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${id}-error` : undefined}
+        className={`${inputBase} ${error ? "border-red-500" : ""}`}
+      />
+      {error ? (
+        <p id={`${id}-error`} role="alert" className="mt-1.5 text-small text-red-600">
+          {error}
+        </p>
+      ) : null}
     </div>
   );
 }
@@ -185,158 +96,5 @@ export function Checkbox({
       </span>
       {label}
     </label>
-  );
-}
-
-function Chevron(): ReactNode {
-  return (
-    <svg
-      width="12"
-      height="12"
-      viewBox="0 0 24 24"
-      fill="currentColor"
-      aria-hidden="true"
-      className="text-label"
-    >
-      <path d="m6 9 6 7 6-7Z" />
-    </svg>
-  );
-}
-
-function FlagNG() {
-  return (
-    <svg width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
-      <rect width="22" height="15" rx="2" fill="#008751" />
-      <rect x="7.3" width="7.4" height="15" fill="#ffffff" />
-    </svg>
-  );
-}
-
-function FlagGB() {
-  return (
-    <svg width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
-      <rect width="22" height="15" rx="2" fill="#012169" />
-      <path d="M0 0 22 15M22 0 0 15" stroke="#ffffff" strokeWidth="3" />
-      <path d="M0 0 22 15M22 0 0 15" stroke="#C8102E" strokeWidth="1.6" />
-      <path d="M11 0v15M0 7.5h22" stroke="#ffffff" strokeWidth="5" />
-      <path d="M11 0v15M0 7.5h22" stroke="#C8102E" strokeWidth="3" />
-    </svg>
-  );
-}
-
-function FlagUS() {
-  return (
-    <svg width="22" height="15" viewBox="0 0 22 15" aria-hidden="true">
-      <rect width="22" height="15" rx="2" fill="#ffffff" />
-      {[0, 2, 4, 6].map((row) => (
-        <rect key={row} y={row * 2.15} width="22" height="2.15" fill="#B22234" />
-      ))}
-      <rect width="10" height="8.6" fill="#3C3B6E" />
-    </svg>
-  );
-}
-
-/** Phone field with a fixed dial-code picker — no email fallback. */
-export function PhoneField({ label, starred, className = "", ...props }: FieldProps) {
-  const generatedId = useId();
-  const id = props.id ?? generatedId;
-  const [dial, setDial] = useState<string>(DIAL_CODES[0].code);
-  const selected = DIAL_CODES.find((entry) => entry.code === dial) ?? DIAL_CODES[0];
-
-  return (
-    <div className={className}>
-      <Label htmlFor={id} starred={starred}>
-        {label}
-      </Label>
-      <div className="flex h-12 items-center rounded-xl border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
-        <div className="relative flex h-full shrink-0 items-center gap-2 pl-4 pr-3">
-          <span aria-hidden="true" className="flex">
-            {selected.flag}
-          </span>
-          <span className="text-copy text-label">{dial}</span>
-          <Chevron />
-          <select
-            aria-label="Country dialling code"
-            value={dial}
-            onChange={(event) => setDial(event.target.value)}
-            className="absolute inset-0 cursor-pointer opacity-0"
-          >
-            {DIAL_CODES.map((entry) => (
-              <option key={entry.code} value={entry.code}>
-                {entry.country} ({entry.code})
-              </option>
-            ))}
-          </select>
-        </div>
-        <input
-          {...props}
-          id={id}
-          type="tel"
-          inputMode="tel"
-          className="h-full w-full bg-transparent pr-4 text-copy text-ink outline-none placeholder:text-muted"
-        />
-        <input type="hidden" name="dialCode" value={dial} />
-      </div>
-    </div>
-  );
-}
-
-const COUNTRIES = [
-  { code: "NIG", label: "Nigeria", flag: <FlagNG /> },
-  { code: "UK", label: "United Kingdom", flag: <FlagGB /> },
-  { code: "US", label: "United States", flag: <FlagUS /> },
-] as const;
-
-/** Country picker showing the short code beside its flag. */
-export function CountrySelect({
-  label,
-  name,
-  className = "",
-}: {
-  label: string;
-  name: string;
-  className?: string;
-}) {
-  const id = useId();
-  const [code, setCode] = useState<string>(COUNTRIES[0].code);
-  const selected = COUNTRIES.find((c) => c.code === code) ?? COUNTRIES[0];
-
-  return (
-    <div className={className}>
-      <label htmlFor={id} className={fieldLabel}>
-        {label}
-      </label>
-      <div className="relative flex h-12 items-center rounded-xl border border-line bg-white transition-[border-color,box-shadow] duration-200 focus-within:border-sky focus-within:shadow-[0_0_0_4px_var(--color-sky-soft)]">
-        <span className="pointer-events-none flex items-center gap-2.5 pl-4 text-copy text-ink">
-          {selected.code}
-          <span aria-hidden="true" className="flex">
-            {selected.flag}
-          </span>
-        </span>
-        <select
-          id={id}
-          name={name}
-          value={code}
-          onChange={(event) => setCode(event.target.value)}
-          className="absolute inset-0 cursor-pointer opacity-0"
-        >
-          {COUNTRIES.map((c) => (
-            <option key={c.code} value={c.code}>
-              {c.label}
-            </option>
-          ))}
-        </select>
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="currentColor"
-          aria-hidden="true"
-          className="pointer-events-none absolute right-4 text-ink"
-        >
-          <path d="m6 9 6 7 6-7Z" />
-        </svg>
-      </div>
-    </div>
   );
 }

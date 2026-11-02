@@ -2,24 +2,30 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BedDouble, CircleUserRound, Headset, House, Plane } from "lucide-react";
+import { BedDouble, CircleUserRound, House, Plane } from "lucide-react";
+import { PrivateJet } from "@/components/site/search-bar";
+import { useAuth } from "@/components/auth/auth-context";
 
 const ICON = { size: 22, strokeWidth: 1.8, "aria-hidden": true } as const;
 
 const TABS = [
   { href: "/", label: "Home", icon: <House {...ICON} /> },
   { href: "/flights", label: "Flights", icon: <Plane {...ICON} />, also: "/booking" },
-  { href: "/hotels", label: "Hotels", icon: <BedDouble {...ICON} /> },
-  { href: "/contact", label: "Help", icon: <Headset {...ICON} /> },
-  { href: "/signin", label: "Account", icon: <CircleUserRound {...ICON} /> },
+  { href: "/hotels", label: "Stays", icon: <BedDouble {...ICON} /> },
+  { href: "/private-jets", label: "Jets", icon: <PrivateJet size={22} strokeWidth={1.8} aria-hidden="true" /> },
 ];
 
-/**
- * Phone-only tab bar: every main destination one thumb-tap away, as in a
- * native travel app. A spacer of the same height keeps page content clear.
- */
 export function BottomNav() {
   const pathname = usePathname();
+  const { isAuthenticated } = useAuth();
+
+  const accountTab = {
+    href: isAuthenticated ? "/dashboard" : "/signin",
+    label: isAuthenticated ? "Account" : "Sign in",
+    icon: <CircleUserRound {...ICON} />,
+  };
+
+  const tabs = [...TABS, accountTab];
 
   return (
     <>
@@ -29,11 +35,11 @@ export function BottomNav() {
         className="fixed inset-x-0 bottom-0 z-40 bg-white/95 shadow-[0_-1px_0_rgba(16,24,40,0.06),0_-8px_24px_-16px_rgba(16,24,40,0.2)] pb-[env(safe-area-inset-bottom)] backdrop-blur-md lg:hidden"
       >
         <ul className="grid h-[60px] grid-cols-5">
-          {TABS.map((tab) => {
+          {tabs.map((tab) => {
             const active =
               tab.href === "/"
                 ? pathname === "/"
-                : pathname.startsWith(tab.href) || (tab.also ? pathname.startsWith(tab.also) : false);
+                : pathname.startsWith(tab.href) || ("also" in tab && tab.also ? pathname.startsWith(tab.also as string) : false);
             return (
               <li key={tab.href}>
                 <Link

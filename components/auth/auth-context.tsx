@@ -1,105 +1,89 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { useRouter } from "next/navigation";
-import {
-  api,
-  clearAccessToken,
-  getApiErrorMessage,
-  loginRequest,
-  refreshSessionRequest,
-  setAuthFailureHandler,
-  signupRequest,
-  type User,
-} from "@/lib/api";
+
+/**
+ * Passwordless auth, kept entirely in the browser until a backend is wired:
+ * sign in with an email code, Apple or Google. The signed-in user and the
+ * list of emails that already have an account live in localStorage, so a
+ * refresh keeps you signed in and returning users skip account set-up.
+ */
+
+export type User = {
+  id: string;
+  fullName: string;
+  email: string;
+  provider: "email" | "apple" | "google";
+};
 
 type AuthContextValue = {
   user: User | null;
   isAuthenticated: boolean;
   isLoading: boolean;
-  login: (email: string, password: string) => Promise<User>;
-  signup: (fullName: string, email: string, password: string) => Promise<User>;
-  logout: () => Promise<void>;
-  refreshSession: () => Promise<User | null>;
+  /** True when this email has signed in on this device before. */
+  isKnownEmail: (email: string) => boolean;
+  signIn: (email: string, provider?: User["provider"]) => void;
+  logout: () => void;
 };
+
+const USER_KEY = "flygo:user";
+const KNOWN_KEY = "flygo:known-emails";
 
 const AuthContext = createContext<AuthContextValue | null>(null);
 
-async function loadCurrentUser() {
-  const { data } = await api.get<User>("/users/me");
-  return data;
+function read<T>(key: string, fallback: T): T {
+  try {
+    const raw = window.localStorage.getItem(key);
+    return raw ? (JSON.parse(raw) as T) : fallback;
+  } catch {
+    return fallback;
+  }
+}
+
+function write(key: string, value: unknown) {
+  try {
+    if (value === null) window.localStorage.removeItem(key);
+    else window.localStorage.setItem(key, JSON.stringify(value));
+  } catch {
+    // Private mode or blocked storage: the session simply won't persist.
+  }
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function refreshSession() {
-    try {
-      await refreshSessionRequest();
-      const currentUser = await loadCurrentUser();
-      setUser(currentUser);
-      return currentUser;
-    } catch {
-      clearAccessToken();
-      setUser(null);
-      return null;
-    }
-  }
-
-  async function login(email: string, password: string) {
-    await loginRequest(email, password);
-    const currentUser = await loadCurrentUser();
-    setUser(currentUser);
-    return currentUser;
-  }
-
-  async function signup(fullName: string, email: string, password: string) {
-    await signupRequest(fullName, email, password);
-    const currentUser = await loadCurrentUser();
-    setUser(currentUser);
-    return currentUser;
-  }
-
-  async function logout() {
-    try {
-      await api.post("/auth/logout");
-    } finally {
-      clearAccessToken();
-      setUser(null);
-    }
-  }
-
+  // Restore the session after mount; localStorage isn't available on the server.
   useEffect(() => {
-    setAuthFailureHandler(() => {
-      clearAccessToken();
-      setUser(null);
-      router.push("/login");
-    });
+    // eslint-disable-next-line react-hooks/set-state-in-effect -- one-time read of an external store
+    setUser(read<User | null>(USER_KEY, null));
+    setIsLoading(false);
+  }, []);
 
-    let active = true;
-    void refreshSessionRequest()
-      .then(loadCurrentUser)
-      .then((currentUser) => {
-        if (active) setUser(currentUser);
-      })
-      .catch(() => {
-        clearAccessToken();
-        if (active) setUser(null);
-      })
-      .finally(() => {
-        if (active) setIsLoading(false);
-      });
-
-    return () => {
-      active = false;
-      setAuthFailureHandler(null);
-    };
-  }, [router]);
-
-  const value = useMemo(
-    () => ({ user, isAuthenticated: Boolean(user), isLoading, login, signup, logout, refreshSession }),
+  const value = useMemo<AuthContextValue>(
+    () => ({
+      user,
+      isAuthenticated: Boolean(user),
+      isLoading,
+      isKnownEmail: (email) => read<string[]>(KNOWN_KEY, []).includes(email.toLowerCase()),
+      signIn: (email, provider = "email") => {
+        const address = email.toLowerCase();
+        const next: User = {
+          id: crypto.randomUUID(),
+          fullName: address.split("@")[0],
+          email: address,
+          provider,
+        };
+        const known = read<string[]>(KNOWN_KEY, []);
+        if (!known.includes(address)) write(KNOWN_KEY, [...known, address]);
+        write(USER_KEY, next);
+        setUser(next);
+      },
+      logout: () => {
+        write(USER_KEY, null);
+        setUser(null);
+      },
+    }),
     [user, isLoading],
   );
 
@@ -111,5 +95,3 @@ export function useAuth() {
   if (!context) throw new Error("useAuth must be used inside an AuthProvider");
   return context;
 }
-
-export { getApiErrorMessage };

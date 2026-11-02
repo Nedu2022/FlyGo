@@ -1,12 +1,11 @@
 /** Static copy for the marketing pages. Swap for real API data later. */
 
+/** Everything FLYGO offers, in the header on desktop. About and Contact live in the footer. */
 export const NAV_LINKS = [
-  { href: "/", label: "Home" },
   { href: "/flights", label: "Flights" },
   { href: "/hotels", label: "Hotels" },
+  { href: "/hotels?type=apartments", label: "Apartments" },
   { href: "/private-jets", label: "Private jets" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
 ] as const;
 
 export const RESORT_COUNTRIES = [
@@ -186,7 +185,7 @@ export const FOOTER_LINKS = [
     links: [
       { label: "Flights", href: "/flights" },
       { label: "Hotels", href: "/hotels" },
-      { label: "Apartments", href: "/hotels" },
+      { label: "Apartments", href: "/hotels?type=apartments" },
       { label: "Private jets", href: "/private-jets" },
       { label: "Travel deals", href: "/flights" },
     ],

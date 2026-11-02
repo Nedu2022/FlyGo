@@ -1,23 +1,28 @@
 "use client";
 
-import Link from "next/link";
-import { useState, type ButtonHTMLAttributes, type ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/components/auth/auth-context";
 
 const primaryBase =
   "relative flex h-12 w-full items-center justify-center rounded-xl bg-brand text-copy font-semibold text-white transition-colors duration-200 active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand disabled:cursor-not-allowed disabled:opacity-70";
 
 type PrimaryButtonProps = ButtonHTMLAttributes<HTMLButtonElement> & {
   pending?: boolean;
+  /** Same as `pending`. */
+  busy?: boolean;
   children: ReactNode;
 };
 
 export function PrimaryButton({
-  pending = false,
+  pending: pendingProp = false,
+  busy = false,
   children,
   className = "",
   disabled,
   ...props
 }: PrimaryButtonProps) {
+  const pending = pendingProp || busy;
   return (
     <button {...props} disabled={disabled || pending} className={`${primaryBase} ${className}`}>
       <span
@@ -31,23 +36,6 @@ export function PrimaryButton({
         </span>
       ) : null}
     </button>
-  );
-}
-
-/** Same shape as PrimaryButton, for screens whose action is just navigation. */
-export function PrimaryLink({
-  href,
-  children,
-  className = "",
-}: {
-  href: string;
-  children: ReactNode;
-  className?: string;
-}) {
-  return (
-    <Link href={href} className={`${primaryBase} ${className}`}>
-      {children}
-    </Link>
   );
 }
 
@@ -70,31 +58,30 @@ const socialBase =
 
 /**
  * "Continue with Apple" and "Continue with Google", Apple first in black as
- * Apple's guidelines ask. The OAuth flows aren't wired yet, so tapping one
- * shows a short notice instead of failing silently.
+ * Apple's guidelines ask. Until real OAuth is connected, each signs in a
+ * local demo account so the rest of the app can be used.
  */
 export function SocialButtons({ verb = "Continue" }: { verb?: "Continue" | "Sign up" }) {
-  const [note, setNote] = useState("");
-  const start = (provider: string) => setNote(`${provider} sign-in is coming soon. Use your email for now.`);
+  const router = useRouter();
+  const { signIn } = useAuth();
+  const start = (provider: "apple" | "google") => {
+    signIn(`traveller@${provider === "apple" ? "icloud" : "gmail"}.com`, provider);
+    router.push("/");
+  };
   return (
     <div className="flex flex-col gap-2.5">
-      <button type="button" onClick={() => start("Apple")} className={`${socialBase} bg-black text-white`}>
+      <button type="button" onClick={() => start("apple")} className={`${socialBase} bg-black text-white`}>
         <AppleMark />
         {verb} with Apple
       </button>
       <button
         type="button"
-        onClick={() => start("Google")}
+        onClick={() => start("google")}
         className={`${socialBase} border border-line bg-white text-ink`}
       >
         <GoogleMark />
         {verb} with Google
       </button>
-      {note ? (
-        <p role="status" className="animate-fade text-center text-small text-body">
-          {note}
-        </p>
-      ) : null}
     </div>
   );
 }

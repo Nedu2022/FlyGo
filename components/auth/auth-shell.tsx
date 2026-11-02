@@ -1,7 +1,7 @@
 import type { ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft } from "lucide-react";
+import { ChevronLeft, X } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 
 type AuthShellProps = {
@@ -9,9 +9,13 @@ type AuthShellProps = {
   topRight?: ReactNode;
   /** Renders the "‹ Back" control level with the title. */
   backHref?: string;
+  /** Optional close link (usually to "/" or modal dismiss) */
+  closeHref?: string;
   /** Illustration above the title on the confirmation screens. */
   icon?: ReactNode;
-  title: string;
+  title?: string;
+  /** Same as `title`; the passwordless screens use this name. */
+  heading?: string;
   subtitle?: ReactNode;
   children: ReactNode;
   /** Pinned under the form — the padlock reassurance line. */
@@ -48,35 +52,60 @@ function PhotoPanel() {
 
 /**
  * Auth layout: a compact form column beside a photo panel on desktop, the
- * form alone on phones. Header holds the logo and an optional corner prompt.
+ * form alone on phones. Header holds the logo and optional controls.
  */
 export function AuthShell({
   topRight,
   backHref,
+  closeHref,
   icon,
-  title,
+  title: titleProp,
+  heading,
   subtitle,
   children,
   seal,
   width = "form",
 }: AuthShellProps) {
   const wide = width === "wide";
+  const title = titleProp ?? heading ?? "";
   return (
     <div className={`grid min-h-dvh bg-white p-3 ${wide ? "" : "lg:grid-cols-[minmax(0,1fr)_minmax(0,0.9fr)]"}`}>
       <div className="flex min-h-full flex-col px-2 sm:px-8 lg:px-12">
         <header className="flex shrink-0 items-center justify-between gap-4 pt-3">
           <Logo imgClass="h-[30px] sm:h-[36px]" />
-          {topRight ? <div className="text-right">{topRight}</div> : null}
+          <div className="flex items-center gap-3">
+            {topRight ? <div className="text-right">{topRight}</div> : null}
+            {closeHref ? (
+              <Link
+                href={closeHref}
+                aria-label="Close"
+                className="flex h-9 w-9 items-center justify-center rounded-full bg-shell text-ink transition-colors hover:bg-line"
+              >
+                <X size={18} strokeWidth={2.2} />
+              </Link>
+            ) : null}
+          </div>
         </header>
 
         <main className="flex flex-1 flex-col justify-center py-10">
           <div className={`mx-auto w-full ${wide ? "max-w-[1280px]" : "max-w-[400px]"}`}>
-            {backHref ? (
-              <Link href={backHref} className="mb-6 inline-flex items-center gap-1.5 text-small font-medium text-body">
-                <ChevronLeft size={18} strokeWidth={2} aria-hidden="true" />
-                Back
-              </Link>
-            ) : null}
+            <div className="mb-4 flex items-center justify-between">
+              {backHref ? (
+                <Link href={backHref} className="inline-flex items-center gap-1.5 text-small font-medium text-body transition-colors hover:text-ink">
+                  <ChevronLeft size={18} strokeWidth={2} aria-hidden="true" />
+                  Back
+                </Link>
+              ) : <div />}
+              {!topRight && closeHref && (
+                <Link
+                  href={closeHref}
+                  aria-label="Close"
+                  className="inline-flex h-8 w-8 items-center justify-center rounded-full text-body transition-colors hover:bg-shell hover:text-ink sm:hidden"
+                >
+                  <X size={18} strokeWidth={2.2} />
+                </Link>
+              )}
+            </div>
 
             <div className={`animate-rise flex flex-col ${icon ? "items-center text-center" : ""}`}>
               {icon ? <div className="animate-badge-in mb-6">{icon}</div> : null}
@@ -142,4 +171,3 @@ function Padlock() {
     </svg>
   );
 }
-

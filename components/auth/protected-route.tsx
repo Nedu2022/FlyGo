@@ -1,37 +1,24 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, type ReactNode } from "react";
 import { useAuth } from "@/components/auth/auth-context";
 
+/** Sends signed-out visitors to sign in; shows nothing until the session is read. */
 export function ProtectedRoute({ children }: { children: ReactNode }) {
-  const { user, isAuthenticated, isLoading } = useAuth();
-  const pathname = usePathname();
+  const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
-    if (isLoading) return;
-    if (!isAuthenticated) {
-      router.replace("/login");
-      return;
-    }
-    if (user?.status === "DOCUMENTS_REQUIRED" && pathname !== "/onboarding/documents") {
-      router.replace("/onboarding/documents");
-    }
-  }, [isAuthenticated, isLoading, pathname, router, user?.status]);
+    if (!isLoading && !isAuthenticated) router.replace("/signin");
+  }, [isAuthenticated, isLoading, router]);
 
-  if (isLoading || !isAuthenticated) return <AuthLoading />;
-  if (user?.status === "DOCUMENTS_REQUIRED" && pathname !== "/onboarding/documents") {
-    return <AuthLoading />;
+  if (isLoading || !isAuthenticated) {
+    return (
+      <main className="flex min-h-dvh items-center justify-center bg-white text-copy text-label">
+        <span className="animate-pulse">Loading…</span>
+      </main>
+    );
   }
-
   return <>{children}</>;
-}
-
-function AuthLoading() {
-  return (
-    <main className="flex min-h-dvh items-center justify-center bg-white text-copy text-muted">
-      <span className="animate-pulse">Restoring your FlyGo session...</span>
-    </main>
-  );
 }
