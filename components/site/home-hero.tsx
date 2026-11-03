@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { BedDouble, Building2, Plane, Users } from "lucide-react";
 import { PAGE } from "@/components/site/container";
@@ -72,6 +73,12 @@ export function HomeHero() {
             >
               Start searching
             </button>
+            <Link
+              href="/host"
+              className="flex h-12 items-center rounded-full bg-white px-6 text-copy font-semibold text-ink shadow-[0_1px_2px_rgba(16,24,40,0.06),0_8px_20px_-14px_rgba(16,24,40,0.35)]"
+            >
+              List your place
+            </Link>
           </div>
         </div>
 

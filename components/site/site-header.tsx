@@ -3,6 +3,8 @@
 import {
   CircleUserRound,
   Heart,
+  Menu,
+  X,
 } from "lucide-react";
 import { openAssistant } from "@/components/site/ai-assistant";
 import { AiMark } from "@/components/site/ai-mark";
@@ -21,6 +23,7 @@ export function SiteHeader({
   const pathname = usePathname();
   const { user, isAuthenticated } = useAuth();
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -88,6 +91,17 @@ export function SiteHeader({
             <AiMark size={22} />
           </button>
 
+          <button
+            type="button"
+            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-navigation"
+            onClick={() => setMenuOpen((open) => !open)}
+            className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] lg:hidden sm:h-12 sm:w-12"
+          >
+            {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+          </button>
+
           {isAuthenticated ? (
             <>
               <Link
@@ -118,6 +132,37 @@ export function SiteHeader({
           )}
         </div>
       </div>
+
+      {menuOpen ? (
+        <nav
+          id="mobile-navigation"
+          aria-label="Mobile navigation"
+          className="absolute right-3 top-full z-50 mt-2 w-[min(20rem,calc(100vw-1.5rem))] rounded-2xl bg-white p-3 shadow-[0_12px_36px_-12px_rgba(16,24,40,0.3)] lg:hidden"
+        >
+          {[...NAV_LINKS, { href: "/private-jets#share", label: "Shared jets" }].map((item) => {
+            const path = item.href.split(/[?#]/)[0];
+            const active = pathname.startsWith(path) && (item.label !== "Shared jets" || pathname === "/private-jets");
+            return (
+              <Link
+                key={item.label}
+                href={item.href}
+                aria-current={active ? "page" : undefined}
+                onClick={() => setMenuOpen(false)}
+                className={`block rounded-xl px-4 py-3 text-copy font-medium ${active ? "bg-shell text-ink" : "text-body"}`}
+              >
+                {item.label}
+              </Link>
+            );
+          })}
+          <Link
+            href="/host"
+            onClick={() => setMenuOpen(false)}
+            className="mt-1 block rounded-xl bg-brand-soft px-4 py-3 text-copy font-semibold text-ink"
+          >
+            List your place
+          </Link>
+        </nav>
+      ) : null}
     </header>
   );
 }
