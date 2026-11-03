@@ -84,6 +84,17 @@ export function SiteHeader({
       }
     >
       <div className="mx-auto flex h-[56px] w-full max-w-[1600px] items-center gap-2 px-3 sm:h-[76px] sm:gap-4 sm:px-6">
+        <button
+          type="button"
+          aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
+          aria-expanded={menuOpen}
+          aria-controls="site-navigation-menu"
+          onClick={() => setMenuOpen((open) => !open)}
+          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] lg:hidden sm:h-12 sm:w-12 ${hasStickySearch ? "xl:flex" : ""}`}
+        >
+          {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
+        </button>
+
         <Logo imgClass="h-[30px] sm:h-[40px]" />
 
         <button
@@ -133,17 +144,6 @@ export function SiteHeader({
             className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-brand shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] sm:h-12 sm:w-12 md:hidden"
           >
             <AiMark size={22} />
-          </button>
-
-          <button
-            type="button"
-            aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
-            aria-expanded={menuOpen}
-            aria-controls="site-navigation-menu"
-            onClick={() => setMenuOpen((open) => !open)}
-            className={`flex h-10 w-10 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] lg:hidden sm:h-12 sm:w-12 ${hasStickySearch ? "xl:flex" : ""}`}
-          >
-            {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
           </button>
 
           {isAuthenticated ? (

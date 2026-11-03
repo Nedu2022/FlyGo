@@ -3,6 +3,8 @@
 :root {
   --background: #ffffff;
   --foreground: #1a202c;
+  --font-jakarta: Arial, Helvetica, sans-serif;
+  --font-dancing: "Brush Script MT", cursive;
 }
 
 @theme inline {
@@ -409,4 +411,3 @@ body {
     animation-delay: 0s !important;
   }
 }
-
