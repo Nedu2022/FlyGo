@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { SearchSummaryBar } from "@/components/flights/search-summary-bar";
-import { SearchSummaryBar } from "@/components/flights/search-summary-bar";
 import { CinematicHero } from "@/components/site/hero";
 import { FiltersSidebar, type StopsFilter } from "@/components/flights/filters-sidebar";
 import { SortTabs, type SortMode, type SortSummary } from "@/components/flights/sort-tabs";
