@@ -13,6 +13,7 @@ export function JetRouteSearch({ from, to }: { from: string; to: string }) {
 
   return (
     <form
+      data-page-search
       onSubmit={(event) => {
         event.preventDefault();
         router.push(`/private-jets?from=${origin}&to=${dest}`);

@@ -9,7 +9,7 @@ import {
 import { openAssistant } from "@/components/site/ai-assistant";
 import { AiMark } from "@/components/site/ai-mark";
 import { SearchSummaryBar, type CompactSearchMode } from "@/components/flights/search-summary-bar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/brand/logo";
@@ -34,7 +34,9 @@ export function SiteHeader({
       : pathname === "/" || pathname.startsWith("/flights") || pathname.startsWith("/booking")
         ? "flight"
         : null;
-  const hasStickySearch = scrolled && searchMode !== null;
+  const headerRef = useRef<HTMLElement>(null);
+  const [pastSearch, setPastSearch] = useState(false);
+  const hasStickySearch = pastSearch && searchMode !== null;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -42,6 +44,26 @@ export function SiteHeader({
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Only on laptop widths, and only once the page's own search form has
+  // scrolled up behind the header.
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1280px)");
+    const update = () => {
+      const form = Array.from(document.querySelectorAll<HTMLElement>("[data-page-search]")).find(
+        (el) => el.getClientRects().length > 0,
+      );
+      const headerBottom = headerRef.current?.getBoundingClientRect().bottom ?? 0;
+      setPastSearch(desktop.matches && !!form && form.getBoundingClientRect().bottom < headerBottom);
+    };
+    update();
+    window.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
+    return () => {
+      window.removeEventListener("scroll", update);
+      window.removeEventListener("resize", update);
+    };
+  }, [pathname]);
 
   useEffect(() => {
     const syncServiceMode = () => {
@@ -52,7 +74,7 @@ export function SiteHeader({
     syncServiceMode();
     window.addEventListener("hashchange", syncServiceMode);
     return () => window.removeEventListener("hashchange", syncServiceMode);
-  }, [pathname, scrolled]);
+  }, [pathname, hasStickySearch]);
 
   useEffect(() => {
     if (!menuOpen) return;
@@ -70,6 +92,7 @@ export function SiteHeader({
 
   return (
     <header
+      ref={headerRef}
       style={{ viewTransitionName: "site-header" }}
       className={
         variant === "solid"
@@ -90,53 +113,69 @@ export function SiteHeader({
           aria-expanded={menuOpen}
           aria-controls="site-navigation-menu"
           onClick={() => setMenuOpen((open) => !open)}
-          className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white text-ink shadow-[0_2px_10px_-2px_rgba(16,24,40,0.18)] lg:hidden sm:h-12 sm:w-12 ${hasStickySearch ? "xl:flex" : ""}`}
+          className="-ml-2 flex h-10 w-10 shrink-0 items-center justify-center text-ink sm:h-12 sm:w-12"
         >
           {menuOpen ? <X size={22} aria-hidden="true" /> : <Menu size={22} aria-hidden="true" />}
         </button>
 
         <Logo imgClass="h-[30px] sm:h-[40px]" />
 
-        <button
-          type="button"
-          onClick={() => openAssistant()}
-          className={`ml-2 hidden h-11 items-center gap-2 rounded-full px-3 text-copy font-medium text-ink ${hasStickySearch ? "md:flex xl:hidden" : "md:flex"}`}
-        >
-          <AiMark size={20} />
-          Ask AI
-        </button>
+        <div className="grid min-w-0 flex-1 items-center">
+          <div
+            inert={hasStickySearch}
+            className={`col-start-1 row-start-1 flex min-w-0 items-center transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none ${
+              hasStickySearch ? "pointer-events-none -translate-y-1 opacity-0" : ""
+            }`}
+          >
+            <button
+              type="button"
+              onClick={() => openAssistant()}
+              className="ml-2 hidden h-11 items-center gap-2 rounded-full px-3 text-copy font-medium text-ink md:flex"
+            >
+              <AiMark size={20} />
+              Ask AI
+            </button>
 
-        <nav aria-label="Main" className={`ml-6 hidden items-center gap-1 ${hasStickySearch ? "lg:flex xl:hidden" : "lg:flex"}`}>
-          {NAV_LINKS.map((item) => {
-            const path = item.href.split("?")[0];
-            const active =
-              !item.href.includes("?") &&
-              (pathname.startsWith(path) || (path === "/flights" && pathname.startsWith("/booking")));
-            return (
-              <Link
-                key={item.label}
-                href={item.href}
-                aria-current={active ? "page" : undefined}
-                className={`rounded-full px-3.5 py-2 text-copy font-medium ${active ? "bg-shell text-ink" : "text-body"}`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
-        </nav>
+            <nav aria-label="Main" className="ml-6 hidden items-center gap-1 lg:flex">
+              {NAV_LINKS.map((item) => {
+                const path = item.href.split("?")[0];
+                const active =
+                  !item.href.includes("?") &&
+                  (pathname.startsWith(path) || (path === "/flights" && pathname.startsWith("/booking")));
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    aria-current={active ? "page" : undefined}
+                    className={`rounded-full px-3.5 py-2 text-copy font-medium ${active ? "bg-shell text-ink" : "text-body"}`}
+                  >
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </nav>
 
-        {hasStickySearch ? (
-          <div className="hidden min-w-0 flex-1 xl:block">
-            <div className="xl:max-w-[760px]">
-              <SearchSummaryBar compact mode={searchMode!} initialStayType={stayType} initialJetType={jetType} key={`${searchMode}-${stayType}-${jetType}`} />
-            </div>
+            <Link href="/host" className="ml-auto hidden rounded-full px-3.5 py-2 text-copy font-medium text-ink lg:block">
+              List your place
+            </Link>
           </div>
-        ) : null}
 
-        <div className="ml-auto flex items-center gap-2 sm:gap-3">
-          <Link href="/host" className={`hidden rounded-full px-3.5 py-2 text-copy font-medium text-ink ${hasStickySearch ? "lg:hidden" : "lg:block"}`}>
-            List your place
-          </Link>
+          {searchMode ? (
+            <div
+              inert={!hasStickySearch}
+              aria-hidden={!hasStickySearch}
+              className={`col-start-1 row-start-1 hidden min-w-0 justify-center px-2 transition-[opacity,transform] duration-300 ease-out motion-reduce:transition-none xl:flex ${
+                hasStickySearch ? "" : "pointer-events-none translate-y-2 opacity-0"
+              }`}
+            >
+              <div className="w-full max-w-[920px]">
+                <SearchSummaryBar compact mode={searchMode} initialStayType={stayType} initialJetType={jetType} key={`${searchMode}-${stayType}-${jetType}`} />
+              </div>
+            </div>
+          ) : null}
+        </div>
+
+        <div className="flex items-center gap-2 sm:gap-3">
           <button
             type="button"
             onClick={() => openAssistant()}

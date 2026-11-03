@@ -103,6 +103,7 @@ export function SearchBar({ defaultTab = "Flight" }: { defaultTab?: SearchTab })
 
   return (
     <form
+      data-page-search
       onSubmit={(event) => {
         event.preventDefault();
         const href = jet

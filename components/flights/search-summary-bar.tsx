@@ -60,7 +60,7 @@ export function SearchSummaryBar({
         }}
         className="flex min-w-0 items-center gap-1.5"
       >
-        <label className={`flex h-10 shrink-0 items-center rounded-lg border border-line bg-shell px-2.5 ${mode === "flight" ? "w-[84px]" : "w-[116px]"}`}>
+        <label className={`flex h-10 shrink-0 items-center rounded-lg border border-line bg-shell px-2.5 ${mode === "flight" ? "w-[104px]" : "w-[124px]"}`}>
           <span className="sr-only">{mode === "stay" ? "Stay type" : mode === "jet" ? "Jet type" : "Trip type"}</span>
           <select
             aria-label={mode === "stay" ? "Stay type" : mode === "jet" ? "Jet type" : "Trip type"}
@@ -115,7 +115,7 @@ export function SearchSummaryBar({
           </div>
         )}
 
-        <div className="flex h-10 min-w-[155px] flex-1 items-center gap-1.5 rounded-lg border border-line bg-shell px-2 [&_button]:text-tiny">
+        <div className="flex h-10 min-w-[180px] flex-1 items-center gap-1.5 rounded-lg border border-line bg-shell px-2 [&_button]:text-tiny">
           <DateField tone="plain" label={mode === "stay" ? "Check-in" : "Departure"} value={departure} onChange={(date) => {
             setDeparture(date);
             if (date > returnDate) setReturnDate(date);
@@ -128,7 +128,7 @@ export function SearchSummaryBar({
           ) : null}
         </div>
 
-        <div className="flex h-10 min-w-[120px] flex-[0.75] items-center rounded-lg border border-line bg-shell px-2">
+        <div className={`flex h-10 shrink-0 items-center rounded-lg border border-line bg-shell px-2 ${mode === "flight" ? "w-[220px]" : "w-[150px]"}`}>
           <TravellersField key={mode} kind={mode === "stay" ? "stay" : mode === "jet" ? "jet" : "flight"} initial={mode === "stay" ? { adults: 2 } : undefined} className="text-tiny" compact />
         </div>
 
@@ -166,6 +166,7 @@ export function SearchSummaryBar({
         </button>
 
         <form
+          data-page-search
           onSubmit={(event) => {
             event.preventDefault();
             router.push("/flights");
