@@ -63,7 +63,7 @@ export function TravellersField({
   const short = jet
     ? `${counts.adults}`
     : flight
-      ? `${people} ${cabin}`
+      ? `${plural(people, "traveller")}, ${cabin}`
       : `${counts.adults + counts.children} · ${plural(counts.rooms, "room")}`;
   const title = jet ? "Passengers" : flight ? "Travellers" : "Guests";
   const rows = jet

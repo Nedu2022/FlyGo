@@ -30,7 +30,7 @@ export function HeroSlides({ slides }: { slides: Slide[] }) {
           src={slide.src}
           alt=""
           fill
-          priority={i === 0}
+          preload={i === 0}
           sizes="100vw"
           className={`-z-20 object-cover transition-opacity duration-[1500ms] ease-in-out ${
             i === index ? "opacity-100" : "opacity-0"

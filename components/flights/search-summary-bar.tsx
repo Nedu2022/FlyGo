@@ -5,9 +5,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DateField } from "@/components/ui/calendar";
 import { TravellersField } from "@/components/site/travellers-field";
+import { PlaceInput } from "@/components/site/place-input";
 import { SEARCH as TRIP } from "@/lib/duffel";
+import { findCity } from "@/lib/jet-data";
 
 const SUMMARY = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short" });
+export type CompactSearchMode = "flight" | "stay" | "jet";
 
 /**
  * Floating white search card that sits under the header on the results and
@@ -15,20 +18,134 @@ const SUMMARY = new Intl.DateTimeFormat("en-GB", { day: "numeric", month: "short
  * results hero. Each control is an outlined box with its label notched into
  * the top border.
  */
-export function SearchSummaryBar({ embedded = false }: { embedded?: boolean }) {
+export function SearchSummaryBar({
+  embedded = false,
+  compact = false,
+  mode = "flight",
+  initialStayType = "hotel",
+  initialJetType = "private",
+}: {
+  embedded?: boolean;
+  compact?: boolean;
+  mode?: CompactSearchMode;
+  initialStayType?: "hotel" | "apartment";
+  initialJetType?: "private" | "shared";
+}) {
   const router = useRouter();
   const [from, setFrom] = useState(TRIP.from);
   const [to, setTo] = useState(TRIP.to);
   const [trip, setTrip] = useState(TRIP.trip);
   const [departure, setDeparture] = useState(() => new Date(2026, 11, 15));
   const [returnDate, setReturnDate] = useState(() => new Date(2027, 0, 9));
+  const [where, setWhere] = useState("London");
+  const [stayType, setStayType] = useState<"hotel" | "apartment">(initialStayType);
+  const [jetType, setJetType] = useState<"private" | "shared">(initialJetType);
   const oneWay = trip !== "Round-Trip";
   // Phones open on a one-line summary; the full form unfolds on demand.
   const [editing, setEditing] = useState(false);
 
+  if (compact) {
+    return (
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (mode === "stay") {
+            router.push(`/hotels/search?type=${stayType === "apartment" ? "apartments" : "hotels"}`);
+          } else if (mode === "jet") {
+            const code = (value: string) => value.match(/\(([A-Z]{3})\)/i)?.[1] ?? findCity(value)?.code ?? value;
+            router.push(`/private-jets?from=${encodeURIComponent(code(from))}&to=${encodeURIComponent(code(to))}${jetType === "shared" ? "#share" : ""}`);
+          } else {
+            router.push("/flights");
+          }
+        }}
+        className="flex min-w-0 items-center gap-1.5"
+      >
+        <label className={`flex h-10 shrink-0 items-center rounded-lg border border-line bg-shell px-2.5 ${mode === "flight" ? "w-[84px]" : "w-[116px]"}`}>
+          <span className="sr-only">{mode === "stay" ? "Stay type" : mode === "jet" ? "Jet type" : "Trip type"}</span>
+          <select
+            aria-label={mode === "stay" ? "Stay type" : mode === "jet" ? "Jet type" : "Trip type"}
+            value={mode === "stay" ? stayType : mode === "jet" ? jetType : trip}
+            onChange={(event) => {
+              if (mode === "stay") setStayType(event.target.value as "hotel" | "apartment");
+              else if (mode === "jet") setJetType(event.target.value as "private" | "shared");
+              else setTrip(event.target.value);
+            }}
+            className="w-full appearance-none bg-transparent text-tiny font-semibold text-ink outline-none"
+          >
+            {mode === "stay" ? (
+              <>
+                <option value="hotel">Hotels</option>
+                <option value="apartment">Apartments</option>
+              </>
+            ) : mode === "jet" ? (
+              <>
+                <option value="private">Private jet</option>
+                <option value="shared">Shared jet</option>
+              </>
+            ) : (
+              <>
+                <option value="Round-Trip">Return</option>
+                <option value="One-way">One-way</option>
+                <option value="Multi-city">Multi-city</option>
+              </>
+            )}
+          </select>
+          <ChevronDown size={16} className="shrink-0 text-label" aria-hidden="true" />
+        </label>
+
+        {mode === "stay" ? (
+          <div className="flex h-10 min-w-[190px] flex-1 items-center rounded-lg border border-line bg-shell px-2.5">
+            <PlaceInput value={where} onChange={setWhere} label="Destination" kind="stay" placeholderPrefix="Where?" className="h-8 min-w-0 text-tiny font-medium" />
+          </div>
+        ) : (
+          <div className="flex h-10 min-w-[190px] flex-1 items-center rounded-lg border border-line bg-shell px-2.5">
+            <PlaceInput value={from} onChange={setFrom} label="From" placeholderPrefix="From?" className="h-8 min-w-0 text-tiny font-medium" />
+            <button
+              type="button"
+              aria-label="Swap origin and destination"
+              onClick={() => {
+                setFrom(to);
+                setTo(from);
+              }}
+              className="mx-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-ink hover:bg-white"
+            >
+              <ArrowLeftRight size={16} aria-hidden="true" />
+            </button>
+            <PlaceInput value={to} onChange={setTo} label="To" placeholderPrefix="To?" className="h-8 min-w-0 text-tiny font-medium" />
+          </div>
+        )}
+
+        <div className="flex h-10 min-w-[155px] flex-1 items-center gap-1.5 rounded-lg border border-line bg-shell px-2 [&_button]:text-tiny">
+          <DateField tone="plain" label={mode === "stay" ? "Check-in" : "Departure"} value={departure} onChange={(date) => {
+            setDeparture(date);
+            if (date > returnDate) setReturnDate(date);
+          }} />
+          {mode !== "jet" ? (
+            <>
+              <span aria-hidden="true" className="h-6 w-px shrink-0 bg-line" />
+              <DateField tone="plain" label={mode === "stay" ? "Check-out" : "Return"} value={returnDate} onChange={(date) => setReturnDate(date < departure ? departure : date)} disabled={mode === "flight" && oneWay} placeholder={mode === "flight" && oneWay ? "One-way" : undefined} />
+            </>
+          ) : null}
+        </div>
+
+        <div className="flex h-10 min-w-[120px] flex-[0.75] items-center rounded-lg border border-line bg-shell px-2">
+          <TravellersField key={mode} kind={mode === "stay" ? "stay" : mode === "jet" ? "jet" : "flight"} initial={mode === "stay" ? { adults: 2 } : undefined} className="text-tiny" compact />
+        </div>
+
+        <button
+          type="submit"
+          aria-label={mode === "stay" ? "Search stays" : mode === "jet" ? "Search jets" : "Search flights"}
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand text-white active:translate-y-px"
+        >
+          <Search size={17} strokeWidth={2.2} aria-hidden="true" />
+        </button>
+      </form>
+    );
+  }
+
   return (
     <div className={embedded ? "" : "bg-white"}>
-      <div className={embedded ? "" : "mx-auto w-full max-w-[1240px] px-5 pb-4 pt-2 sm:px-8"}>
+      <div className={embedded ? "" : "mx-auto w-full max-w-[1440px] px-5 pb-4 pt-2 sm:px-8"}>
         <button
           type="button"
           onClick={() => setEditing((v) => !v)}

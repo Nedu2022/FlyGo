@@ -25,7 +25,7 @@ export function BookingShell({
         </h1>
         {steps.length > 1 ? <BookingStepper current={step} steps={steps} /> : <div className="h-6" />}
 
-        <main className="mx-auto grid w-full max-w-[1120px] gap-8 px-5 pb-20 sm:px-8 lg:grid-cols-[minmax(0,1fr)_340px]">
+        <main className="mx-auto grid w-full max-w-[1440px] gap-8 px-5 pb-20 sm:px-8 lg:grid-cols-[minmax(0,1fr)_360px]">
           <div className="flex min-w-0 flex-col gap-6">{children}</div>
           <div className="lg:sticky lg:top-24 lg:self-start">{aside}</div>
         </main>

@@ -23,7 +23,7 @@ export default async function StaySearchPage({ searchParams }: { searchParams: P
     <>
       <SiteHeader variant="solid" />
       <main className="flex-1 bg-shell">
-        <div className="mx-auto w-full max-w-[960px] px-4 py-6 sm:px-8 sm:py-10">
+        <div className="mx-auto w-full max-w-[1600px] px-4 py-6 sm:px-8 sm:py-10">
           <h1 className="text-h2 font-bold tracking-tight text-ink">
             {apartments ? "Apartments" : "Hotels"} in {STAY_SEARCH.city}
           </h1>

@@ -1,13 +1,24 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
+import { usePathname, useSearchParams } from "next/navigation";
 
-/** Every route change opens at the top of the page, instantly. */
+/** Every route change smoothly returns the page to the top. */
 export function ScrollToTop() {
+  return (
+    <Suspense fallback={null}>
+      <RouteScrollReset />
+    </Suspense>
+  );
+}
+
+function RouteScrollReset() {
   const pathname = usePathname();
+  const search = useSearchParams().toString();
+
   useEffect(() => {
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
-  }, [pathname]);
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [pathname, search]);
+
   return null;
 }

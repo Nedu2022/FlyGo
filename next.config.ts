@@ -2,13 +2,18 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   images: {
-    // AVIF first: roughly half the size of WebP for photos, with WebP as fallback.
-    formats: ["image/avif", "image/webp"],
-    // One quality for every photo: high enough to stay crisp after resizing,
-    // while AVIF/WebP keep the files small. The default prop (75) snaps to it.
-    qualities: [85],
-    // Optimised photos are cached for a month instead of re-encoded per request.
-    minimumCacheTTL: 2592000,
+    // Local photos are already compressed WebP; bypass per-request AVIF encoding.
+    unoptimized: true,
+  },
+  async headers() {
+    return [
+      {
+        source: "/images/photos/:path*",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=86400, stale-while-revalidate=604800" },
+        ],
+      },
+    ];
   },
 };
 

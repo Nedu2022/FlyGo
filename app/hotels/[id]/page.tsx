@@ -69,7 +69,7 @@ export default async function StayPage({ params }: { params: Promise<{ id: strin
       <SiteHeader variant="solid" />
       <main className="flex-1 bg-shell">
         <JsonLd data={structured} />
-        <div className="mx-auto w-full max-w-[1040px] px-4 py-6 sm:px-8 sm:py-10">
+        <div className="mx-auto w-full max-w-[1440px] px-4 py-6 sm:px-8 sm:py-10">
           <nav aria-label="Breadcrumb" className="mb-4">
             <ol className="flex flex-wrap items-center gap-1.5 text-small text-label">
               <li>
@@ -87,7 +87,7 @@ export default async function StayPage({ params }: { params: Promise<{ id: strin
           {/* Photos */}
           <div className="grid gap-2 overflow-hidden rounded-3xl sm:grid-cols-[2fr_1fr] sm:grid-rows-2 sm:h-[400px]">
             <div className="relative aspect-[16/10] bg-steel sm:row-span-2 sm:aspect-auto">
-              <Image src={main.url} alt={hotel.name} fill priority sizes="(max-width: 640px) 92vw, 680px" className="object-cover" />
+              <Image src={main.url} alt={hotel.name} fill preload sizes="(max-width: 640px) 92vw, 680px" className="object-cover" />
             </div>
             {rest.slice(0, 2).map((img) => (
               <div key={img.url} className="relative hidden bg-steel sm:block">

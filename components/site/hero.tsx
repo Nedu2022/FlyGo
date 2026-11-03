@@ -40,7 +40,7 @@ export function CinematicHero({
             src={image}
             alt={imageAlt}
             fill
-            priority
+            preload
             sizes="100vw"
             className="animate-settle -z-20 object-cover"
             style={{ objectPosition: imagePosition }}
@@ -114,14 +114,14 @@ export function Hero({ variant = "flight" }: { variant?: "flight" | "stay" }) {
         <div aria-hidden="true" className="absolute inset-y-0 right-5 hidden w-[26%] gap-4 lg:flex xl:w-[20%] 2xl:w-[24%]">
           {columns.map((column, c) => (
             <div key={c} className={`flex flex-1 flex-col gap-4 ${c === 0 ? "-mt-24" : "-mt-6"}`}>
-              {column.map(([src, position]) => (
+              {column.map(([src, position], i) => (
                 <div key={src} className="relative aspect-[4/5] shrink-0 overflow-hidden rounded-[32px] bg-steel">
                   <Image
                     src={src}
                     alt=""
                     fill
                     sizes="(max-width: 1280px) 15vw, 220px"
-                    priority={c === 0}
+                    preload={c === 0 && i === 0}
                     className="object-cover"
                     style={{ objectPosition: position }}
                   />

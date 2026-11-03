@@ -38,7 +38,7 @@ export default function HotelsPage() {
 
       <section className={`${PAGE} pb-16 pt-16 lg:pb-24 lg:pt-24`}>
         <SectionHeader title="Apartments" href="/hotels/search?type=apartments" />
-        <Rail label="Apartments" className="mt-6">
+        <Rail label="Apartments" className="mt-6" controls={false}>
           {byRating
             .filter((h) => h.type === "apartment")
             .map((hotel) => (

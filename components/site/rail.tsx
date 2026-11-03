@@ -18,10 +18,12 @@ export function Rail({
   children,
   label,
   className = "",
+  controls = true,
 }: {
   children: ReactNode;
   label: string;
   className?: string;
+  controls?: boolean;
 }) {
   const track = useRef<HTMLUListElement>(null);
   const [pages, setPages] = useState(1);
@@ -62,7 +64,7 @@ export function Rail({
         {children}
       </ul>
 
-      {pages > 1 ? (
+      {controls && pages > 1 ? (
         <div className="mt-5 hidden justify-end gap-2 sm:flex">
           <ArrowButton label={`Previous ${label}`} disabled={page === 0} onClick={() => goTo(page - 1)} />
           <ArrowButton

@@ -6,6 +6,7 @@ import { JetRouteSearch } from "@/components/jets/jet-route-search";
 import { JetOfferCard } from "@/components/jets/jet-offer-card";
 import { PAGE } from "@/components/site/container";
 import { ShareIllustration } from "@/components/ui/illustrations";
+import { ProTip } from "@/components/site/pro-tip";
 import { JET_CITIES, findCity, jetOffers } from "@/lib/jet-data";
 
 export const metadata: Metadata = {
@@ -62,9 +63,15 @@ export default async function PrivateJetsPage({ searchParams }: PageProps<"/priv
             ))}
           </ul>
 
-          <section id="share" className="mt-10 scroll-mt-24 rounded-[28px] border border-line bg-white p-6 sm:flex sm:items-center sm:gap-10 sm:p-8">
-            <ShareIllustration className="mx-auto h-32 w-auto shrink-0 sm:mx-0 sm:h-40" />
-            <div className="mt-4 sm:mt-0">
+          <div className="mt-8">
+            <ProTip title="Share the flight and split the cost" art={<ShareIllustration className="h-16 w-auto" />}>
+              Join travellers already heading your way and pay your share of the charter.
+            </ProTip>
+          </div>
+
+          <section id="share" className="mt-10 scroll-mt-24 grid items-center gap-6 rounded-[28px] border border-line bg-white p-6 sm:p-8 lg:grid-cols-[280px_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[360px_minmax(0,1fr)] xl:p-10">
+            <ShareIllustration className="mx-auto h-44 w-auto sm:h-52 lg:h-56 xl:h-64" />
+            <div className="min-w-0">
               <span className="inline-flex rounded-full bg-brand-soft px-3 py-1 text-tiny font-semibold text-brand">
                 By-The-Seat Aviation
               </span>
@@ -72,7 +79,7 @@ export default async function PrivateJetsPage({ searchParams }: PageProps<"/priv
               <p className="mt-1 text-small text-body">
                 Experience private aviation on confirmed routes at commercial business-class fares.
               </p>
-              <ol className="mt-4 space-y-3 text-small text-body">
+              <ol className="mt-5 grid gap-3 text-small text-body lg:grid-cols-3">
                 {[
                   {
                     title: "Confirmed routes",
@@ -87,13 +94,13 @@ export default async function PrivateJetsPage({ searchParams }: PageProps<"/priv
                     desc: "Fly in comfort alongside identity-verified professionals and vetted travelers.",
                   },
                 ].map((step, i) => (
-                  <li key={step.title} className="flex gap-3 items-start">
+                  <li key={step.title} className="flex items-start gap-3 rounded-2xl bg-shell p-4">
                     <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-brand-soft text-tiny font-bold text-brand mt-0.5">
                       {i + 1}
                     </span>
-                    <div>
+                    <div className="min-w-0">
                       <strong className="font-semibold text-ink">{step.title}</strong>
-                      <p className="text-tiny text-body mt-0.5">{step.desc}</p>
+                      <p className="mt-1 text-small leading-relaxed text-body">{step.desc}</p>
                     </div>
                   </li>
                 ))}

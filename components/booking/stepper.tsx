@@ -3,7 +3,7 @@ export const STEPS = ["Passenger", "Extras", "Payment"] as const;
 /** Numbered steps joined by a line; `current` is 1-indexed. */
 export function BookingStepper({ current, steps = STEPS }: { current: number; steps?: readonly string[] }) {
   return (
-    <ol className="mx-auto flex w-full max-w-[1120px] items-center gap-3 px-5 py-6 sm:px-8 sm:py-8">
+    <ol className="mx-auto flex w-full max-w-[1440px] items-center gap-3 px-5 py-6 sm:px-8 sm:py-8">
       {steps.map((label, index) => {
         const number = index + 1;
         const done = number <= current;

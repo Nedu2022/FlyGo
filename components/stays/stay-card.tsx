@@ -39,10 +39,10 @@ export function StayCard({ hotel, eager = false }: { hotel: Hotel; eager?: boole
   return (
     <Link
       href={`/hotels/${hotel.id}`}
-      className="grid overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05),0_10px_28px_-18px_rgba(16,24,40,0.3)] sm:grid-cols-[260px_minmax(0,1fr)]"
+      className="grid overflow-hidden rounded-3xl bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05),0_10px_28px_-18px_rgba(16,24,40,0.3)] sm:grid-cols-[360px_minmax(0,1fr)]"
     >
       <div className="relative aspect-[16/10] bg-shell sm:aspect-auto sm:min-h-[220px]">
-        <Image src={hotel.main_photo} alt={hotel.name} fill priority={eager} sizes="(max-width: 640px) 92vw, 260px" className="object-cover" />
+        <Image src={hotel.main_photo} alt={hotel.name} fill preload={eager} sizes="(max-width: 640px) 92vw, 360px" className="object-cover" />
       </div>
 
       <div className="flex min-w-0 flex-col gap-3 p-4 sm:p-5">
@@ -79,17 +79,17 @@ export function StayCard({ hotel, eager = false }: { hotel: Hotel; eager?: boole
 export function StayTile({ hotel }: { hotel: Hotel }) {
   const rate = cheapest(hotel);
   return (
-    <Link href={`/hotels/${hotel.id}`} className="flex h-full flex-col">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-3xl bg-shell">
+    <Link href={`/hotels/${hotel.id}`} className="group flex h-full flex-col overflow-hidden rounded-[24px] bg-white shadow-[0_1px_2px_rgba(16,24,40,0.05),0_12px_28px_-18px_rgba(16,24,40,0.35)] transition-transform duration-300 hover:-translate-y-1">
+      <div className="relative aspect-[4/3] overflow-hidden bg-shell">
         <Image
           src={hotel.main_photo}
           alt={hotel.name}
           fill
           sizes="(max-width: 640px) 78vw, (max-width: 1024px) 46vw, 300px"
-          className="object-cover"
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
         />
       </div>
-      <div className="flex flex-1 flex-col px-1 pt-3">
+      <div className="flex flex-1 flex-col px-4 pb-4 pt-3">
         <div className="flex items-start justify-between gap-3">
           <h3 className="line-clamp-1 text-copy font-semibold text-ink">{hotel.name}</h3>
           <span className="shrink-0 rounded-md bg-steel px-1.5 py-0.5 text-tiny font-bold text-white">

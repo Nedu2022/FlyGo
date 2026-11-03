@@ -32,7 +32,7 @@ function PhotoPanel() {
         src="/images/photos/hero-sky.webp"
         alt=""
         fill
-        priority
+        preload
         sizes="45vw"
         className="object-cover object-[70%_center]"
       />
