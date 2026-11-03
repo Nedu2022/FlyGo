@@ -227,7 +227,7 @@ export function SiteHeader({
             aria-modal="true"
             aria-label="Site navigation"
             onClick={(event) => event.stopPropagation()}
-            className="absolute right-0 top-0 flex h-dvh w-[min(88vw,360px)] flex-col bg-white p-5 shadow-[-16px_0_48px_-20px_rgba(16,24,40,0.4)] sm:w-[400px] xl:w-[440px]"
+            className="absolute left-0 top-0 flex h-dvh w-[min(88vw,360px)] flex-col bg-white p-5 shadow-[16px_0_48px_-20px_rgba(16,24,40,0.4)] sm:w-[400px] xl:w-[440px]"
           >
             <div className="flex items-center justify-between border-b border-line pb-5">
               <div>
