@@ -2,8 +2,6 @@
 
 import { useMemo, useState } from "react";
 import { StayCard } from "@/components/stays/stay-card";
-import { ProTip } from "@/components/site/pro-tip";
-import { SavedIllustration } from "@/components/ui/illustrations";
 import { Pagination, scrollToList } from "@/components/ui/pagination";
 import { cheapest, refundable, total, type Hotel } from "@/lib/liteapi";
 
@@ -56,10 +54,6 @@ export function StayResults({ stays }: { stays: Hotel[] }) {
           Breakfast
         </Chip>
       </div>
-
-      <ProTip title="Check what is included before booking" art={<SavedIllustration className="h-16 w-auto" />}>
-        Use the filters to find stays with free cancellation or breakfast for your dates.
-      </ProTip>
 
       <p id="stays" className="scroll-mt-24 px-1 text-small text-label">
         {shown.length} places

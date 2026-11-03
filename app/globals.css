@@ -91,6 +91,15 @@ textarea {
   touch-action: manipulation;
 }
 
+/* iOS Safari auto-zooms form controls when text is smaller than 16px. Keep the
+   app readable without triggering browser zoom on focus. */
+input,
+select,
+textarea,
+button {
+  font-size: 16px;
+}
+
 /* Never scroll sideways: clip stray overflow without breaking sticky headers. */
 html,
 body {

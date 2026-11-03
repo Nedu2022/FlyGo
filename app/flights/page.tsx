@@ -3,8 +3,7 @@
 import { useMemo, useState } from "react";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
-import { ProTip } from "@/components/site/pro-tip";
-import { TripsIllustration } from "@/components/ui/illustrations";
+import { SearchSummaryBar } from "@/components/flights/search-summary-bar";
 import { SearchSummaryBar } from "@/components/flights/search-summary-bar";
 import { CinematicHero } from "@/components/site/hero";
 import { FiltersSidebar, type StopsFilter } from "@/components/flights/filters-sidebar";
@@ -117,9 +116,6 @@ export default function FlightSearchPage() {
 
           <div className="min-w-0 space-y-4">
             <SortTabs tabs={tabs} active={sort} onChange={setSort} />
-            <ProTip title="Compare fares before you choose" art={<TripsIllustration className="h-16 w-auto" />}>
-              Check Best, Cheapest, and Quickest to find the flight that fits your trip.
-            </ProTip>
             <p id="results" className="scroll-mt-24 px-1 text-small text-label">
               {filtered.length} flights
             </p>
